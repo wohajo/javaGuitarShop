@@ -1,4 +1,0 @@
-jdbc:sqlserver://localhost
-guitarShop
-SA
-Passw0rd!
