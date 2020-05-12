@@ -5,16 +5,13 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 public class Controller {
 
     Stage primaryStage;
 
-    public Controller() {
-
-    }
+    public Controller() {}
 
     public void setStage(Stage primaryStage) {
         this.primaryStage = primaryStage;

@@ -9,13 +9,18 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    private void connect() {
+
+    }
+
     @Override
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/guitarShop/resources/login.fxml"));
         Parent root = (Parent) loader.load();
         Controller controller = (Controller) loader.getController();
+
         primaryStage.setTitle("Guitar Shop");
-        primaryStage.setScene(new Scene(root, 600, 400));
+        primaryStage.setScene(new Scene(root, 800, 600));
         controller.setStage(primaryStage);
         primaryStage.show();
     }
