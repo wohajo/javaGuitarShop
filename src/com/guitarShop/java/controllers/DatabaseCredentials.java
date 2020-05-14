@@ -1,19 +1,25 @@
 package com.guitarShop.java.controllers;
 
-public class DatabaseCredidentials {
+public class DatabaseCredentials {
 
     String url;
+    String database;
     String username;
     String password;
 
-    public DatabaseCredidentials(String url, String username, String password) {
+    public DatabaseCredentials(String url, String database, String username, String password) {
         this.url = url;
+        this.database = database;
         this.username = username;
         this.password = password;
     }
 
     public String getUrl() {
         return url;
+    }
+
+    public String getDatabase() {
+        return database;
     }
 
     public String getUsername() {
