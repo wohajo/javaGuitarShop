@@ -16,14 +16,14 @@ public class ConnectionFactory {
     ConnectionFactory() {}
 
     public static Connection getConnection() throws SQLException {
-        String connectionString = "";
+
+        DatabaseCredentials dbcred = null;
         try {
             Gson gson = new Gson();
             try (Scanner scanner = new Scanner(new File("src/com/guitarShop/resources/dbcredidentials.json"))) {
                 while (scanner.hasNext()) {
                     String scanned = scanner.nextLine();
-                    DatabaseCredentials dbcred = gson.fromJson(scanned, DatabaseCredentials.class);
-                    connectionString = dbcred.url + "=" + dbcred.database + ";user=" +dbcred.username + ";password=" + dbcred.password;
+                        dbcred = gson.fromJson(scanned, DatabaseCredentials.class);
                 }
             } catch (FileNotFoundException fnfe) {
                 fnfe.printStackTrace();
@@ -33,6 +33,6 @@ public class ConnectionFactory {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return DriverManager.getConnection(connectionString);
+        return DriverManager.getConnection(dbcred.url + "=" + dbcred.database, dbcred.username, dbcred.password);
     }
 }
