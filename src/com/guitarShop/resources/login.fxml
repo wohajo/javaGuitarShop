@@ -11,7 +11,7 @@
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0">
          <children>
-            <Button id="loginButton" layoutX="268.0" layoutY="237.0" mnemonicParsing="false" onAction="#checkCredentials" text="Zaloguj" />
+            <Button id="loginButton" layoutX="268.0" layoutY="237.0" mnemonicParsing="false" onAction="#checkEnteredCredentials" text="Zaloguj" />
             <PasswordField id="passwordField" fx:id="passwordField" layoutX="236.0" layoutY="179.0" />
             <TextField id="loginField" fx:id="loginField" layoutX="236.0" layoutY="143.0" />
             <Text layoutX="171.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" />
