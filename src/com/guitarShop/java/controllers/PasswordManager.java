@@ -14,24 +14,22 @@ import java.util.Scanner;
 public class PasswordManager {
 
     PasswordManager() {
-
     }
 
     public String makeHash(String password) {
 
         String hashedPassword = "";
-        String salt = "testsalt";
+        String salt = "";
         byte[] byteString = null;
         StringBuilder sb = null;
 
-        // TODO Fix scanner
-        /*try (Scanner scanner = new Scanner(new File("/com/guitarShop/resources/salt.txt"))) {
+        try (Scanner scanner = new Scanner(new File("src/com/guitarShop/resources/salt.txt"))) {
             while (scanner.hasNext()) {
                 salt = scanner.nextLine();
             }
         } catch (FileNotFoundException fnfe) {
             fnfe.printStackTrace();
-        }*/
+        }
 
         try {
             MessageDigest md = MessageDigest.getInstance("MD5");
@@ -50,6 +48,7 @@ public class PasswordManager {
         }
 
         hashedPassword = sb.toString();
+        System.out.println(hashedPassword);
 
         return hashedPassword;
     }
