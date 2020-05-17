@@ -46,9 +46,7 @@ public class PasswordManager {
         catch (NoSuchAlgorithmException e) {
             e.printStackTrace();
         }
-
         hashedPassword = sb.toString();
-        System.out.println(hashedPassword);
 
         return hashedPassword;
     }
@@ -79,5 +77,4 @@ public class PasswordManager {
         }
         return isCorrect;
     }
-
 }

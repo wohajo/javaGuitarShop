@@ -11,11 +11,11 @@
   <content>
     <AnchorPane minHeight="0.0" minWidth="0.0">
          <children>
-            <Button id="loginButton" layoutX="268.0" layoutY="237.0" mnemonicParsing="false" onAction="#checkEnteredCredentials" text="Zaloguj" />
-            <PasswordField id="passwordField" fx:id="passwordField" layoutX="236.0" layoutY="179.0" />
-            <TextField id="loginField" fx:id="loginField" layoutX="236.0" layoutY="143.0" />
-            <Text layoutX="171.0" layoutY="161.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" />
-            <Text layoutX="171.0" layoutY="197.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hasło" />
+            <Button id="loginButton" layoutX="240.0" layoutY="212.0" mnemonicParsing="false" onAction="#checkEnteredCredentials" prefHeight="44.0" prefWidth="119.0" text="Zaloguj" />
+             <TextField id="loginField" fx:id="loginField" layoutX="207.0" layoutY="134.0" prefHeight="26.0" prefWidth="247.0" />
+             <PasswordField id="passwordField" fx:id="passwordField" layoutX="207.0" layoutY="168.0" prefHeight="26.0" prefWidth="247.0" />
+            <Text layoutX="146.0" layoutY="152.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" />
+            <Text layoutX="145.0" layoutY="185.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Hasło" />
          </children></AnchorPane>
   </content>
 </TitledPane>

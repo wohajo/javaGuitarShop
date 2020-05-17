@@ -16,7 +16,7 @@ public class Main extends Application {
         Controller controller = (Controller) loader.getController();
 
         primaryStage.setTitle("Guitar Shop");
-        primaryStage.setScene(new Scene(root, 800, 600));
+        primaryStage.setScene(new Scene(root, 600, 400));
         controller.setStage(primaryStage);
         primaryStage.show();
     }
