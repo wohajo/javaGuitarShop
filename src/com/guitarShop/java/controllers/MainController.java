@@ -1,5 +1,9 @@
 package com.guitarShop.java.controllers;
 
+import com.guitarShop.java.controllers.tabControllers.ClientsTabController;
+import com.guitarShop.java.controllers.tabControllers.OrdersTabController;
+import com.guitarShop.java.controllers.tabControllers.StockTabController;
+import com.guitarShop.java.controllers.tabControllers.WorkersTabController;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -12,10 +16,14 @@ public class MainController {
 
     Stage primaryStage;
     PasswordManager passwordManager = new PasswordManager();
-    @FXML private StockTabController stockTabController;
-    @FXML private OrdersTabController ordersTabController;
-    @FXML private WorkersTabController workersTabController;
-    @FXML private ClientsTabController clientsTabController;
+    @FXML
+    StockTabController stockTabController;
+    @FXML
+    OrdersTabController ordersTabController;
+    @FXML
+    WorkersTabController workersTabController;
+    @FXML
+    ClientsTabController clientsTabController;
     @FXML TextField loginField;
     @FXML TextField passwordField;
 
@@ -25,7 +33,6 @@ public class MainController {
         this.primaryStage = primaryStage;
     }
 
-    @FXML
     private void login() throws IOException {
         Parent loggedIn = FXMLLoader.load(getClass().getResource("/com/guitarShop/resources/loggedIn.fxml"));
         this.primaryStage.setScene(new Scene(loggedIn));
