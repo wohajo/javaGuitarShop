@@ -1,6 +1,6 @@
 package com.guitarShop.java;
 
-import com.guitarShop.java.controllers.Controller;
+import com.guitarShop.java.controllers.MainController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -13,11 +13,11 @@ public class Main extends Application {
     public void start(Stage primaryStage) throws Exception {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/guitarShop/resources/login.fxml"));
         Parent root = (Parent) loader.load();
-        Controller controller = (Controller) loader.getController();
+        MainController mainController = (MainController) loader.getController();
 
         primaryStage.setTitle("Guitar Shop");
         primaryStage.setScene(new Scene(root, 600, 400));
-        controller.setStage(primaryStage);
+        mainController.setStage(primaryStage);
         primaryStage.show();
     }
 

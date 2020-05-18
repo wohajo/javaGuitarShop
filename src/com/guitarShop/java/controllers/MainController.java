@@ -8,12 +8,18 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class Controller {
+public class MainController {
 
     Stage primaryStage;
     PasswordManager passwordManager = new PasswordManager();
+    @FXML private StockTabController stockTabController;
+    @FXML private OrdersTabController ordersTabController;
+    @FXML private WorkersTabController workersTabController;
+    @FXML private ClientsTabController clientsTabController;
+    @FXML TextField loginField;
+    @FXML TextField passwordField;
 
-    public Controller() {}
+    public MainController() {}
 
     public void setStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
@@ -24,9 +30,6 @@ public class Controller {
         Parent loggedIn = FXMLLoader.load(getClass().getResource("/com/guitarShop/resources/loggedIn.fxml"));
         this.primaryStage.setScene(new Scene(loggedIn));
     }
-
-    @FXML TextField loginField;
-    @FXML TextField passwordField;
 
     @FXML
     private void checkEnteredCredentials() throws IOException {
