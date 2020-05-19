@@ -4,10 +4,9 @@
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.StockTabController">
+<Pane fx:id="MaufacturerColumn" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.StockTabController">
    <children>
-      <Button fx:id="refreshStockTableButton" layoutX="41.0" layoutY="575.0" mnemonicParsing="false" onAction="#refreshStockTable" prefHeight="30.0" prefWidth="142.0" text="Odśwież" />
-      <TableView fx:id="stockTable" layoutX="41.0" layoutY="46.0" prefHeight="489.0" prefWidth="712.0" />
+      <Button fx:id="refreshStockTableButton" layoutX="41.0" layoutY="575.0" mnemonicParsing="false" onAction="#refreshStockTable" prefHeight="30.0" prefWidth="142.0" text="Refresh" />
+      <TableView fx:id="stockTable" layoutX="41.0" layoutY="46.0" prefHeight="496.0" prefWidth="783.0" />
    </children>
 </Pane>
