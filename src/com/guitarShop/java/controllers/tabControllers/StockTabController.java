@@ -1,13 +1,14 @@
 package com.guitarShop.java.controllers.tabControllers;
 
+
 import com.guitarShop.java.controllers.Guitar;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
+import com.guitarShop.java.models.StockModel;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import java.sql.SQLException;
 
 public class StockTabController {
 
@@ -22,9 +23,10 @@ public class StockTabController {
     @FXML private TableColumn<Guitar, String> tunersCol;
     @FXML private TableColumn<Guitar, String> quantityCol;
     @FXML private Button refreshStockTableButton;
+    private StockModel stockModel = new StockModel();
 
     @FXML
-    private void initializeTable() {
+    public void initializeTable() throws SQLException {
         manufacturerCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("manufacturer"));
         modelCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("model"));
         priceCol.setCellValueFactory(new PropertyValueFactory<Guitar, Double>("guitarPrice"));
@@ -34,16 +36,6 @@ public class StockTabController {
         stringsCol.setCellValueFactory(new PropertyValueFactory<Guitar, Integer>("numberOfStrings"));
         tunersCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("lockingTuners"));
         quantityCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("numberOfGuitars"));
-        this.stockTable.setItems(getStock());
-    }
-
-
-    public ObservableList<Guitar> getStock() {
-        ObservableList<Guitar> stockList = FXCollections.observableArrayList();
-        for (int i = 0; i < 5; i ++) {
-            stockList.add(new Guitar( i, "Femder", i * 1000, "strat", "sss", "floating",
-                    true, i, "aaaaaaaaa", "aaaaaaawww", 6));
-        }
-        return stockList;
+        this.stockTable.setItems(stockModel.getStock());
     }
 }
