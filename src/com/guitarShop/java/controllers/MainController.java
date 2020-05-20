@@ -11,18 +11,17 @@ import javafx.scene.Scene;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
-import java.sql.SQLException;
 
 public class MainController {
 
     Stage primaryStage;
     PasswordManager passwordManager = new PasswordManager();
-    @FXML StockTabController stockTabController;
-    @FXML OrdersTabController ordersTabController;
-    @FXML WorkersTabController workersTabController;
-    @FXML ClientsTabController clientsTabController;
-    @FXML TextField loginField;
-    @FXML TextField passwordField;
+    @FXML private StockTabController stockTabController;
+    @FXML private OrdersTabController ordersTabController;
+    @FXML private WorkersTabController workersTabController;
+    @FXML private ClientsTabController clientsTabController;
+    @FXML private TextField loginField;
+    @FXML private TextField passwordField;
 
     public MainController() {}
 
