@@ -11,58 +11,39 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class StockTabController {
 
-    @FXML TableView<Guitar> stockTable;
-    @FXML Button refreshStockTableButton;
-
-    private void initializeTable() {
-
-        ObservableList<Guitar> data = FXCollections.observableArrayList();
-
-        Guitar guitar = new Guitar(1, "fender", 2500, "strat", "sss",
-                "yes", true, 6, "aaa", "aaaaaa", 4);
-
-        data.add(guitar);
-
-        TableColumn<Guitar, String> manufacturerCol = new TableColumn<>("Maufacturer");
-        manufacturerCol.setMinWidth(200);
-        manufacturerCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("manufacturer"));
-
-        TableColumn<Guitar, String> guitarModelCol = new TableColumn<>("Model");
-        guitarModelCol.setMinWidth(200);
-        guitarModelCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("model"));
-
-//        TableColumn priceColumn = new TableColumn("Price");
-//        priceColumn.setCellValueFactory(new PropertyValueFactory<>("price"));
-//
-//        TableColumn guitarTypeCol = new TableColumn("Type");
-//        guitarTypeCol.setCellValueFactory(new PropertyValueFactory<>("guitarType"));
-//
-//        TableColumn pickupsCol = new TableColumn("Pickups");
-//        pickupsCol.setCellValueFactory(new PropertyValueFactory<>("pickupsType"));
-//
-//        TableColumn bridgeCol = new TableColumn("Bridge");
-//        bridgeCol.setCellValueFactory(new PropertyValueFactory<>("bridgeType"));
-//
-//        TableColumn tunersCol = new TableColumn("Tuners");
-//        priceColumn.setCellValueFactory(new PropertyValueFactory<>("lockingTuners"));
-//
-//        TableColumn inStockCol = new TableColumn("In Stock");
-//        priceColumn.setCellValueFactory(new PropertyValueFactory<>("numberOfGuitars"));
-//
-//        TableColumn stringsCol = new TableColumn("Strings");
-//        priceColumn.setCellValueFactory(new PropertyValueFactory<>("numberOfStrings"));
-
-        this.stockTable = new TableView<>();
-        this.stockTable.setItems(data);
-        stockTable.getColumns().addAll(manufacturerCol, guitarModelCol);
-//        stockTable.getColumns().addAll(manufacturerCol, guitarModelCol, priceColumn, guitarTypeCol, pickupsCol,
-//                bridgeCol, tunersCol, inStockCol, stringsCol);
-    }
+    @FXML private TableView<Guitar> stockTable;
+    @FXML private TableColumn<Guitar, String> manufacturerCol;
+    @FXML private TableColumn<Guitar, String> modelCol;
+    @FXML private TableColumn<Guitar, Double> priceCol;
+    @FXML private TableColumn<Guitar, String> typeCol;
+    @FXML private TableColumn<Guitar, String> pickupsCol;
+    @FXML private TableColumn<Guitar, String> bridgeCol;
+    @FXML private TableColumn<Guitar, Integer> stringsCol;
+    @FXML private TableColumn<Guitar, String> tunersCol;
+    @FXML private TableColumn<Guitar, String> quantityCol;
+    @FXML private Button refreshStockTableButton;
 
     @FXML
-    private void refreshStockTable() {
-        initializeTable();
+    private void initializeTable() {
+        manufacturerCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("manufacturer"));
+        modelCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("model"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<Guitar, Double>("guitarPrice"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("guitarType"));
+        pickupsCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("pickupsType"));
+        bridgeCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("pickupsType"));
+        stringsCol.setCellValueFactory(new PropertyValueFactory<Guitar, Integer>("numberOfStrings"));
+        tunersCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("lockingTuners"));
+        quantityCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("numberOfGuitars"));
+        this.stockTable.setItems(getStock());
+    }
 
-        System.out.println();
+
+    public ObservableList<Guitar> getStock() {
+        ObservableList<Guitar> stockList = FXCollections.observableArrayList();
+        for (int i = 0; i < 5; i ++) {
+            stockList.add(new Guitar( i, "Femder", i * 1000, "strat", "sss", "floating",
+                    true, i, "aaaaaaaaa", "aaaaaaawww", 6));
+        }
+        return stockList;
     }
 }

@@ -16,14 +16,10 @@ public class MainController {
 
     Stage primaryStage;
     PasswordManager passwordManager = new PasswordManager();
-    @FXML
-    StockTabController stockTabController;
-    @FXML
-    OrdersTabController ordersTabController;
-    @FXML
-    WorkersTabController workersTabController;
-    @FXML
-    ClientsTabController clientsTabController;
+    @FXML StockTabController stockTabController;
+    @FXML OrdersTabController ordersTabController;
+    @FXML WorkersTabController workersTabController;
+    @FXML ClientsTabController clientsTabController;
     @FXML TextField loginField;
     @FXML TextField passwordField;
 
@@ -36,6 +32,7 @@ public class MainController {
     private void login() throws IOException {
         Parent loggedIn = FXMLLoader.load(getClass().getResource("/com/guitarShop/resources/loggedIn.fxml"));
         this.primaryStage.setScene(new Scene(loggedIn));
+        primaryStage.setResizable(false);
     }
 
     @FXML

@@ -4,7 +4,7 @@ public class Guitar {
 
     private int guitarID;
     private String manufacturer;
-    private int guitarPrice;
+    private double guitarPrice;
     private String guitarType;
     private String pickupsType;
     private String bridgeType;
@@ -14,7 +14,7 @@ public class Guitar {
     private String modelDescription;
     private int numberOfStrings;
 
-    public Guitar(int guitarID, String manufacturer, int guitarPrice, String guitarType, String pickupsType, String bridgeType, Boolean lockingTuners, int numberOfGuitars, String model, String modelDescription, int numberOfStrings) {
+    public Guitar(int guitarID, String manufacturer, double guitarPrice, String guitarType, String pickupsType, String bridgeType, Boolean lockingTuners, int numberOfGuitars, String model, String modelDescription, int numberOfStrings) {
         this.guitarID = guitarID;
         this.manufacturer = manufacturer;
         this.guitarPrice = guitarPrice;
@@ -44,11 +44,11 @@ public class Guitar {
         this.manufacturer = manufacturer;
     }
 
-    public int getGuitarPrice() {
+    public double getGuitarPrice() {
         return guitarPrice;
     }
 
-    public void setGuitarPrice(int guitarPrice) {
+    public void setGuitarPrice(double guitarPrice) {
         this.guitarPrice = guitarPrice;
     }
 
