@@ -1,4 +1,4 @@
-package com.guitarShop.java.controllers;
+package com.guitarShop.java.helpers;
 
 import com.google.gson.Gson;
 
@@ -20,7 +20,7 @@ public class ConnectionFactory {
         DatabaseCredentials dbcred = null;
         try {
             Gson gson = new Gson();
-            try (Scanner scanner = new Scanner(new File("src/com/guitarShop/resources/dbcredidentials.json"))) {
+            try (Scanner scanner = new Scanner(new File("src/com/guitarShop/resources/misc/dbcredidentials.json"))) {
                 while (scanner.hasNext()) {
                     String scanned = scanner.nextLine();
                         dbcred = gson.fromJson(scanned, DatabaseCredentials.class);

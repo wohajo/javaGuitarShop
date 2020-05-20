@@ -1,4 +1,4 @@
-package com.guitarShop.java.controllers;
+package com.guitarShop.java.models.objects;
 
 public class Guitar {
 

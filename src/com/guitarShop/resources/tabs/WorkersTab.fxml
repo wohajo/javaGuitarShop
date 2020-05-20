@@ -1,17 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.Pane?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
-      minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0"
-      xmlns="http://javafx.com/javafx/11.0.1"
-      xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="com.guitarShop.java.controllers.tabControllers.WorkersTabController">
+<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.WorkersTabController">
    <children>
-      <TableView fx:id="workersTable" layoutX="28.0" layoutY="46.0" prefHeight="496.0" prefWidth="935.0" />
+      <TableView fx:id="workersTable" layoutX="28.0" layoutY="46.0" prefHeight="496.0" prefWidth="703.0">
+         <columns>
+            <TableColumn fx:id="nameCol" prefWidth="141.0" text="Name" />
+            <TableColumn fx:id="surnameCol" prefWidth="141.0" text="Surname" />
+            <TableColumn fx:id="phoneCol" prefWidth="141.0" text="Phone number" />
+            <TableColumn fx:id="peselCol" prefWidth="141.0" text="Pesel" />
+            <TableColumn fx:id="emailCol" prefWidth="139.0" text="Email" />
+         </columns></TableView>
        <Button fx:id="refreshStockTableButton" layoutX="114.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Refresh" />
        <Button fx:id="editButton" layoutX="268.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Edit" />
        <Button fx:id="deleteButton" layoutX="424.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Delete" />

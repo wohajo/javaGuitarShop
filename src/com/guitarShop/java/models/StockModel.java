@@ -1,7 +1,7 @@
 package com.guitarShop.java.models;
 
-import com.guitarShop.java.controllers.ConnectionFactory;
-import com.guitarShop.java.controllers.Guitar;
+import com.guitarShop.java.helpers.ConnectionFactory;
+import com.guitarShop.java.models.objects.Guitar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

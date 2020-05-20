@@ -1,4 +1,4 @@
-package com.guitarShop.java.controllers;
+package com.guitarShop.java.helpers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -13,7 +13,7 @@ import java.util.Scanner;
 
 public class PasswordManager {
 
-    PasswordManager() {
+    public PasswordManager() {
     }
 
     public String makeHash(String password) {
@@ -23,7 +23,7 @@ public class PasswordManager {
         byte[] byteString = null;
         StringBuilder sb = null;
 
-        try (Scanner scanner = new Scanner(new File("src/com/guitarShop/resources/salt.txt"))) {
+        try (Scanner scanner = new Scanner(new File("src/com/guitarShop/resources/misc/salt.txt"))) {
             while (scanner.hasNext()) {
                 salt = scanner.nextLine();
             }

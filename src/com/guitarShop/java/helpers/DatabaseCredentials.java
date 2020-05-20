@@ -1,4 +1,4 @@
-package com.guitarShop.java.controllers;
+package com.guitarShop.java.helpers;
 
 public class DatabaseCredentials {
 

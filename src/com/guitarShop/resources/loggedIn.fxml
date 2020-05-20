@@ -5,24 +5,34 @@
 
 <TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" fx:controller="com.guitarShop.java.controllers.MainController" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
   <tabs>
-    <Tab text="Magazyn">
+    <Tab text="Stock">
       <content>
-        <fx:include fx:id="StockTab" source="StockTab.fxml"/>
+        <fx:include fx:id="stockTab" source="tabs/StockTab.fxml"/>
       </content>
     </Tab>
-    <Tab text="Pracownicy">
+    <Tab text="Workers">
       <content>
-        <fx:include fx:id="WorkersTab" source="WorkersTab.fxml"/>
+        <fx:include fx:id="workersTab" source="tabs/WorkersTab.fxml"/>
       </content>
     </Tab>
-    <Tab text="Klienci">
+    <Tab text="Clients">
       <content>
-        <fx:include fx:id="ClientsTab" source="ClientsTab.fxml"/>
+        <fx:include fx:id="clientsTab" source="tabs/ClientsTab.fxml"/>
       </content>
     </Tab>
-    <Tab text="Zamówienia">
+    <Tab text="Orders">
       <content>
-        <fx:include fx:id="OrdersTab" source="OrdersTab.fxml"/>
+        <fx:include fx:id="ordersTab" source="tabs/OrdersTab.fxml"/>
+      </content>
+    </Tab>
+    <Tab text="Addresses">
+      <content>
+        <fx:include fx:id="addressesTab" source="tabs/AddressesTab.fxml"/>
+      </content>
+    </Tab>
+    <Tab text="Details">
+      <content>
+        <fx:include fx:id="detailsTab" source="tabs/DetailsTab.fxml"/>
       </content>
     </Tab>
   </tabs>
