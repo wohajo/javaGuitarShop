@@ -1,9 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Tab?>
-<?import javafx.scene.control.TabPane?>
+<?import com.jfoenix.controls.JFXTabPane?>
 
-<TabPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" tabClosingPolicy="UNAVAILABLE" fx:controller="com.guitarShop.java.controllers.MainController" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.control.Tab?>
+<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity"
+            minHeight="-Infinity" minWidth="-Infinity"
+            prefHeight="750.0" prefWidth="1000.0"
+            xmlns="http://javafx.com/javafx/11.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.guitarShop.java.controllers.MainController">
   <tabs>
     <Tab text="Stock">
       <content>
@@ -40,5 +45,10 @@
         <fx:include fx:id="dashboardTab" source="tabs/Dashboard.fxml"/>
       </content>
     </Tab>
+    <Tab text="Test">
+      <content>
+        <fx:include fx:id="TestTab" source="tabs/TestTab.fxml"/>
+      </content>
+    </Tab>
   </tabs>
-</TabPane>
+</JFXTabPane>

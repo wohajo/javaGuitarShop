@@ -10,5 +10,6 @@
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="mssql-jdbc-8.2.0.jre13" level="project" />
     <orderEntry type="library" name="gson-2.8.6" level="project" />
+    <orderEntry type="library" name="jfoenix-9.0.8" level="project" />
   </component>
 </module>

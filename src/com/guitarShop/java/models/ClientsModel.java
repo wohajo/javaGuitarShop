@@ -3,6 +3,7 @@ package com.guitarShop.java.models;
 import com.guitarShop.java.helpers.ConnectionFactory;
 import com.guitarShop.java.models.objects.Client;
 import com.sun.glass.ui.EventLoop;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -23,7 +24,7 @@ public class ClientsModel {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                clientsList.add(new Client(resultSet.getInt("ClientID"), resultSet.getString("Name"),
+                clientsList.add(new Client(resultSet.getInt("ClientID"), (new SimpleStringProperty(resultSet.getString("Name"))),
                         resultSet.getString("Surname"), resultSet.getString("PhoneNumber"),
                         resultSet.getString("Pesel"), resultSet.getString("Email"), resultSet.getInt("AddressID")));
             }

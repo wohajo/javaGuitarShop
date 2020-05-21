@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.layout.AnchorPane?>
+
+
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="com.guitarShop.java.controllers.tabControllers.TestTabController">
+   <children>
+      <JFXTreeTableView fx:id="testTable" layoutX="134.0" layoutY="129.0" prefHeight="403.0" prefWidth="734.0" />
+   </children>
+</AnchorPane>

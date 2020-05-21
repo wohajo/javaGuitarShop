@@ -1,16 +1,19 @@
 package com.guitarShop.java.models.objects;
 
-public class Client {
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+import javafx.beans.property.SimpleStringProperty;
+
+public class Client extends RecursiveTreeObject<Client> {
 
     int clientID;
-    String name;
+    public SimpleStringProperty name;
     String surname;
     String phoneNumber;
     String pesel;
     String email;
     int addressID;
 
-    public Client(int clientID, String name, String surname, String phoneNumber, String pesel, String email,  int addressID) {
+    public Client(int clientID, SimpleStringProperty name, String surname, String phoneNumber, String pesel, String email,  int addressID) {
         this.clientID = clientID;
         this.name = name;
         this.surname = surname;
@@ -28,11 +31,11 @@ public class Client {
         this.clientID = clientID;
     }
 
-    public String getName() {
+    public SimpleStringProperty getName() {
         return name;
     }
 
-    public void setName(String name) {
+    public void setName(SimpleStringProperty name) {
         this.name = name;
     }
 
