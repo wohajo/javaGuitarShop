@@ -25,8 +25,12 @@ public class StockTabController {
     @FXML private Button refreshStockTableButton;
     private StockModel stockModel = new StockModel();
 
+    @FXML void initialize() throws SQLException {
+        initTable();
+    }
+
     @FXML
-    public void initializeTable() throws SQLException {
+    public void initTable() throws SQLException {
         manufacturerCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("manufacturer"));
         modelCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("model"));
         priceCol.setCellValueFactory(new PropertyValueFactory<Guitar, Double>("guitarPrice"));

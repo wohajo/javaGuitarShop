@@ -24,7 +24,7 @@
             <TableColumn fx:id="tunersCol" prefWidth="127.0" text="Tuners" />
             <TableColumn fx:id="quantityCol" prefWidth="86.0" text="In stock" />
          </columns></TableView>
-      <Button fx:id="refreshStockTableButton" layoutX="114.0" layoutY="576.0" mnemonicParsing="false" onAction="#initializeTable" prefHeight="30.0" prefWidth="142.0" text="Refresh" />
+      <Button fx:id="refreshStockTableButton" layoutX="114.0" layoutY="576.0" mnemonicParsing="false" onAction="#initTable" prefHeight="30.0" prefWidth="142.0" text="Refresh" />
       <Button fx:id="editButton" layoutX="268.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Edit" />
       <Button fx:id="deleteButton" layoutX="424.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Delete" />
       <Button fx:id="addButton" layoutX="579.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Add" />

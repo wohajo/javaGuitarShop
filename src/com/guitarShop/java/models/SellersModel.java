@@ -1,7 +1,7 @@
 package com.guitarShop.java.models;
 
 import com.guitarShop.java.helpers.ConnectionFactory;
-import com.guitarShop.java.models.objects.Address;
+import com.guitarShop.java.models.objects.Client;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -10,27 +10,27 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public class AddressModel {
+public class SellersModel {
 
-    public ObservableList<Address> getAddresses() {
-        ObservableList<Address> addressesList = FXCollections.observableArrayList();
+    public ObservableList<Client> getSellers() {
+        ObservableList<Client> sellersList = FXCollections.observableArrayList();
         Statement statement = null;
-        String query = "SELECT * FROM Addresses";
+        String query = "SELECT SellerID, Name, Surname, PhoneNumber, Pesel, Email FROM Sellers";
 
         try (Connection connection = ConnectionFactory.getConnection()) {
             statement = connection.createStatement();
             ResultSet resultSet = statement.executeQuery(query);
+
             while (resultSet.next()) {
-                addressesList.add(new Address(resultSet.getInt("AddressID"),
-                        resultSet.getString("City"), resultSet.getString("Postcode"),
-                        resultSet.getString("Street"), resultSet.getInt("BuildingNumber"),
-                        resultSet.getInt("FlatNumber")));
+                sellersList.add(new Client(resultSet.getInt("SellerID"), resultSet.getString("Name"),
+                        resultSet.getString("Surname"), resultSet.getString("PhoneNumber"),
+                        resultSet.getString("Pesel"), resultSet.getString("Email")));
             }
 
         } catch (SQLException e) {
             e.printStackTrace();
         }
-
-        return addressesList;
+        return sellersList;
     }
+
 }

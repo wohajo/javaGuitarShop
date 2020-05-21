@@ -15,7 +15,7 @@
             <TableColumn fx:id="buildingCol" prefWidth="116.0" text="Building" />
             <TableColumn fx:id="flatCol" prefWidth="102.0" text="Flat" />
          </columns></TableView>
-        <Button fx:id="refreshTableButton" layoutX="114.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Refresh" />
+        <Button fx:id="refreshTableButton" layoutX="114.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" onAction="#initTable" text="Refresh" />
         <Button fx:id="editButton" layoutX="268.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Edit" />
         <Button fx:id="deleteButton" layoutX="424.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Delete" />
         <Button fx:id="addButton" layoutX="579.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Add" />

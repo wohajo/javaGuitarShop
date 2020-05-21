@@ -12,7 +12,7 @@
     </Tab>
     <Tab text="Workers">
       <content>
-        <fx:include fx:id="workersTab" source="tabs/WorkersTab.fxml"/>
+        <fx:include fx:id="sellersTab" source="tabs/sellersTab.fxml"/>
       </content>
     </Tab>
     <Tab text="Clients">
@@ -33,6 +33,11 @@
     <Tab text="Details">
       <content>
         <fx:include fx:id="detailsTab" source="tabs/DetailsTab.fxml"/>
+      </content>
+    </Tab>
+    <Tab text="Dashboard">
+      <content>
+        <fx:include fx:id="dashboardTab" source="tabs/Dashboard.fxml"/>
       </content>
     </Tab>
   </tabs>

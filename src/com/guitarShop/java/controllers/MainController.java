@@ -3,7 +3,7 @@ package com.guitarShop.java.controllers;
 import com.guitarShop.java.controllers.tabControllers.ClientsTabController;
 import com.guitarShop.java.controllers.tabControllers.OrdersTabController;
 import com.guitarShop.java.controllers.tabControllers.StockTabController;
-import com.guitarShop.java.controllers.tabControllers.WorkersTabController;
+import com.guitarShop.java.controllers.tabControllers.SellersTabController;
 import com.guitarShop.java.helpers.PasswordManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -17,10 +17,6 @@ public class MainController {
 
     Stage primaryStage;
     PasswordManager passwordManager = new PasswordManager();
-    @FXML private StockTabController stockTabController;
-    @FXML private OrdersTabController ordersTabController;
-    @FXML private WorkersTabController workersTabController;
-    @FXML private ClientsTabController clientsTabController;
     @FXML private TextField loginField;
     @FXML private TextField passwordField;
 
