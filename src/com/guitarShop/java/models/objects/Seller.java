@@ -8,14 +8,16 @@ public class Seller {
     String phoneNumber;
     String pesel;
     String email;
+    int addressID;
 
-    public Seller(int sellerID, String name, String surname, String phoneNumber, String pesel, String email) {
+    public Seller(int sellerID, String name, String surname, String phoneNumber, String pesel, String email, int addressID) {
         this.sellerID = sellerID;
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.pesel = pesel;
         this.email = email;
+        this.addressID = addressID;
     }
 
     public int getSellerID() {
@@ -64,5 +66,13 @@ public class Seller {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getAddressID() {
+        return addressID;
+    }
+
+    public void setAddressID(int addressID) {
+        this.addressID = addressID;
     }
 }

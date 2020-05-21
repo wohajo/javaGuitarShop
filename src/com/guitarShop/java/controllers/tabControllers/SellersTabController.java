@@ -2,6 +2,7 @@ package com.guitarShop.java.controllers.tabControllers;
 
 import com.guitarShop.java.models.SellersModel;
 import com.guitarShop.java.models.objects.Client;
+import com.guitarShop.java.models.objects.Seller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
@@ -12,12 +13,12 @@ import java.sql.SQLException;
 
 public class SellersTabController {
 
-    @FXML TableView<Client> sellersTable;
-    @FXML TableColumn<Client, String> nameCol;
-    @FXML TableColumn<Client, String> surnameCol;
-    @FXML TableColumn<Client, String> phoneCol;
-    @FXML TableColumn<Client, String> peselCol;
-    @FXML TableColumn<Client, String> emailCol;
+    @FXML TableView<Seller> sellersTable;
+    @FXML TableColumn<Seller, String> nameCol;
+    @FXML TableColumn<Seller, String> surnameCol;
+    @FXML TableColumn<Seller, String> phoneCol;
+    @FXML TableColumn<Seller, String> peselCol;
+    @FXML TableColumn<Seller, String> emailCol;
     @FXML private Button refreshButton;
     private SellersModel sellersModel = new SellersModel();
 

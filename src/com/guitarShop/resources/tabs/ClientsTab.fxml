@@ -10,7 +10,7 @@
 
 <Pane fx:id="ClientsTab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.ClientsTabController">
    <children>
-      <TableView fx:id="clientsTable" layoutX="28.0" layoutY="46.0" prefHeight="496.0" prefWidth="694.0">
+      <TableView fx:id="clientsTable" layoutX="28.0" layoutY="46.0" prefHeight="496.0" prefWidth="694.0" onMouseClicked="#changeAddressBox">
          <columns>
             <TableColumn fx:id="nameCol" prefWidth="139.0" text="Name" />
             <TableColumn fx:id="surnameCol" prefWidth="139.0" text="Surname" />

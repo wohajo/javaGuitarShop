@@ -8,14 +8,16 @@ public class Client {
     String phoneNumber;
     String pesel;
     String email;
+    int addressID;
 
-    public Client(int clientID, String name, String surname, String phoneNumber, String pesel, String email) {
+    public Client(int clientID, String name, String surname, String phoneNumber, String pesel, String email,  int addressID) {
         this.clientID = clientID;
         this.name = name;
         this.surname = surname;
         this.phoneNumber = phoneNumber;
         this.pesel = pesel;
         this.email = email;
+        this.addressID =  addressID;
     }
 
     public int getClientID() {
@@ -64,5 +66,13 @@ public class Client {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public int getAddressID() {
+        return addressID;
+    }
+
+    public void setAddressID(int addressID) {
+        this.addressID = addressID;
     }
 }
