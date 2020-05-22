@@ -1,24 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
+<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.Pane?>
 
 <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.AddressesTabController">
-    <children>
-        <TableView fx:id="addressTable" layoutX="114.0" layoutY="46.0" prefHeight="496.0" prefWidth="762.0">
+   <children>
+      <JFXTreeTableView fx:id="addressTable" layoutX="83.0" layoutY="59.0" prefHeight="528.0" prefWidth="823.0">
          <columns>
-            <TableColumn fx:id="cityCol" prefWidth="176.0" text="City" />
-            <TableColumn fx:id="postcodeCol" prefWidth="120.0" text="Postcode" />
-            <TableColumn fx:id="streetCol" prefWidth="247.0" text="Street" />
-            <TableColumn fx:id="buildingCol" prefWidth="116.0" text="Building" />
-            <TableColumn fx:id="flatCol" prefWidth="102.0" text="Flat" />
-         </columns></TableView>
-        <Button fx:id="refreshTableButton" layoutX="114.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" onAction="#initTable" text="Refresh" />
-        <Button fx:id="editButton" layoutX="268.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Edit" />
-        <Button fx:id="deleteButton" layoutX="424.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Delete" />
-        <Button fx:id="addButton" layoutX="579.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="Add" />
-        <Button fx:id="viewButton" layoutX="735.0" layoutY="576.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="142.0" text="View" />
-    </children>
+            <TreeTableColumn fx:id="cityCol" prefWidth="222.0" text="City" />
+            <TreeTableColumn fx:id="postcodeCol" prefWidth="127.0" text="Postcode" />
+            <TreeTableColumn fx:id="streetCol" prefWidth="230.0" text="Street" />
+            <TreeTableColumn fx:id="buildingCol" prefWidth="116.0" text="Building" />
+            <TreeTableColumn fx:id="flatCol" prefWidth="127.0" text="Flat" />
+         </columns>
+      </JFXTreeTableView>
+   </children>
 </Pane>

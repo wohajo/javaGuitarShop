@@ -24,7 +24,7 @@ public class ClientsModel {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                clientsList.add(new Client(resultSet.getInt("ClientID"), (new SimpleStringProperty(resultSet.getString("Name"))),
+                clientsList.add(new Client(resultSet.getInt("ClientID"), resultSet.getString("Name"),
                         resultSet.getString("Surname"), resultSet.getString("PhoneNumber"),
                         resultSet.getString("Pesel"), resultSet.getString("Email"), resultSet.getInt("AddressID")));
             }

@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import java.io.IOException;
@@ -14,9 +15,7 @@ public class MainController {
     Stage primaryStage;
     PasswordManager passwordManager = new PasswordManager();
     @FXML private TextField loginField;
-    @FXML private TextField passwordField;
-
-    public MainController() {}
+    @FXML private PasswordField passwordField;
 
     public void setStage(Stage primaryStage) {
         this.primaryStage = primaryStage;

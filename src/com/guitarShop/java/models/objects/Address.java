@@ -1,6 +1,8 @@
 package com.guitarShop.java.models.objects;
 
-public class Address {
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
+public class Address extends RecursiveTreeObject<Address> {
     int addressID;
     String city;
     String postcode;

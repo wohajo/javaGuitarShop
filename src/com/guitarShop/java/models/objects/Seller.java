@@ -1,6 +1,8 @@
 package com.guitarShop.java.models.objects;
 
-public class Seller {
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
+public class Seller extends RecursiveTreeObject<Seller> {
 
     int sellerID;
     String name;
