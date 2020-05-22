@@ -21,6 +21,7 @@ public class MainController {
         this.primaryStage = primaryStage;
     }
 
+    @FXML
     private void login() throws IOException {
         Parent loggedIn = FXMLLoader.load(getClass().getResource("/com/guitarShop/resources/loggedIn.fxml"));
         this.primaryStage.setScene(new Scene(loggedIn));

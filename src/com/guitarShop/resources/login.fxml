@@ -16,7 +16,7 @@
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <JFXButton fx:id="loginButton" layoutX="223.0" layoutY="262.0" prefHeight="49.0" prefWidth="154.0" text="Login" onAction="#checkEnteredCredentials"/>
+            <JFXButton fx:id="loginButton" layoutX="223.0" layoutY="262.0" prefHeight="49.0" prefWidth="154.0" text="Login" onAction="#login"/> <!--onAction="#checkEnteredCredentials"-->
             <Text layoutX="133.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="38.7294921875" />
             <Text layoutX="122.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
             <TextField fx:id="loginField" layoutX="208.0" layoutY="154.0" prefHeight="26.0" prefWidth="223.0" />
