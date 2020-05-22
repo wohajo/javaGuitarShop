@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
 <?import com.jfoenix.controls.JFXTabPane?>
-
 <?import javafx.scene.control.Tab?>
+
 <JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity"
             minHeight="-Infinity" minWidth="-Infinity"
             prefHeight="750.0" prefWidth="1000.0"
