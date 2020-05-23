@@ -2,9 +2,7 @@ package com.guitarShop.java.controllers.tabControllers;
 
 import com.guitarShop.java.models.ClientsModel;
 import com.guitarShop.java.models.objects.Client;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXTreeTableView;
+import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -45,26 +43,32 @@ public class TestTabController {
     @FXML
     public void add() {
         root.getChildren().add(new TreeItem<>(new Client(5, "RRRRR", "cgh", "888", "333", "333", 1)));
+
+        /*JFXDialogLayout content = new JFXDialogLayout();
+        content.setStyle("-fx-background-color: black");
+        content.setHeading(new Text("TEST"));
+        VBox vBox = new VBox(10);
+        vBox.getChildren().addAll(new Text("test"), new JFXButton("ssss"), new JFXButton("aaa"));
+        content.setBody(vBox);
+        content.setActions(new JFXButton("test"), new JFXButton("test2"));
+        JFXDialog dialog2 = new JFXDialog(testStackPane, content, JFXDialog.DialogTransition.BOTTOM);
+        dialog2.show();*/
+
     }
     @FXML
     public void get() throws IOException {
-        String name = (testTable.getSelectionModel().getSelectedItem().getValue().getName());
-
-        Parent parent = FXMLLoader.load(getClass().getResource("/com/guitarShop/resources/tabs/dialogs/testDialog.fxml"));
+        System.out.println(testTable.getSelectionModel().getSelectedItem().getValue().getName());
+        Parent parent = FXMLLoader.load(getClass().getResource("/com/guitarShop/resources/tabs/dialog.fxml"));
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
         dialogLayout.setBody(parent);
         JFXDialog dialog = new JFXDialog(testStackPane, dialogLayout, JFXDialog.DialogTransition.LEFT);
         dialog.setPrefSize(300, 300);
         dialog.show();
 
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/guitarShop/resources/tabs/dialogs/testDialog.fxml"));
-        Parent root = loader.load();
-        TestDialogController testTabController = loader.<TestDialogController>getController();
-        testTabController.setTestButton(name);
     }
 
     public String getName() {
-        return (testTable.getSelectionModel().getSelectedItem().getValue().getName());
+        return (testTable.getSelectionModel().getSelectedItem().getValue().name);
     }
 
     @FXML
@@ -76,14 +80,8 @@ public class TestTabController {
 
     @FXML
     public void edit() {
-
         testTable.getSelectionModel().getSelectedItem().getValue().name = "aaaaaaaa";
         testTable.refresh();
     }
-
-    public void dialogTest(String input) {
-        System.out.println(input + "works!");
-    }
-
 }
 

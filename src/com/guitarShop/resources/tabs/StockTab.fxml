@@ -1,23 +1,37 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.StockTabController">
+
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity"
+           minHeight="-Infinity" minWidth="-Infinity"
+           prefHeight="750.0" prefWidth="1000.0"
+           xmlns="http://javafx.com/javafx/11.0.1"
+           xmlns:fx="http://javafx.com/fxml/1"
+           fx:id="stockStackPane"
+            fx:controller="com.guitarShop.java.controllers.tabControllers.StockTabController">
    <children>
-      <JFXTreeTableView fx:id="stockTable" layoutX="28.0" layoutY="46.0" prefHeight="585.0" prefWidth="944.0">
-         <columns>
-            <TreeTableColumn fx:id="manufacturerCol" prefWidth="131.0" text="Manufacturer" />
-            <TreeTableColumn fx:id="modelCol" prefWidth="107.0" text="Model" />
-            <TreeTableColumn fx:id="priceCol" prefWidth="100.0" text="Price" />
-            <TreeTableColumn fx:id="typeCol" prefWidth="104.0" text="Type" />
-            <TreeTableColumn fx:id="pickupsCol" prefWidth="117.0" text="Pickups" />
-            <TreeTableColumn fx:id="bridgeCol" prefWidth="112.0" text="Bridge" />
-            <TreeTableColumn fx:id="stringsCol" prefWidth="65.0" text="Strings" />
-            <TreeTableColumn fx:id="tunersCol" prefWidth="117.0" text="Tuners" />
-            <TreeTableColumn fx:id="quantityCol" prefWidth="90.0" text="In stock" />
-         </columns>
-      </JFXTreeTableView>
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0">
+         <children>
+            <JFXTreeTableView fx:id="stockTable" layoutX="28.0" layoutY="46.0" prefHeight="585.0" prefWidth="944.0">
+               <columns>
+                  <TreeTableColumn fx:id="manufacturerCol" prefWidth="131.0" text="Manufacturer" />
+                  <TreeTableColumn fx:id="modelCol" prefWidth="107.0" text="Model" />
+                  <TreeTableColumn fx:id="priceCol" prefWidth="100.0" text="Price" />
+                  <TreeTableColumn fx:id="typeCol" prefWidth="104.0" text="Type" />
+                  <TreeTableColumn fx:id="pickupsCol" prefWidth="117.0" text="Pickups" />
+                  <TreeTableColumn fx:id="bridgeCol" prefWidth="112.0" text="Bridge" />
+                  <TreeTableColumn fx:id="stringsCol" prefWidth="65.0" text="Strings" />
+                  <TreeTableColumn fx:id="tunersCol" prefWidth="117.0" text="Tuners" />
+                  <TreeTableColumn fx:id="quantityCol" prefWidth="90.0" text="In stock" />
+               </columns>
+            </JFXTreeTableView>
+            <JFXButton fx:id="viewButton" layoutX="28.0" layoutY="663.0" onAction="#view" prefHeight="49.0" prefWidth="187.0" text="View" />
+         </children>
+      </Pane>
    </children>
-</Pane>
+</StackPane>
