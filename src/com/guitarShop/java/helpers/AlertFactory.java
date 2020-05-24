@@ -16,8 +16,8 @@ public class AlertFactory {
         JFXButton closeButton = new JFXButton(buttonText);
         dialogLayout.setHeading(new Text(heading));
         dialogLayout.setBody(new Text(alertText));
+        dialogLayout.setActions(closeButton);
         JFXDialog alertDialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
-        alertDialog.show(stackPane);
         closeButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
