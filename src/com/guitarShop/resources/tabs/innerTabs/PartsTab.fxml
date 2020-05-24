@@ -9,7 +9,7 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.innerTabControllers.PartsTabController">
    <children>
       <Text layoutX="38.0" layoutY="41.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Guitar types">
          <font>
@@ -46,21 +46,21 @@
       <TextField layoutX="665.0" layoutY="78.0" prefHeight="26.0" prefWidth="298.0" />
       <VBox layoutX="38.0" layoutY="346.0" prefHeight="313.0" prefWidth="300.0">
          <children>
-            <JFXButton fx:id="editTypeButton" layoutX="10.0" layoutY="10.0" onAction="#editType" prefHeight="82.0" prefWidth="386.0" text="Edit" />
+            <JFXButton fx:id="editTypeButton" layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="386.0" text="Edit" />
             <JFXButton layoutX="10.0" layoutY="92.0" prefHeight="82.0" prefWidth="386.0" text="Add" />
             <JFXButton layoutX="10.0" layoutY="174.0" prefHeight="82.0" prefWidth="386.0" text="Delete" />
          </children>
       </VBox>
       <VBox layoutX="350.0" layoutY="346.0" prefHeight="313.0" prefWidth="300.0">
          <children>
-            <JFXButton fx:id="editPickupsButton" layoutX="10.0" layoutY="10.0" onAction="#editPickups" prefHeight="82.0" prefWidth="386.0" text="Edit" />
+            <JFXButton fx:id="editPickupsButton" layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="386.0" text="Edit" />
             <JFXButton layoutX="10.0" layoutY="92.0" prefHeight="82.0" prefWidth="386.0" text="Add" />
             <JFXButton layoutX="10.0" layoutY="174.0" prefHeight="82.0" prefWidth="386.0" text="Delete" />
          </children>
       </VBox>
       <VBox layoutX="664.0" layoutY="346.0" prefHeight="313.0" prefWidth="300.0">
          <children>
-            <JFXButton fx:id="editBridgeButton" layoutX="10.0" layoutY="10.0" onAction="#editBridge" prefHeight="82.0" prefWidth="386.0" text="Edit" />
+            <JFXButton fx:id="editBridgeButton" layoutX="10.0" layoutY="10.0" prefHeight="82.0" prefWidth="386.0" text="Edit" />
             <JFXButton layoutX="10.0" layoutY="92.0" prefHeight="82.0" prefWidth="386.0" text="Add" />
             <JFXButton layoutX="10.0" layoutY="174.0" prefHeight="82.0" prefWidth="386.0" text="Delete" />
          </children>
@@ -76,7 +76,7 @@
             <TreeTableColumn fx:id="pickupsCol" editable="false" prefWidth="153.0" text="Pickups" />
          </columns>
       </JFXTreeTableView>
-      <JFXTreeTableView fx:id="bridgeCol" layoutX="664.0" layoutY="119.0" prefHeight="173.0" prefWidth="300.0">
+      <JFXTreeTableView fx:id="bridgeTable" layoutX="664.0" layoutY="119.0" prefHeight="173.0" prefWidth="300.0">
          <columns>
             <TreeTableColumn fx:id="bridgeManCol" editable="false" prefWidth="154.0" text="Manufacturer" />
             <TreeTableColumn fx:id="bridgeCol" editable="false" prefWidth="154.0" text="Bridge" />
