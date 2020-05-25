@@ -1,24 +1,26 @@
-package com.guitarShop.java.models.objects;
+package com.guitarShop.java.models.objects.parts;
 
-public class Pickups {
-    int pickupsID;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
+public class Bridge extends RecursiveTreeObject<Bridge> {
+    int bridgeID;
     String name;
     String manufacturer;
     int manufacturerID;
 
-    public Pickups(int pickupsID, String name, String manufacturer, int manufacturerID) {
-        this.pickupsID = pickupsID;
+    public Bridge(int bridgeID, String name, String manufacturer, int manufacturerID) {
+        this.bridgeID = bridgeID;
         this.name = name;
         this.manufacturer = manufacturer;
         this.manufacturerID = manufacturerID;
     }
 
-    public int getPickupsID() {
-        return pickupsID;
+    public int getBridgeID() {
+        return bridgeID;
     }
 
-    public void setPickupsID(int pickupsID) {
-        this.pickupsID = pickupsID;
+    public void setBridgeID(int bridgeID) {
+        this.bridgeID = bridgeID;
     }
 
     public String getName() {

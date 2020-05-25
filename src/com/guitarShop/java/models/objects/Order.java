@@ -7,12 +7,14 @@ public class Order {
     private int orderID;
     private LocalDate date;
     private int sellerID;
+    private int clientID;
     private ArrayList<Integer> guitarIDs;
 
-    public Order(int orderID, LocalDate date, int sellerID, ArrayList<Integer> guitarIDs) {
+    public Order(int orderID, LocalDate date, int sellerID, int clientID, ArrayList<Integer> guitarIDs) {
         this.orderID = orderID;
         this.date = date;
         this.sellerID = sellerID;
+        this.clientID = clientID;
         this.guitarIDs = guitarIDs;
     }
 
@@ -38,6 +40,14 @@ public class Order {
 
     public void setSellerID(int sellerID) {
         this.sellerID = sellerID;
+    }
+
+    public int getClientID() {
+        return clientID;
+    }
+
+    public void setClientID(int clientID) {
+        this.clientID = clientID;
     }
 
     public ArrayList<Integer> getGuitarIDs() {

@@ -1,6 +1,8 @@
-package com.guitarShop.java.models.objects;
+package com.guitarShop.java.models.objects.parts;
 
-public class GuitarType {
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
+public class GuitarType extends RecursiveTreeObject<GuitarType> {
     int typeID;
     String name;
 

@@ -41,7 +41,7 @@
          </font>
       </Text>
       <JFXTextArea layoutX="689.0" layoutY="603.0" prefHeight="43.0" prefWidth="271.0" />
-      <Text layoutX="588.0" layoutY="640.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total:">
+      <Text layoutX="588.0" layoutY="640.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Total">
          <font>
             <Font size="24.0" />
          </font>
