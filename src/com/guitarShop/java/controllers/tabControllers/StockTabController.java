@@ -162,6 +162,7 @@ public class StockTabController {
             TextArea priceText = new TextArea(String.valueOf(getSelectedItem().getGuitarPrice()));
 
             JFXToggleButton lockingTunersToggle = new JFXToggleButton();
+            lockingTunersToggle.setText("Locking");
             if(getSelectedItem().getLockingTuners().equals("Locking"))
                 lockingTunersToggle.setSelected(true);
 
@@ -225,6 +226,7 @@ public class StockTabController {
                     try {
                         stockModel.updateGuitar(guitarID, manufacturerID, model, modelDesc, numbersOfStrings, guitarPrice,
                                 guitarTypeID, pickupsTypeID, bridgeTypeID, lockingTuners, quantity);
+                        refreshTable();
                     } catch (SQLException e) {
                         alertFactory.makeAlertDialog(stockStackPane, "Error", "Error updating guitar.", "Close");
                     }
@@ -237,6 +239,11 @@ public class StockTabController {
         } catch (NullPointerException e) {
             alertFactory.makeAlertDialog(stockStackPane, "Error", "Choose a guitar to display informations.", "Close");
         }
+    }
+
+    private void refreshTable() throws SQLException {
+        stockTable.getRoot().getChildren().clear();
+        initTable();
     }
 
     private GridPane getGridPaneWithText() {
@@ -272,10 +279,11 @@ public class StockTabController {
     }
 
     @FXML public void add() {
-
+        // TODO
     }
 
-    @FXML public void delete() {
-
+    @FXML public void delete() throws SQLException {
+        stockModel.deleteGuitar(stockStackPane, getSelectedItem().getGuitarID());
+        refreshTable();
     }
 }

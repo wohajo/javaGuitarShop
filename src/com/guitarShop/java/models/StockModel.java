@@ -1,9 +1,12 @@
 package com.guitarShop.java.models;
 
+import com.google.gson.internal.bind.SqlDateTypeAdapter;
+import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.helpers.ConnectionFactory;
 import com.guitarShop.java.models.objects.Guitar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.StackPane;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -67,11 +70,34 @@ public class StockModel {
     }
 
     public void updateGuitar(int guitarID, int manufacturerID, String model, String modelDesc, int numbersOfStrings, int guitarPrice, int guitarTypeID,
-                             int PickupsTypeID, int BridgeTypeID, Boolean lockingTuners, int quantity) throws SQLException {
+                             int pickupsTypeID, int bridgeTypeID, Boolean lockingTuners, int quantity) throws SQLException {
+        int tuners = 0;
+        Statement statement = null;
+        if(lockingTuners) {
+            tuners = 1;
+        }
+        String query = "UPDATE Guitars SET ManufacturerID = " + manufacturerID +
+                ", Model = '" + model + "', ModelDescription = '" + modelDesc + "'," +
+                "NumberOfStrings = " + numbersOfStrings + ", GuitarPrice = " + guitarPrice
+                +", GuitarTypeID = " + guitarTypeID + ", PickupsTypeID = " + pickupsTypeID
+                + ", BridgeTypeID = " + bridgeTypeID + ", LockingTuners = " + tuners + " , NumberOfGuitars = " + quantity + " WHERE GuitarID = " + guitarID;
         try(Connection connection = ConnectionFactory.getConnection()) {
-
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
         } catch (SQLException e) {
 
+        }
+    }
+
+    public void deleteGuitar(StackPane stackPane, int guitarID) throws SQLException {
+        Statement statement = null;
+        String query = "DELETE FROM Guitars WHERE GuitarID = " + guitarID;
+
+        try(Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+        } catch (SQLException e) {
+            AlertFactory.makeAlertDialog(stackPane, "Database error", "Item cannot be deleted as it is connected to other tables.", "Close");
         }
     }
 }
