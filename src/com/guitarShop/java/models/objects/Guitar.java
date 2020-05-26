@@ -6,23 +6,33 @@ public class Guitar extends RecursiveTreeObject<Guitar> {
 
     private int guitarID;
     private String manufacturer;
-    private double guitarPrice;
+    private int manufacturerID;
+    private int guitarPrice;
     private String guitarType;
+    private int guitarTypeID;
     private String pickupsType;
+    private int pickupsTypeID;
     private String bridgeType;
-    private Boolean lockingTuners;
+    private int bridgeTypeID;
+    private String lockingTuners;
     private int numberOfGuitars;
     private String model;
     private String modelDescription;
     private int numberOfStrings;
 
-    public Guitar(int guitarID, String manufacturer, double guitarPrice, String guitarType, String pickupsType, String bridgeType, Boolean lockingTuners, int numberOfGuitars, String model, String modelDescription, int numberOfStrings) {
+    public Guitar(int guitarID, String manufacturer, int manufacturerID, int guitarPrice, String guitarType, int guitarTypeID,
+                  String pickupsType, int pickupsTypeID, String bridgeType, int bridgeTypeID, String lockingTuners,
+                  int numberOfGuitars, String model, String modelDescription, int numberOfStrings) {
         this.guitarID = guitarID;
         this.manufacturer = manufacturer;
+        this.manufacturerID = manufacturerID;
         this.guitarPrice = guitarPrice;
         this.guitarType = guitarType;
+        this.guitarTypeID = guitarTypeID;
         this.pickupsType = pickupsType;
+        this.pickupsTypeID = pickupsTypeID;
         this.bridgeType = bridgeType;
+        this.bridgeTypeID = bridgeTypeID;
         this.lockingTuners = lockingTuners;
         this.numberOfGuitars = numberOfGuitars;
         this.model = model;
@@ -46,11 +56,19 @@ public class Guitar extends RecursiveTreeObject<Guitar> {
         this.manufacturer = manufacturer;
     }
 
-    public double getGuitarPrice() {
+    public int getManufacturerID() {
+        return manufacturerID;
+    }
+
+    public void setManufacturerID(int manufacturerID) {
+        this.manufacturerID = manufacturerID;
+    }
+
+    public int getGuitarPrice() {
         return guitarPrice;
     }
 
-    public void setGuitarPrice(double guitarPrice) {
+    public void setGuitarPrice(int guitarPrice) {
         this.guitarPrice = guitarPrice;
     }
 
@@ -62,6 +80,14 @@ public class Guitar extends RecursiveTreeObject<Guitar> {
         this.guitarType = guitarType;
     }
 
+    public int getGuitarTypeID() {
+        return guitarTypeID;
+    }
+
+    public void setGuitarTypeID(int guitarTypeID) {
+        this.guitarTypeID = guitarTypeID;
+    }
+
     public String getPickupsType() {
         return pickupsType;
     }
@@ -70,19 +96,35 @@ public class Guitar extends RecursiveTreeObject<Guitar> {
         this.pickupsType = pickupsType;
     }
 
+    public int getPickupsTypeID() {
+        return pickupsTypeID;
+    }
+
+    public void setPickupsTypeID(int pickupsTypeID) {
+        this.pickupsTypeID = pickupsTypeID;
+    }
+
     public String getBridgeType() {
         return bridgeType;
+    }
+
+    public int getBridgeTypeID() {
+        return bridgeTypeID;
+    }
+
+    public void setBridgeTypeID(int bridgeTypeID) {
+        this.bridgeTypeID = bridgeTypeID;
     }
 
     public void setBridgeType(String bridgeType) {
         this.bridgeType = bridgeType;
     }
 
-    public Boolean getLockingTuners() {
+    public String getLockingTuners() {
         return lockingTuners;
     }
 
-    public void setLockingTuners(Boolean lockingTuners) {
+    public void setLockingTuners(String lockingTuners) {
         this.lockingTuners = lockingTuners;
     }
 

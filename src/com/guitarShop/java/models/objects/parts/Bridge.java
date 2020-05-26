@@ -46,4 +46,9 @@ public class Bridge extends RecursiveTreeObject<Bridge> {
     public void setManufacturerID(int manufacturerID) {
         this.manufacturerID = manufacturerID;
     }
+
+    @Override
+    public String toString() {
+        return getName();
+    }
 }

@@ -34,4 +34,9 @@ public class Manufacturer {
     public void setAddressID(int addressID) {
         this.addressID = addressID;
     }
+
+    @Override
+    public String toString() {
+        return getManufacturerName();
+    }
 }
