@@ -1,10 +1,11 @@
 package com.guitarShop.java.models;
 
+import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.helpers.ConnectionFactory;
 import com.guitarShop.java.models.objects.Manufacturer;
-import com.jfoenix.controls.RecursiveTreeItem;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.StackPane;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -31,5 +32,41 @@ public class ManufacturerModel {
 
         }
         return manufacturerObservableList;
+    }
+
+    public void updateManufacturer(StackPane manufacturersStackPane, int manufacturerID, String manufacturerName, int addressID) {
+        Statement statement = null;
+        String query = "UPDATE Manufacturers SET ManufacturerName = '" + manufacturerName
+                + "',  AddressID = " + addressID
+                + " WHERE ManufacturerID = " + manufacturerID;
+        try(Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            AlertFactory.makeAlertDialog(manufacturersStackPane, "Database error", "Cannot update manufacturer.", "Close");
+        }
+    }
+
+    public void addManufacturer(StackPane manufacturersStackPane, String manufacturerName, int addressID) {
+        Statement statement = null;
+        String query = "INSERT INTO Manufacturers(ManufacturerName, AddressID) "
+                + "VALUES ('" + manufacturerName + "', " + addressID + ")";
+        try(Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            AlertFactory.makeAlertDialog(manufacturersStackPane, "Database error", "Cannot add manufacturer.", "Close");
+        }
+    }
+
+    public void deleteManufacturer(StackPane manufacturersStackPane, int manufacturerID) {
+        Statement statement = null;
+        String query = "DELETE FROM Manufacturers WHERE ManufacturerID = " + manufacturerID;
+        try(Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            AlertFactory.makeAlertDialog(manufacturersStackPane, "Database error", "Item cannot be deleted as it is connected to other tables.", "Close");
+        }
     }
 }

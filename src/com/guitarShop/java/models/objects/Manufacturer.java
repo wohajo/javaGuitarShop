@@ -1,30 +1,32 @@
 package com.guitarShop.java.models.objects;
 
-public class Manufacturer {
-    private String ManufacturerName;
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
+public class Manufacturer extends RecursiveTreeObject<Manufacturer> {
+    private String manufacturerName;
     private int addressID;
-    private int ManufacturerID;
+    private int manufacturerID;
 
     public Manufacturer(int manufacturerID, String manufacturerName, int addressID) {
-        ManufacturerID = manufacturerID;
-        ManufacturerName = manufacturerName;
+        this.manufacturerID = manufacturerID;
+        this.manufacturerName = manufacturerName;
         this.addressID = addressID;
     }
 
     public int getManufacturerID() {
-        return ManufacturerID;
+        return manufacturerID;
     }
 
     public void setManufacturerID(int manufacturerID) {
-        ManufacturerID = manufacturerID;
+        this.manufacturerID = manufacturerID;
     }
 
     public String getManufacturerName() {
-        return ManufacturerName;
+        return manufacturerName;
     }
 
     public void setManufacturerName(String manufacturerName) {
-        ManufacturerName = manufacturerName;
+        this.manufacturerName = manufacturerName;
     }
 
     public int getAddressID() {

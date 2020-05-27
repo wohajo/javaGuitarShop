@@ -71,4 +71,41 @@ public class PartsTabController {
         pickupsTable.setRoot(pickupsRoot);
         pickupsTable.setShowRoot(false);
     }
+
+    @FXML private void viewBridge() {
+
+    }
+    @FXML private void updateBridge() {
+
+    }
+    @FXML private void addBridge() {
+
+    }
+    @FXML private void deleteBridge() {
+
+    }
+    @FXML private void viewType() {
+
+    }
+    @FXML private void updateType() {
+
+    }
+    @FXML private void addType() {
+
+    }
+    @FXML private void deleteType() {
+
+    }
+    @FXML private void viewPickups() {
+
+    }
+    @FXML private void updatePickups() {
+
+    }
+    @FXML private void addPickups() {
+
+    }
+    @FXML private void deletePickups() {
+
+    }
 }

@@ -14,6 +14,7 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeTableColumn;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
@@ -56,16 +57,35 @@ public class AddressesTabController {
         addressTable.setShowRoot(false);
     }
 
-    @FXML
-    public void view() {
-        try {
-            GridPane dialogGrid = new GridPane();
+    private GridPane getGridPaneWithText() {
+        GridPane dialogGrid = new GridPane();
 
-            Label cityLabel = new Label("City");
-            Label postcodeLabel = new Label("Postcode");
-            Label streetLabel = new Label("Street");
-            Label buildingLabel = new Label("Building");
-            Label flatLabel = new Label("Flat");
+        Label cityLabel = new Label("City");
+        Label postcodeLabel = new Label("Postcode");
+        Label streetLabel = new Label("Street");
+        Label buildingLabel = new Label("Building");
+        Label flatLabel = new Label("Flat");
+        dialogGrid.add(cityLabel, 0,0);
+        dialogGrid.add(postcodeLabel, 0,1);
+        dialogGrid.add(streetLabel, 0,2);
+        dialogGrid.add(buildingLabel, 0,3);
+        dialogGrid.add(flatLabel, 0,4);
+
+        return dialogGrid;
+    }
+
+    private Address getSelectedItem() {
+        return addressTable.getSelectionModel().getSelectedItem().getValue();
+    }
+
+    private void refreshTable() {
+        addressTable.getRoot().getChildren().clear();
+        initTable();
+    }
+
+    @FXML private void view() {
+        try {
+            GridPane dialogGrid = getGridPaneWithText();
 
             Text cityText = new Text(getSelectedItem().getCity());
             Text postcodeText = new Text(getSelectedItem().getPostcode());
@@ -73,12 +93,6 @@ public class AddressesTabController {
             Text buildingText = new Text(String.valueOf(getSelectedItem().getBuildingNumber()));
             Text flatText = new Text(String.valueOf(getSelectedItem().getFlatNumber()));
             JFXButton closeButton = new JFXButton("close");
-
-            dialogGrid.add(cityLabel, 0,0);
-            dialogGrid.add(postcodeLabel, 0,1);
-            dialogGrid.add(streetLabel, 0,2);
-            dialogGrid.add(buildingLabel, 0,3);
-            dialogGrid.add(flatLabel, 0,4);
 
             dialogGrid.add(cityText, 1, 0);
             dialogGrid.add(postcodeText, 1, 1);
@@ -109,7 +123,111 @@ public class AddressesTabController {
         }
     }
 
-    private Address getSelectedItem() {
-        return addressTable.getSelectionModel().getSelectedItem().getValue();
+    @FXML private void update() {
+        try {
+            GridPane dialogGrid = getGridPaneWithText();
+
+            TextField cityText = new TextField(getSelectedItem().getCity());
+            TextField postcodeText = new TextField(getSelectedItem().getPostcode());
+            TextField streetText = new TextField(getSelectedItem().getStreet());
+            TextField buildingText = new TextField(String.valueOf(getSelectedItem().getBuildingNumber()));
+            TextField flatText = new TextField(String.valueOf(getSelectedItem().getFlatNumber()));
+            JFXButton closeButton = new JFXButton("Close");
+            JFXButton acceptButton = new JFXButton("Accept");
+
+            dialogGrid.add(cityText, 1, 0);
+            dialogGrid.add(postcodeText, 1, 1);
+            dialogGrid.add(streetText, 1, 2);
+            dialogGrid.add(buildingText, 1, 3);
+            dialogGrid.add(flatText, 1, 4);
+
+            dialogGrid.setAlignment(Pos.CENTER);
+            dialogGrid.setVgap(10);
+            dialogGrid.setHgap(10);
+
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            dialogLayout.setHeading(new Text("Address"));
+            dialogLayout.setBody(dialogGrid);
+            dialogLayout.setActions(acceptButton, closeButton);
+
+            JFXDialog viewDialog = new JFXDialog(addressesStackPane, dialogLayout, JFXDialog.DialogTransition.BOTTOM);
+
+            acceptButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    addressModel.updateAddress(addressesStackPane, cityText.getText(), postcodeText.getText(),
+                            streetText.getText(), buildingText.getText(), flatText.getText(), getSelectedItem().getAddressID());
+                    refreshTable();
+                    viewDialog.close();
+                }
+            });
+
+            closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    viewDialog.close();
+                }
+            });
+            viewDialog.show();
+
+        } catch (NullPointerException e) {
+            alertFactory.makeAlertDialog(addressesStackPane, "Error", "Choose an address to update informations.", "Close");
+        }
+    }
+
+    @FXML private void add() {
+            GridPane dialogGrid = getGridPaneWithText();
+
+            TextField cityText = new TextField();
+            TextField postcodeText = new TextField();
+            TextField streetText = new TextField();
+            TextField buildingText = new TextField();
+            TextField flatText = new TextField();
+            JFXButton closeButton = new JFXButton("Close");
+            JFXButton acceptButton = new JFXButton("Accept");
+
+            dialogGrid.add(cityText, 1, 0);
+            dialogGrid.add(postcodeText, 1, 1);
+            dialogGrid.add(streetText, 1, 2);
+            dialogGrid.add(buildingText, 1, 3);
+            dialogGrid.add(flatText, 1, 4);
+
+            dialogGrid.setAlignment(Pos.CENTER);
+            dialogGrid.setVgap(10);
+            dialogGrid.setHgap(10);
+
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            dialogLayout.setHeading(new Text("Address"));
+            dialogLayout.setBody(dialogGrid);
+            dialogLayout.setActions(acceptButton, closeButton);
+
+            JFXDialog viewDialog = new JFXDialog(addressesStackPane, dialogLayout, JFXDialog.DialogTransition.BOTTOM);
+
+            acceptButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    addressModel.addAddress(addressesStackPane, cityText.getText(), postcodeText.getText(),
+                            streetText.getText(), buildingText.getText(), flatText.getText());
+                    refreshTable();
+                    viewDialog.close();
+                }
+            });
+
+            closeButton.setOnAction(new EventHandler<ActionEvent>() {
+                @Override
+                public void handle(ActionEvent actionEvent) {
+                    viewDialog.close();
+                }
+            });
+            viewDialog.show();
+    }
+
+    @FXML private void delete() {
+        try {
+            addressModel.deleteAddress(addressesStackPane, getSelectedItem().getAddressID());
+            refreshTable();
+        } catch (NullPointerException e) {
+            AlertFactory.makeAlertDialog(addressesStackPane, "Error", "No address selected.", "Close");
+        }
     }
 }

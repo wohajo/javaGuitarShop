@@ -91,7 +91,7 @@ public class ClientsTabController {
             Text phoneText = new Text(getSelectedItem().getPhoneNumber());
             Text peselText = new Text(getSelectedItem().getPesel());
             Text emailText = new Text(getSelectedItem().getEmail());
-            Text addressText = new Text((getSelectedItem().toString()));
+            Text addressText = new Text(addressModel.getAddress(getSelectedItem().getAddressID()).toString());
             JFXButton closeButton = new JFXButton("Close");
 
             dialogGrid.add(nameText, 1, 0);
