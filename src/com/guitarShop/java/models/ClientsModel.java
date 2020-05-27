@@ -1,11 +1,13 @@
 package com.guitarShop.java.models;
 
+import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.helpers.ConnectionFactory;
 import com.guitarShop.java.models.objects.Client;
 import com.sun.glass.ui.EventLoop;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.StackPane;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -35,26 +37,41 @@ public class ClientsModel {
         return clientsList;
     }
 
-    // TODO fix null flat number
-    public String getAddressByID(int clientAddressID) {
-        String address = "";
+    public void updateClient (StackPane clientsStackPane, int clientID, String name, String surname, String phoneNumber, String pesel, int addressID, String email) {
         Statement statement = null;
-        String query = "SELECT City, Postcode, Street, BuildingNumber, FlatNumber FROM Addresses WHERE AddressID = " + clientAddressID;
+        String query = "UPDATE Clients SET Name = '" + name + "', Surname = '" + surname
+                + "', PhoneNumber = " + phoneNumber + ", Pesel = " + pesel + ",  AddressID = " + addressID
+                + ", Email = '" + email + "' WHERE ClientID = " + clientID;
 
-        try (Connection connection = ConnectionFactory.getConnection()) {
+        try(Connection connection = ConnectionFactory.getConnection()) {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()) {
-                address = resultSet.getString("City") + " " + resultSet.getString("Postcode") + "\n"
-                        + resultSet.getString("Street") + " " +resultSet.getInt("BuildingNumber")
-                        + "/" + resultSet.getString("FlatNumber");
-            }
-
+            statement.executeUpdate(query);
         } catch (SQLException e) {
-            e.printStackTrace();
+            AlertFactory.makeAlertDialog(clientsStackPane, "Database error", "Cannot update client.", "Close");
         }
+    }
 
-        return address;
+    public void addClient(StackPane clientsStackPane, String name, String surname, String phoneNumber, String pesel, int addressID, String email) {
+        Statement statement = null;
+        String query = "INSERT INTO Clients (Name, Surname, PhoneNumber, Pesel, AddressID, Email)\n" +
+                "VALUES ('" + name + "', '" + surname+ "', " + phoneNumber + ", "+ pesel + ", " + addressID + ", '" + email + "')";
+
+        try(Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            AlertFactory.makeAlertDialog(clientsStackPane, "Database error", "Cannot add client.", "Close");
+        }
+    }
+
+    public void deleteClient(StackPane clientsStackPane, int clientID) {
+        Statement statement = null;
+        String query = "DELETE FROM Clients WHERE ClientID = " + clientID;
+        try(Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            AlertFactory.makeAlertDialog(clientsStackPane, "Database error", "Item cannot be deleted as it is connected to other tables.", "Close");
+        }
     }
 }

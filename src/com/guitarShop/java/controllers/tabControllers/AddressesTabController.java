@@ -30,7 +30,7 @@ public class AddressesTabController {
     @FXML private TreeTableColumn<Address, String> postcodeCol;
     @FXML private TreeTableColumn<Address, String> streetCol;
     @FXML private TreeTableColumn<Address, Integer> buildingCol;
-    @FXML private TreeTableColumn<Address, Integer> flatCol;
+    @FXML private TreeTableColumn<Address, String> flatCol;
     private AddressModel addressModel = new AddressModel();
     private TreeItem<Address> root = new TreeItem<>();
     private AlertFactory alertFactory = new AlertFactory();
@@ -44,7 +44,7 @@ public class AddressesTabController {
         postcodeCol.setCellValueFactory(new TreeItemPropertyValueFactory<Address, String>("postcode"));
         streetCol.setCellValueFactory(new TreeItemPropertyValueFactory<Address, String>("street"));
         buildingCol.setCellValueFactory(new TreeItemPropertyValueFactory<Address, Integer>("buildingNumber"));
-        flatCol.setCellValueFactory(new TreeItemPropertyValueFactory<Address, Integer>("flatNumber"));
+        flatCol.setCellValueFactory(new TreeItemPropertyValueFactory<Address, String>("flatNumber"));
 
         ObservableList<Address> addresses = FXCollections.observableArrayList();
         addresses.addAll(addressModel.getAddresses());

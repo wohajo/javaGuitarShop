@@ -69,13 +69,13 @@ public class StockModel {
         return stockList;
     }
 
-    public void updateGuitar(int guitarID, int manufacturerID, String model, String modelDesc, int numbersOfStrings, int guitarPrice, int guitarTypeID,
+    public void updateGuitar(StackPane stackPane, int guitarID, int manufacturerID, String model, String modelDesc, int numbersOfStrings, int guitarPrice, int guitarTypeID,
                              int pickupsTypeID, int bridgeTypeID, Boolean lockingTuners, int quantity) throws SQLException {
         int tuners = 0;
         Statement statement = null;
-        if(lockingTuners) {
+        if(lockingTuners)
             tuners = 1;
-        }
+
         String query = "UPDATE Guitars SET ManufacturerID = " + manufacturerID +
                 ", Model = '" + model + "', ModelDescription = '" + modelDesc + "'," +
                 "NumberOfStrings = " + numbersOfStrings + ", GuitarPrice = " + guitarPrice
@@ -83,9 +83,9 @@ public class StockModel {
                 + ", BridgeTypeID = " + bridgeTypeID + ", LockingTuners = " + tuners + " , NumberOfGuitars = " + quantity + " WHERE GuitarID = " + guitarID;
         try(Connection connection = ConnectionFactory.getConnection()) {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
-
+            AlertFactory.makeAlertDialog(stackPane, "Database error", "Item cannot be updated.", "Close");
         }
     }
 
@@ -95,9 +95,28 @@ public class StockModel {
 
         try(Connection connection = ConnectionFactory.getConnection()) {
             statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
+            statement.executeUpdate(query);
         } catch (SQLException e) {
             AlertFactory.makeAlertDialog(stackPane, "Database error", "Item cannot be deleted as it is connected to other tables.", "Close");
+        }
+    }
+
+    public void addGuitar(StackPane stackPane, int manufacturerID, String model, String modelDesc, int numbersOfStrings, int guitarPrice, int guitarTypeID, int pickupsTypeID, int bridgeTypeID, Boolean lockingTuners, int quantity) {
+        int tuners = 0;
+        Statement statement = null;
+        if(lockingTuners)
+            tuners = 1;
+
+        String query = "INSERT INTO Guitars(ManufacturerID, Model, ModelDescription, NumberOfStrings, " +
+                "GuitarPrice, GuitarTypeID, PickupsTypeID, BridgeTypeID, LockingTuners, NumberOfGuitars) " +
+                "VALUES (" + manufacturerID + ", '" + model + "', '" + modelDesc + "', " + numbersOfStrings +
+                ", " + guitarPrice + ", " + guitarTypeID + ", " + pickupsTypeID + ", " + bridgeTypeID + ", " + tuners + ", " + quantity + ")";
+
+        try(Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            AlertFactory.makeAlertDialog(stackPane, "Database error", "Item cannot be added to database.", "Close");
         }
     }
 }

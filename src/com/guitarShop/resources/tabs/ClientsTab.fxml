@@ -5,28 +5,27 @@
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity"
-           minHeight="-Infinity" minWidth="-Infinity"
-           prefHeight="750.0" prefWidth="1000.0"
-           xmlns="http://javafx.com/javafx/11.0.1"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:id="clientsStackPane"
-            fx:controller="com.guitarShop.java.controllers.tabControllers.ClientsTabController">
+<StackPane fx:id="clientsStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.ClientsTabController">
    <children>
       <Pane fx:id="ClientsTab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0">
          <children>
-            <JFXTreeTableView fx:id="clientsTable" layoutX="40.0" layoutY="36.0" prefHeight="545.0" prefWidth="916.0">
+            <JFXTreeTableView fx:id="clientsTable" layoutX="40.0" layoutY="36.0" prefHeight="545.0" prefWidth="576.0">
                <columns>
                   <TreeTableColumn fx:id="nameCol" prefWidth="185.0" text="Name" />
-                  <TreeTableColumn fx:id="surnameCol" prefWidth="185.0" text="Surname" />
-                  <TreeTableColumn fx:id="phoneCol" prefWidth="185.0" text="Phone number" />
-                  <TreeTableColumn fx:id="peselCol" prefWidth="185.0" text="Pesel" />
-                  <TreeTableColumn fx:id="emailCol" prefWidth="175.0" text="Email" />
+                  <TreeTableColumn fx:id="surnameCol" prefWidth="201.0" text="Surname" />
+                  <TreeTableColumn fx:id="peselCol" prefWidth="189.0" text="Pesel" />
                </columns>
             </JFXTreeTableView>
-            <JFXButton fx:id="viewButton" layoutX="40.0" layoutY="621.0" onAction="#view" prefHeight="64.0" prefWidth="201.0" text="View" />
+            <VBox layoutX="705.0" layoutY="97.0" prefHeight="259.0" prefWidth="201.0">
+               <children>
+                  <JFXButton fx:id="viewButton" onAction="#view" prefHeight="64.0" prefWidth="201.0" text="View" />
+                  <JFXButton fx:id="updateButton" layoutX="10.0" layoutY="10.0" onAction="#update" prefHeight="64.0" prefWidth="201.0" text="Update" />
+                  <JFXButton fx:id="addButton" layoutX="10.0" layoutY="74.0" onAction="#add" prefHeight="64.0" prefWidth="201.0" text="Add" />
+                  <JFXButton fx:id="deleteButton" layoutX="10.0" layoutY="138.0" onAction="#delete" prefHeight="64.0" prefWidth="201.0" text="Delete" />
+               </children>
+            </VBox>
          </children>
       </Pane>
    </children>

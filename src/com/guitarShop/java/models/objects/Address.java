@@ -8,7 +8,7 @@ public class Address extends RecursiveTreeObject<Address> {
     String postcode;
     String street;
     int buildingNumber;
-    int flatNumber;
+    String flatNumber;
 
     public int getAddressID() {
         return addressID;
@@ -50,20 +50,30 @@ public class Address extends RecursiveTreeObject<Address> {
         this.buildingNumber = buildingNumber;
     }
 
-    public int getFlatNumber() {
+    public String getFlatNumber() {
         return flatNumber;
     }
 
-    public void setFlatNumber(int flatNumber) {
+    public void setFlatNumber(String flatNumber) {
         this.flatNumber = flatNumber;
     }
 
-    public Address(int addressID, String city, String postcode, String street, int buildingNumber, int flatNumber) {
+    public Address(int addressID, String city, String postcode, String street, int buildingNumber, String flatNumber) {
         this.addressID = addressID;
         this.city = city;
         this.postcode = postcode;
         this.street = street;
         this.buildingNumber = buildingNumber;
         this.flatNumber = flatNumber;
+    }
+
+    @Override
+    public String toString() {
+        String string = city + " " + postcode + ", \n"
+        + street + " " + buildingNumber;
+        if(!flatNumber.equals("null"))
+            string = string + "/" + buildingNumber;
+
+        return string;
     }
 }
