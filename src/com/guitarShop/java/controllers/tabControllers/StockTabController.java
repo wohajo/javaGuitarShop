@@ -40,11 +40,11 @@ public class StockTabController {
     private ManufacturerModel manufacturerModel = new ManufacturerModel();
     private TreeItem<Guitar> root = new TreeItem<>();
 
-    @FXML void initialize() throws SQLException {
+    @FXML private void initialize() throws SQLException {
         initTable();
     }
 
-    @FXML public void initTable() throws SQLException {
+    @FXML private void initTable() throws SQLException {
         manufacturerCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, String>("manufacturer"));
         modelCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, String>("model"));
         priceCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, Double>("guitarPrice"));
@@ -61,7 +61,7 @@ public class StockTabController {
         stockTable.setShowRoot(false);
     }
 
-    private void refreshTable() throws SQLException {
+    public void refreshTable() throws SQLException {
         stockTable.getRoot().getChildren().clear();
         initTable();
     }

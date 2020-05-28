@@ -1,5 +1,6 @@
 package com.guitarShop.java.controllers.tabControllers.innerTabControllers;
 
+import com.guitarShop.java.controllers.tabControllers.StockTabController;
 import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.models.AddressModel;
 import com.guitarShop.java.models.ManufacturerModel;
@@ -11,8 +12,10 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
@@ -21,6 +24,9 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
+import java.sql.SQLException;
 
 public class ManufacturersTabController {
     @FXML private StackPane manufacturersStackPane;
@@ -51,6 +57,15 @@ public class ManufacturersTabController {
     private void refreshTable() {
         manufacturerTable.getRoot().getChildren().clear();
         initTable();
+    }
+
+    private void refreshPartsTables() throws IOException, SQLException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/guitarShop/resources/tabs/innerTabs/PartsTab.fxml"));
+        Parent root = (Parent)fxmlLoader.load();
+        PartsTabController controller = fxmlLoader.getController();
+        controller.refreshTypeTable();
+        controller.refreshPickupsTable();
+        controller.refreshBridgesTable();
     }
 
     private Manufacturer getSelectedItem() {
@@ -148,6 +163,11 @@ public class ManufacturersTabController {
             closeButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
+                    try {
+                        refreshPartsTables();
+                    } catch (IOException | SQLException e) {
+                        AlertFactory.makeRefreshTableError(manufacturersStackPane);
+                    }
                     viewDialog.close();
                 }
             });
