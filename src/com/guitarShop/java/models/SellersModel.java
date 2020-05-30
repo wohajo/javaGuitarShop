@@ -36,6 +36,27 @@ public class SellersModel {
         return sellersList;
     }
 
+    public Seller getSellerByID(int sellerID) {
+        Seller seller = null;
+        Statement statement = null;
+        String query = "SELECT SellerID, Name, Surname, PhoneNumber, Pesel, Email, AddressID FROM Sellers WHERE SellerID = " + sellerID;
+
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                seller = new Seller(resultSet.getInt("SellerID"), resultSet.getString("Name"),
+                        resultSet.getString("Surname"), resultSet.getString("PhoneNumber"),
+                        resultSet.getString("Pesel"), resultSet.getString("Email"), resultSet.getInt("AddressID"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return seller;
+    }
+
     public void updateSeller(StackPane sellersStackPane, int sellerID, String name, String surname, String phoneNumber, String pesel, int addressID, String email) {
 
         Statement statement = null;

@@ -1,5 +1,6 @@
 package com.guitarShop.java.controllers.tabControllers;
 
+import com.guitarShop.java.controllers.MainController;
 import com.guitarShop.java.models.ClientsModel;
 import com.guitarShop.java.models.objects.Client;
 import com.jfoenix.controls.*;
@@ -25,7 +26,7 @@ public class TestTabController {
     private StackPane testStackPane;
     private TreeItem<Client> root = new TreeItem<>();
 
-    public void initialize() {
+    @FXML void initialize() throws IOException {
         ClientsModel clientsModel = new ClientsModel();
 
         nameCol.setCellValueFactory(new TreeItemPropertyValueFactory<Client, String>("name"));
@@ -38,6 +39,11 @@ public class TestTabController {
         testTable.getColumns().setAll(nameCol);
         testTable.setRoot(root);
         testTable.setShowRoot(false);
+
+        /*FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/guitarShop/resources/login.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        MainController controller = fxmlLoader.getController();
+        controller.print("Test controller up");*/
     }
 
     @FXML

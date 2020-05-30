@@ -1,5 +1,6 @@
 package com.guitarShop.java.controllers.tabControllers;
 
+import com.guitarShop.java.controllers.MainController;
 import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.models.ManufacturerModel;
 import com.guitarShop.java.models.PartsModel;
@@ -15,13 +16,16 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -40,8 +44,13 @@ public class StockTabController {
     private ManufacturerModel manufacturerModel = new ManufacturerModel();
     private TreeItem<Guitar> root = new TreeItem<>();
 
-    @FXML private void initialize() throws SQLException {
+    @FXML private void initialize() throws SQLException, IOException {
         initTable();
+        // test
+        /*FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/guitarShop/resources/login.fxml"));
+        Parent root = (Parent) fxmlLoader.load();
+        MainController controller = fxmlLoader.getController();
+        controller.print("Stock controller up");*/
     }
 
     @FXML private void initTable() throws SQLException {
@@ -56,6 +65,7 @@ public class StockTabController {
 
         for(int i = 0; i < stock.size(); i++)
             root.getChildren().add(new TreeItem<Guitar>(stock.get(i)));
+
         stockTable.getColumns().setAll(manufacturerCol, modelCol, priceCol, typeCol, quantityCol);
         stockTable.setRoot(root);
         stockTable.setShowRoot(false);
@@ -112,11 +122,11 @@ public class StockTabController {
             Text typeText = new Text(getSelectedItem().getGuitarType());
             Text pickupsText = new Text(getSelectedItem().getPickupsType());
             Text bridgeText = new Text(getSelectedItem().getBridgeType());
-            Text tunersText = new Text(getSelectedItem().getLockingTuners() );
+            Text tunersText = new Text(getSelectedItem().getLockingTuners());
             Text quantityText = new Text(String.valueOf(getSelectedItem().getNumberOfGuitars()));
             TextArea descText = new TextArea(getSelectedItem().getModelDescription());
             descText.setMaxWidth(200);
-            descText.setMaxWidth(200);
+            descText.setMaxHeight(130);
             descText.setEditable(false);
             Text stringsText = new Text(String.valueOf(getSelectedItem().getNumberOfStrings()));
             JFXButton closeButton = new JFXButton("close");

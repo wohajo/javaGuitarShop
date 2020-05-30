@@ -45,13 +45,13 @@ public class AlertFactory {
         alertDialog.show();
     }
 
-    public static void makeRefreshTableError(StackPane partsStackPane) {
+    public static void makeRefreshTableError(StackPane stackPane) {
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
         JFXButton closeButton = new JFXButton("Close");
         dialogLayout.setHeading(new Text("Error"));
-        dialogLayout.setBody(new Text("Error refreshing tables. Possibly lost connection or server down."));
+        dialogLayout.setBody(new Text("Error refreshing tables, possibly lost connection or server down."));
         dialogLayout.setActions(closeButton);
-        JFXDialog alertDialog = new JFXDialog(partsStackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
+        JFXDialog alertDialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
         closeButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
@@ -61,24 +61,35 @@ public class AlertFactory {
         alertDialog.show();
     }
 
-    /*public static Boolean makeConfirmDeleteDialog(StackPane stackPane, String itemName) throws InterruptedException {
-        Boolean value = false;
+    public static void makeNullTableError(StackPane stackPane) {
         JFXDialogLayout dialogLayout = new JFXDialogLayout();
-        JFXButton yesButton = new JFXButton("Yes");
-        JFXButton noButton = new JFXButton("No");
-        dialogLayout.setHeading(new Text("Warning"));
-        dialogLayout.setBody(new Text("Are You sure You want to delete '" + itemName + "'?"));
-        dialogLayout.setActions(yesButton);
+        JFXButton closeButton = new JFXButton("Close");
+        dialogLayout.setHeading(new Text("Error"));
+        dialogLayout.setBody(new Text("No data to download."));
+        dialogLayout.setActions(closeButton);
         JFXDialog alertDialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
-        yesButton.setOnAction(e -> {
-            value = true;
-            alertDialog.close();
-                });
-        noButton.setOnAction(e -> {
-            alertDialog.close();
-                });
+        closeButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                alertDialog.close();
+            }
+        });
         alertDialog.show();
-        alertDialog.wait();
-        return value;
-    }*/
+    }
+
+    public static void makeDatabaseConnectionError(StackPane stackPane) {
+        JFXDialogLayout dialogLayout = new JFXDialogLayout();
+        JFXButton closeButton = new JFXButton("Close");
+        dialogLayout.setHeading(new Text("Database error"));
+        dialogLayout.setBody(new Text("Error downloading data, possibly lost connection or server down."));
+        dialogLayout.setActions(closeButton);
+        JFXDialog alertDialog = new JFXDialog(stackPane, dialogLayout, JFXDialog.DialogTransition.TOP);
+        closeButton.setOnAction(new EventHandler<ActionEvent>() {
+            @Override
+            public void handle(ActionEvent actionEvent) {
+                alertDialog.close();
+            }
+        });
+        alertDialog.show();
+    }
 }

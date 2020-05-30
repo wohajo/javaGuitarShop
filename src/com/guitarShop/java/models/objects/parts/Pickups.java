@@ -49,6 +49,6 @@ public class Pickups extends RecursiveTreeObject<Pickups> {
 
     @Override
     public String toString() {
-        return getName();
+        return getName() + " (" + getManufacturer() + ")";
     }
 }

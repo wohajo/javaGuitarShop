@@ -77,4 +77,9 @@ public class Seller extends RecursiveTreeObject<Seller> {
     public void setAddressID(int addressID) {
         this.addressID = addressID;
     }
+
+    @Override
+    public String toString() {
+        return getName() + " " + getSurname();
+    }
 }

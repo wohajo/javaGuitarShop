@@ -1,9 +1,11 @@
 package com.guitarShop.java.models.objects;
 
+import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
+
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
 
-public class Order {
+public class Order extends RecursiveTreeObject<Order> {
     private int orderID;
     private LocalDate date;
     private int sellerID;
@@ -56,5 +58,10 @@ public class Order {
 
     public void setGuitarIDs(LinkedHashMap<Guitar, Integer> guitarIDs) {
         this.guitarIDs = guitarIDs;
+    }
+
+    @Override
+    public String toString() {
+        return "Order: " + getDate().toString();
     }
 }

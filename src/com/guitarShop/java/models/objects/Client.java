@@ -78,4 +78,9 @@ public class Client extends RecursiveTreeObject<Client> {
     public void setAddressID(int addressID) {
         this.addressID = addressID;
     }
+
+    @Override
+    public String toString() {
+        return name + " " + surname + " (" + pesel + ") ";
+    }
 }

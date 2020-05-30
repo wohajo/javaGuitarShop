@@ -1,5 +1,7 @@
 package com.guitarShop.java.controllers.tabControllers;
 
+import com.guitarShop.java.controllers.MainController;
+import com.guitarShop.java.controllers.tabControllers.innerTabControllers.PartsTabController;
 import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.models.AddressModel;
 import com.guitarShop.java.models.objects.Address;
@@ -12,7 +14,9 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
@@ -21,6 +25,8 @@ import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
+
+import java.io.IOException;
 
 
 public class AddressesTabController {
