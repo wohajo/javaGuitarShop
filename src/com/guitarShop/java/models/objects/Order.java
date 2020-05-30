@@ -1,16 +1,16 @@
 package com.guitarShop.java.models.objects;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 
 public class Order {
     private int orderID;
     private LocalDate date;
     private int sellerID;
     private int clientID;
-    private ArrayList<Integer> guitarIDs;
+    private LinkedHashMap<Guitar, Integer> guitarIDs = new LinkedHashMap<>();
 
-    public Order(int orderID, LocalDate date, int sellerID, int clientID, ArrayList<Integer> guitarIDs) {
+    public Order(int orderID, LocalDate date, int sellerID, int clientID, LinkedHashMap<Guitar, Integer> guitarIDs) {
         this.orderID = orderID;
         this.date = date;
         this.sellerID = sellerID;
@@ -50,11 +50,11 @@ public class Order {
         this.clientID = clientID;
     }
 
-    public ArrayList<Integer> getGuitarIDs() {
+    public LinkedHashMap<Guitar, Integer> getGuitarIDs() {
         return guitarIDs;
     }
 
-    public void setGuitarIDs(ArrayList<Integer> guitarIDs) {
+    public void setGuitarIDs(LinkedHashMap<Guitar, Integer> guitarIDs) {
         this.guitarIDs = guitarIDs;
     }
 }

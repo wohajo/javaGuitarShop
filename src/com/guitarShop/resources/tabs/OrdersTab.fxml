@@ -3,22 +3,28 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.StackPane?>
 
-<Pane fx:id="OrdersTab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.OrdersTabController">
+
+<StackPane fx:id="ordersStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.OrdersTabController">
    <children>
-      <JFXTabPane prefHeight="738.0" prefWidth="1000.0" side="BOTTOM">
-         <tabs>
-            <Tab text="Clients' orders">
-               <content>
-                  <fx:include fx:id="ClientsOrdersTab" source="innerTabs/ClientsOrdersTab.fxml"/>
-               </content>
-            </Tab>
-            <Tab text="Orders informations">
-               <content>
-                  <fx:include fx:id="OrdersTabInfo" source="innerTabs/OrdersInfoTab.fxml"/>
-               </content>
-            </Tab>
-         </tabs>
-      </JFXTabPane>
+      <Pane fx:id="OrdersTab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0">
+         <children>
+            <JFXTabPane prefHeight="738.0" prefWidth="1000.0" side="BOTTOM">
+               <tabs>
+                  <Tab text="Clients' orders">
+                     <content>
+                        <fx:include fx:id="ClientsOrdersTab" source="innerTabs/ClientsOrdersTab.fxml" />
+                     </content>
+                  </Tab>
+                  <Tab text="Orders informations">
+                     <content>
+                        <fx:include fx:id="OrdersTabInfo" source="innerTabs/OrdersInfoTab.fxml" />
+                     </content>
+                  </Tab>
+               </tabs>
+            </JFXTabPane>
+         </children>
+      </Pane>
    </children>
-</Pane>
+</StackPane>

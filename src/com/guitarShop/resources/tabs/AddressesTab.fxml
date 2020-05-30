@@ -2,31 +2,43 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="addressesStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.AddressesTabController">
    <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
       <children>
-         <JFXTreeTableView fx:id="addressTable" layoutX="83.0" layoutY="101.0" prefHeight="528.0" prefWidth="823.0">
+         <Label layoutX="695.0" layoutY="391.0" text="City" />
+         <JFXTreeTableView fx:id="addressTable" layoutX="31.0" layoutY="65.0" prefHeight="528.0" prefWidth="548.0">
             <columns>
-               <TreeTableColumn fx:id="cityCol" prefWidth="222.0" text="City" />
-               <TreeTableColumn fx:id="postcodeCol" prefWidth="127.0" text="Postcode" />
-               <TreeTableColumn fx:id="streetCol" prefWidth="230.0" text="Street" />
-               <TreeTableColumn fx:id="buildingCol" prefWidth="116.0" text="Building" />
-               <TreeTableColumn fx:id="flatCol" prefWidth="127.0" text="Flat" />
+               <TreeTableColumn fx:id="cityCol" prefWidth="196.0" text="City" />
+               <TreeTableColumn fx:id="postcodeCol" minWidth="0.0" prefWidth="119.0" text="Postcode" />
+               <TreeTableColumn fx:id="streetCol" prefWidth="232.0" text="Street" />
             </columns>
          </JFXTreeTableView>
-         <HBox layoutX="160.0" layoutY="643.0" prefHeight="54.0" prefWidth="669.0">
+         <VBox layoutX="695.0" layoutY="68.0" prefHeight="240.0" prefWidth="191.0">
             <children>
-               <JFXButton fx:id="viewButton" onAction="#view" prefHeight="57.0" prefWidth="167.0" text="View" />
-               <JFXButton fx:id="addButton" layoutX="10.0" layoutY="10.0" onAction="#update" prefHeight="57.0" prefWidth="167.0" text="Update" />
-               <JFXButton fx:id="viewButton11" layoutX="177.0" layoutY="10.0" onAction="#add" prefHeight="57.0" prefWidth="167.0" text="Add" />
-               <JFXButton fx:id="deleteButton" layoutX="344.0" layoutY="10.0" onAction="#delete" prefHeight="57.0" prefWidth="167.0" text="Delete" />
+               <JFXButton fx:id="viewButton" onAction="#view" prefHeight="80.0" prefWidth="191.0" text="View" />
+               <JFXButton fx:id="addButton" onAction="#update" prefHeight="80.0" prefWidth="191.0" text="Update" />
+               <JFXButton fx:id="viewButton11" onAction="#add" prefHeight="80.0" prefWidth="191.0" text="Add" />
+               <JFXButton fx:id="deleteButton" onAction="#delete" prefHeight="80.0" prefWidth="206.0" text="Delete" />
             </children>
-         </HBox>
+         </VBox>
+         <Label layoutX="695.0" layoutY="340.0" text="Search">
+            <font>
+               <Font size="28.0" />
+            </font>
+         </Label>
+         <TextField fx:id="citySearchText" layoutX="695.0" layoutY="414.0" prefHeight="26.0" prefWidth="181.0" />
+         <Label layoutX="695.0" layoutY="454.0" text="Postcode" />
+         <TextField fx:id="postcodeSearchText" layoutX="695.0" layoutY="477.0" prefHeight="26.0" prefWidth="181.0" />
+         <Label layoutX="695.0" layoutY="511.0" text="Street" />
+         <TextField fx:id="streetSearchText" layoutX="695.0" layoutY="534.0" prefHeight="26.0" prefWidth="181.0" />
       </children>
    </Pane>
 

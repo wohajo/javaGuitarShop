@@ -59,7 +59,7 @@ public class ManufacturerModel {
         }
     }
 
-    public void deleteManufacturer(StackPane manufacturersStackPane, int manufacturerID) {
+    public void deleteManufacturer(StackPane manufacturersStackPane, int manufacturerID)    {
         Statement statement = null;
         String query = "DELETE FROM Manufacturers WHERE ManufacturerID = " + manufacturerID;
         try(Connection connection = ConnectionFactory.getConnection()) {

@@ -2,23 +2,33 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="clientsStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.ClientsTabController">
    <children>
       <Pane fx:id="ClientsTab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0">
          <children>
-            <JFXTreeTableView fx:id="clientsTable" layoutX="40.0" layoutY="36.0" prefHeight="545.0" prefWidth="576.0">
+            <Label layoutX="709.0" layoutY="340.0" text="Search">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="709.0" layoutY="383.0" text="Name" />
+            <TextField fx:id="nameSearchText" layoutX="709.0" layoutY="413.0" prefHeight="26.0" prefWidth="181.0" />
+            <JFXTreeTableView fx:id="clientsTable" layoutX="41.0" layoutY="54.0" prefHeight="545.0" prefWidth="576.0">
                <columns>
                   <TreeTableColumn fx:id="nameCol" prefWidth="185.0" text="Name" />
                   <TreeTableColumn fx:id="surnameCol" prefWidth="201.0" text="Surname" />
                   <TreeTableColumn fx:id="peselCol" prefWidth="189.0" text="Pesel" />
                </columns>
             </JFXTreeTableView>
-            <VBox layoutX="705.0" layoutY="97.0" prefHeight="259.0" prefWidth="201.0">
+            <VBox layoutX="709.0" layoutY="54.0" prefHeight="259.0" prefWidth="201.0">
                <children>
                   <JFXButton fx:id="viewButton" onAction="#view" prefHeight="64.0" prefWidth="201.0" text="View" />
                   <JFXButton fx:id="updateButton" layoutX="10.0" layoutY="10.0" onAction="#update" prefHeight="64.0" prefWidth="201.0" text="Update" />
@@ -26,6 +36,10 @@
                   <JFXButton fx:id="deleteButton" layoutX="10.0" layoutY="138.0" onAction="#delete" prefHeight="64.0" prefWidth="201.0" text="Delete" />
                </children>
             </VBox>
+            <Label layoutX="709.0" layoutY="447.0" text="Surname" />
+            <TextField fx:id="surnameSearchText" layoutX="709.0" layoutY="477.0" prefHeight="26.0" prefWidth="181.0" />
+            <Label layoutX="709.0" layoutY="516.0" text="Pesel" />
+            <TextField fx:id="peselSearchText" layoutX="709.0" layoutY="546.0" prefHeight="26.0" prefWidth="181.0" />
          </children>
       </Pane>
    </children>

@@ -2,23 +2,26 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="sellersStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.SellersTabController">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0">
          <children>
-            <JFXTreeTableView fx:id="sellersTable" layoutX="28.0" layoutY="46.0" prefHeight="496.0" prefWidth="552.0">
+            <JFXTreeTableView fx:id="sellersTable" layoutX="41.0" layoutY="62.0" prefHeight="562.0" prefWidth="552.0">
                <columns>
                   <TreeTableColumn fx:id="nameCol" prefWidth="153.0" text="Name" />
                   <TreeTableColumn fx:id="surnameCol" prefWidth="215.0" text="Surname" />
                   <TreeTableColumn fx:id="peselCol" prefWidth="183.0" text="Pesel" />
                </columns>
             </JFXTreeTableView>
-            <VBox layoutX="693.0" layoutY="155.0" prefHeight="278.0" prefWidth="226.0">
+            <VBox layoutX="685.0" layoutY="62.0" prefHeight="278.0" prefWidth="226.0">
                <children>
                   <JFXButton fx:id="viewButton" onAction="#view" prefHeight="71.0" prefWidth="242.0" text="View" />
                   <JFXButton fx:id="updateButton" layoutX="10.0" layoutY="10.0" onAction="#update" prefHeight="71.0" prefWidth="242.0" text="Update" />
@@ -26,6 +29,17 @@
                   <JFXButton fx:id="deleteButton" layoutX="10.0" layoutY="152.0" onAction="#delete" prefHeight="71.0" prefWidth="242.0" text="Delete" />
                </children>
             </VBox>
+            <Label layoutX="685.0" layoutY="361.0" text="Search">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <Label layoutX="686.0" layoutY="400.0" text="Name" />
+            <TextField fx:id="nameSearchText" layoutX="685.0" layoutY="422.0" prefHeight="26.0" prefWidth="186.0" />
+            <Label layoutX="686.0" layoutY="458.0" text="Surname" />
+            <TextField fx:id="surnameSearchText" layoutX="685.0" layoutY="480.0" prefHeight="26.0" prefWidth="186.0" />
+            <Label layoutX="686.0" layoutY="517.0" text="Pesel" />
+            <TextField fx:id="peselSearchText" layoutX="685.0" layoutY="539.0" prefHeight="26.0" prefWidth="186.0" />
          </children>
       </Pane>
    </children>

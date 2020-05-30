@@ -2,25 +2,28 @@
 
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <StackPane fx:id="stockStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.StockTabController">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0">
          <children>
-            <JFXTreeTableView fx:id="stockTable" layoutX="28.0" layoutY="46.0" prefHeight="585.0" prefWidth="580.0">
+            <JFXTreeTableView fx:id="stockTable" layoutX="45.0" layoutY="65.0" prefHeight="607.0" prefWidth="651.0">
                <columns>
-                  <TreeTableColumn fx:id="manufacturerCol" prefWidth="131.0" text="Manufacturer" />
-                  <TreeTableColumn fx:id="modelCol" prefWidth="107.0" text="Model" />
-                  <TreeTableColumn fx:id="priceCol" prefWidth="100.0" text="Price" />
-                  <TreeTableColumn fx:id="typeCol" prefWidth="149.0" text="Type" />
-                  <TreeTableColumn fx:id="quantityCol" prefWidth="92.0" text="In stock" />
+                  <TreeTableColumn fx:id="manufacturerCol" prefWidth="151.0" text="Manufacturer" />
+                  <TreeTableColumn fx:id="modelCol" prefWidth="114.0" text="Model" />
+                  <TreeTableColumn fx:id="priceCol" prefWidth="109.0" text="Price" />
+                  <TreeTableColumn fx:id="typeCol" prefWidth="164.0" text="Type" />
+                  <TreeTableColumn fx:id="quantityCol" prefWidth="112.0" text="In stock" />
                </columns>
             </JFXTreeTableView>
-            <VBox layoutX="683.0" layoutY="249.0" prefHeight="215.0" prefWidth="224.0">
+            <VBox layoutX="740.0" layoutY="65.0" prefHeight="215.0" prefWidth="224.0">
                <children>
                   <JFXButton fx:id="viewButton" onAction="#view" prefHeight="53.0" prefWidth="234.0" text="View" />
                   <JFXButton fx:id="updateButton" layoutX="10.0" layoutY="10.0" onAction="#update" prefHeight="53.0" prefWidth="234.0" text="Update" />
@@ -28,6 +31,27 @@
                   <JFXButton fx:id="deleteButton" layoutX="10.0" layoutY="116.0" onAction="#delete" prefHeight="53.0" prefWidth="234.0" text="Delete" />
                </children>
             </VBox>
+            <TextField fx:id="manSearchText" layoutX="740.0" layoutY="378.0" prefHeight="26.0" prefWidth="181.0" />
+            <Label layoutX="740.0" layoutY="347.0" text="Manufacturer" />
+            <Label layoutX="740.0" layoutY="298.0" text="Search">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <TextField fx:id="modelSearchText" layoutX="740.0" layoutY="446.0" prefHeight="26.0" prefWidth="181.0" />
+            <Label layoutX="740.0" layoutY="415.0" text="Model" />
+            <TextField fx:id="typeSearchText" layoutX="740.0" layoutY="513.0" prefHeight="26.0" prefWidth="181.0" />
+            <Label layoutX="740.0" layoutY="482.0" text="Type" />
+            <TextField fx:id="minPriceText" layoutX="770.0" layoutY="580.0" prefHeight="26.0" prefWidth="57.0" />
+            <Label layoutX="740.0" layoutY="549.0" text="Price" />
+            <Label layoutX="742.0" layoutY="583.0" text="Min" />
+            <TextField fx:id="maxPriceText" layoutX="865.0" layoutY="580.0" prefHeight="26.0" prefWidth="57.0" />
+            <Label layoutX="837.0" layoutY="583.0" text="Max" />
+            <TextField fx:id="minCountText" layoutX="770.0" layoutY="646.0" prefHeight="26.0" prefWidth="57.0" />
+            <Label layoutX="740.0" layoutY="615.0" text="Stock count" />
+            <Label layoutX="742.0" layoutY="649.0" text="Min" />
+            <TextField fx:id="maxCountText" layoutX="865.0" layoutY="646.0" prefHeight="26.0" prefWidth="57.0" />
+            <Label layoutX="837.0" layoutY="649.0" text="Max" />
          </children>
       </Pane>
    </children>

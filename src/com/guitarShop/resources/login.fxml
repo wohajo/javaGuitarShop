@@ -1,22 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.text.Text?>
 
-
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.PasswordField?>
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity"
-           minHeight="-Infinity" minWidth="-Infinity"
-           prefHeight="400.0" prefWidth="600.0"
-           xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="com.guitarShop.java.controllers.MainController">
+<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.MainController">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <JFXButton fx:id="loginButton" layoutX="223.0" layoutY="262.0" prefHeight="49.0" prefWidth="154.0" text="Login" onAction="#login"/> <!--onAction="#checkEnteredCredentials"-->
+            <JFXButton fx:id="loginButton" layoutX="223.0" layoutY="262.0" onAction="#login" prefHeight="49.0" prefWidth="154.0" text="Login" /> <!--onAction="#checkEnteredCredentials"-->
             <Text layoutX="133.0" layoutY="172.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" wrappingWidth="38.7294921875" />
             <Text layoutX="122.0" layoutY="212.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
             <TextField fx:id="loginField" layoutX="208.0" layoutY="154.0" prefHeight="26.0" prefWidth="223.0" />
