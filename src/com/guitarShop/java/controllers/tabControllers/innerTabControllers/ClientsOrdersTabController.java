@@ -35,6 +35,7 @@ public class ClientsOrdersTabController {
     @FXML private TreeTableColumn<OrderGuitar, Integer> quantityCol;
     private TreeItem<Guitar> itemsRoot = new TreeItem<>();
     private TreeItem<OrderGuitar> ordersRoot = new TreeItem<>();
+    private int itemCount = 0;
 
     private ClientsModel clientsModel = new ClientsModel();
     private OrdersModel ordersModel = new OrdersModel();
@@ -47,7 +48,7 @@ public class ClientsOrdersTabController {
         clientsComboBox.setItems(clientsModel.getClients());
     }
 
-   private void initTable(int orderID) throws SQLException {
+   private void initTable(int orderID) {
         manCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, String>("manufacturer"));
         modelCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, String>("model"));
         priceCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, Double>("guitarPrice"));
@@ -64,7 +65,7 @@ public class ClientsOrdersTabController {
 
         quantityCol.setCellValueFactory(new TreeItemPropertyValueFactory<OrderGuitar, Integer>("quantity"));
         ObservableList<OrderGuitar> orderGuitars = FXCollections.observableArrayList();
-        orderGuitars.addAll(stockModel.getOrderGuitars(orderID));
+        orderGuitars.addAll(stockModel.getOrderGuitars(clientsOrdersStackPane, orderID));
 
         for(int i = 0; i < orderGuitars.size(); i++)
             ordersRoot.getChildren().add(new TreeItem<OrderGuitar>(orderGuitars.get(i)));
@@ -72,8 +73,7 @@ public class ClientsOrdersTabController {
         quantityTable.getColumns().setAll(quantityCol);
         quantityTable.setRoot(ordersRoot);
         quantityTable.setShowRoot(false);
-
-    }
+   }
 
     @FXML private void changeClient() {
         dateBox.setText("");
@@ -81,45 +81,37 @@ public class ClientsOrdersTabController {
         sellerBox.setText("");
         priceBox.setText("");
 
-        try {
-            System.out.println("Clearing tables and order combobox");
-            orderComboBox.getItems().clear();
+        if (itemsTable.getRoot() != null) {
+            orderComboBox.setValue(null);
             itemsTable.getRoot().getChildren().clear();
             quantityTable.getRoot().getChildren().clear();
-        } catch (NullPointerException e) {
-
         }
 
         int clientID = getSelectedClient().getClientID();
         System.out.println("Got selected client ID: " + clientID);
-        try {
-            orderComboBox.setItems(ordersModel.getOrdersWithClientID(clientID));
-        } catch (NullPointerException e) {
-            AlertFactory.makeNullTableError(clientsOrdersStackPane);
-        }
+
+        ObservableList<Order> items = ordersModel.getOrdersWithClientID(clientID);
+        orderComboBox.setItems(items);
+
         addressBox.setText(addressModel.getAddress(getSelectedClient().getAddressID()).toString());
     }
 
-    @FXML private void changeOrder() {
-        try {
+    @FXML private void changeOrder() throws SQLException {
+        if (getSelectedOrder() != null) {
             int orderID = getSelectedOrder().getOrderID();
             int sellerID = getSelectedOrder().getSellerID();
             dateBox.setText(getSelectedOrder().getDate().toString());
+            sellerBox.setText(sellersModel.getSellerByID(sellerID).toString());
             initTable(orderID);
             System.out.println("Changed order, got IDs: order: " + orderID + ", seller: " + sellerID);
-            //TODO FIX
+
             int totalPrice = 0;
 
-            for(int i = 0; i < quantityTable.getCurrentItemsCount(); i++) {
-                System.out.println("table count:" + i);
-                totalPrice = totalPrice + itemsTable.getTreeItem(i).getValue().getGuitarPrice() * quantityTable.getTreeItem(i).getValue().getQuantity();
-            }
-            priceBox.setText(totalPrice + "$");
-            sellerBox.setText(sellersModel.getSellerByID(sellerID).toString());
+           for(int i = 0; i < itemsTable.getExpandedItemCount(); i++)
+                totalPrice += itemsTable.getTreeItem(i).getValue().getGuitarPrice() * quantityTable.getTreeItem(i).getValue().getQuantity();
 
-            System.out.println(quantityTable.getCurrentItemsCount() + " items");
-        } catch (NullPointerException | SQLException e) {
-            e.printStackTrace();
+            priceBox.setText(totalPrice + "$");
+            System.out.println(itemsTable.getExpandedItemCount() + " items");
         }
     }
 

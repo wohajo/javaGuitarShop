@@ -6,6 +6,7 @@ import com.guitarShop.java.models.objects.Guitar;
 import com.guitarShop.java.models.objects.OrderGuitar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.control.Alert;
 import javafx.scene.layout.StackPane;
 
 import java.sql.Connection;
@@ -194,7 +195,7 @@ public class StockModel {
         return guitar;
     }
 
-    public ObservableList<OrderGuitar> getOrderGuitars(int givenOrderID) {
+    public ObservableList<OrderGuitar> getOrderGuitars(StackPane stackPane, int givenOrderID) {
         ObservableList<OrderGuitar> orderGuitarObservableList = FXCollections.observableArrayList();
         Statement statement = null;
         String query = "SELECT * FROM Order_Guitar WHERE OrderID = " + givenOrderID;
@@ -211,7 +212,7 @@ public class StockModel {
             }
 
         } catch (SQLException e) {
-            e.printStackTrace();
+            AlertFactory.makeDatabaseConnectionError(stackPane);
         }
         return orderGuitarObservableList;
     }
