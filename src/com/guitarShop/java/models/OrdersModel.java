@@ -29,8 +29,10 @@ public class OrdersModel {
                 int orderID = resultSet.getInt("OrderID");
                 LocalDate orderDate = resultSet.getDate("OrderDate").toLocalDate();
                 int sellerID = resultSet.getInt("SellerID");
+                String seller = resultSet.getString("SellerFullName");
                 int clientID = resultSet.getInt("ClientID");
-                orderObservableList.add(new Order(orderID, orderDate, sellerID, clientID, getGuitarsForOrder(orderID)));
+                String client = resultSet.getString("ClientFullName");
+                orderObservableList.add(new Order(orderID, orderDate, sellerID, seller, clientID, client, getGuitarsForOrder(orderID)));
             }
 
         } catch (SQLException e) {
@@ -40,11 +42,15 @@ public class OrdersModel {
     }
 
     public ObservableList<Order> getOrders() {
-        return downloadOrders("SELECT * FROM Orders");
+        return downloadOrders("SELECT (CONCAT(s.Name, ' ', s.Surname)) AS 'SellerFullName', (CONCAT(c.Name, ' ', c.Surname)) AS 'ClientFullName', OrderID, s.SellerID, c.ClientID, OrderDate FROM Orders o " +
+                " JOIN Sellers s ON o.SellerID = s.SellerID" +
+                " JOIN Clients c ON c.ClientID = o.ClientID");
     }
 
     public ObservableList<Order> getOrdersWithClientID(int givenClientID) {
-        return downloadOrders("SELECT * FROM Orders WHERE ClientID = " + givenClientID);
+        return downloadOrders("SELECT (CONCAT(s.Name, ' ', s.Surname)) AS 'SellerFullName', (CONCAT(c.Name, ' ', c.Surname)) AS 'ClientFullName', OrderID, s.SellerID, c.ClientID, OrderDate FROM Orders o " +
+                " JOIN Sellers s ON o.SellerID = s.SellerID" +
+                " JOIN Clients c ON c.ClientID = o.ClientID WHERE c.ClientID = " + givenClientID);
     }
 
 

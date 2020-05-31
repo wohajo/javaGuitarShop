@@ -88,8 +88,6 @@ public class ClientsOrdersTabController {
         }
 
         int clientID = getSelectedClient().getClientID();
-        System.out.println("Got selected client ID: " + clientID);
-
         ObservableList<Order> items = ordersModel.getOrdersWithClientID(clientID);
         orderComboBox.setItems(items);
 
@@ -103,15 +101,12 @@ public class ClientsOrdersTabController {
             dateBox.setText(getSelectedOrder().getDate().toString());
             sellerBox.setText(sellersModel.getSellerByID(sellerID).toString());
             initTable(orderID);
-            System.out.println("Changed order, got IDs: order: " + orderID + ", seller: " + sellerID);
-
             int totalPrice = 0;
 
            for(int i = 0; i < itemsTable.getExpandedItemCount(); i++)
                 totalPrice += itemsTable.getTreeItem(i).getValue().getGuitarPrice() * quantityTable.getTreeItem(i).getValue().getQuantity();
 
             priceBox.setText(totalPrice + "$");
-            System.out.println(itemsTable.getExpandedItemCount() + " items");
         }
     }
 

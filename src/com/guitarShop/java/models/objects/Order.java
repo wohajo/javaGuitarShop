@@ -9,14 +9,18 @@ public class Order extends RecursiveTreeObject<Order> {
     private int orderID;
     private LocalDate date;
     private int sellerID;
+    String seller;
     private int clientID;
+    String client;
     private LinkedHashMap<Guitar, Integer> guitarIDs = new LinkedHashMap<>();
 
-    public Order(int orderID, LocalDate date, int sellerID, int clientID, LinkedHashMap<Guitar, Integer> guitarIDs) {
+    public Order(int orderID, LocalDate date, int sellerID, String seller, int clientID, String client, LinkedHashMap<Guitar, Integer> guitarIDs) {
         this.orderID = orderID;
         this.date = date;
         this.sellerID = sellerID;
+        this.seller = seller;
         this.clientID = clientID;
+        this.client = client;
         this.guitarIDs = guitarIDs;
     }
 
@@ -44,12 +48,28 @@ public class Order extends RecursiveTreeObject<Order> {
         this.sellerID = sellerID;
     }
 
+    public String getSeller() {
+        return seller;
+    }
+
+    public void setSeller(String seller) {
+        this.seller = seller;
+    }
+
     public int getClientID() {
         return clientID;
     }
 
     public void setClientID(int clientID) {
         this.clientID = clientID;
+    }
+
+    public String getClient() {
+        return client;
+    }
+
+    public void setClient(String client) {
+        this.client = client;
     }
 
     public LinkedHashMap<Guitar, Integer> getGuitarIDs() {
