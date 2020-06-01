@@ -159,4 +159,9 @@ public class Guitar extends RecursiveTreeObject<Guitar> {
     public void setNumberOfStrings(int numberOfStrings) {
         this.numberOfStrings = numberOfStrings;
     }
+
+    @Override
+    public String toString() {
+        return getManufacturer() + " " + getModel() + " " + getGuitarType();
+    }
 }

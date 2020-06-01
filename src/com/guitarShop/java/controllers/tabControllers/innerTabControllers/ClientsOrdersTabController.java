@@ -1,5 +1,4 @@
 package com.guitarShop.java.controllers.tabControllers.innerTabControllers;
-import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.models.*;
 import com.guitarShop.java.models.objects.Client;
 import com.guitarShop.java.models.objects.Guitar;
@@ -65,7 +64,7 @@ public class ClientsOrdersTabController {
 
         quantityCol.setCellValueFactory(new TreeItemPropertyValueFactory<OrderGuitar, Integer>("quantity"));
         ObservableList<OrderGuitar> orderGuitars = FXCollections.observableArrayList();
-        orderGuitars.addAll(stockModel.getOrderGuitars(clientsOrdersStackPane, orderID));
+        orderGuitars.addAll(ordersModel.getOrderGuitarsByOrderID(clientsOrdersStackPane, orderID));
 
         for(int i = 0; i < orderGuitars.size(); i++)
             ordersRoot.getChildren().add(new TreeItem<OrderGuitar>(orderGuitars.get(i)));

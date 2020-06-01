@@ -92,6 +92,16 @@ public class StockModel {
         return stockList;
     }
 
+    private void updateStatement(StackPane stackPane, String query) {
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            Statement statement = connection.createStatement();
+            statement.executeUpdate(query);
+
+            } catch (SQLException e) {
+                AlertFactory.makeDatabaseConnectionError(stackPane);
+        }
+    }
+
     public void updateGuitar(StackPane stackPane, int guitarID, int manufacturerID, String model, String modelDesc, int numbersOfStrings, int guitarPrice, int guitarTypeID,
                              int pickupsTypeID, int bridgeTypeID, Boolean lockingTuners, int quantity) throws SQLException {
         int tuners = 0;
@@ -195,25 +205,13 @@ public class StockModel {
         return guitar;
     }
 
-    public ObservableList<OrderGuitar> getOrderGuitars(StackPane stackPane, int givenOrderID) {
-        ObservableList<OrderGuitar> orderGuitarObservableList = FXCollections.observableArrayList();
-        Statement statement = null;
-        String query = "SELECT * FROM Order_Guitar WHERE OrderID = " + givenOrderID;
+    public void addGuitarToOrder(StackPane stackPane, int guitarID, int orderID, int quantity) {
+        String query = "INSERT INTO Order_Guitar(OrderID, GuitarID, Quantity) VALUES (" + orderID + ", " + guitarID + ", " + quantity + ")";
+        updateStatement(stackPane, query);
+    }
 
-        try (Connection connection = ConnectionFactory.getConnection()) {
-            statement = connection.createStatement();
-            ResultSet resultSet = statement.executeQuery(query);
-
-            while (resultSet.next()) {
-                int orderID = resultSet.getInt("OrderID");
-                int guitarID = resultSet.getInt("GuitarID");
-                int quantity = resultSet.getInt("Quantity");
-                orderGuitarObservableList.add(new OrderGuitar(orderID, guitarID, quantity));
-            }
-
-        } catch (SQLException e) {
-            AlertFactory.makeDatabaseConnectionError(stackPane);
-        }
-        return orderGuitarObservableList;
+    public void updateGuitarQuantity(StackPane stackPane, int guitarID, int orderID, int quantity) {
+        String query = "UPDATE Order_Guitar SET Quantity = " + quantity + " WHERE GuitarID = " + guitarID + " AND OrderID = " + orderID;
+        updateStatement(stackPane, query);
     }
 }

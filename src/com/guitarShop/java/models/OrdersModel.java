@@ -1,10 +1,13 @@
 package com.guitarShop.java.models;
 
+import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.helpers.ConnectionFactory;
 import com.guitarShop.java.models.objects.Guitar;
 import com.guitarShop.java.models.objects.Order;
+import com.guitarShop.java.models.objects.OrderGuitar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.layout.StackPane;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -53,8 +56,6 @@ public class OrdersModel {
                 " JOIN Clients c ON c.ClientID = o.ClientID WHERE c.ClientID = " + givenClientID);
     }
 
-
-
     public LinkedHashMap<Guitar, Integer> getGuitarsForOrder(int givenOrderID) {
         LinkedHashMap<Guitar, Integer> guitarsInOrder = new LinkedHashMap<>();
         Statement statement = null;
@@ -74,5 +75,67 @@ public class OrdersModel {
             e.printStackTrace();
         }
         return guitarsInOrder;
+    }
+
+    public ObservableList<OrderGuitar> getOrderGuitarsByOrderID(StackPane stackPane, int givenOrderID) {
+        ObservableList<OrderGuitar> orderGuitarObservableList = FXCollections.observableArrayList();
+        Statement statement = null;
+        String query = "SELECT * FROM Order_Guitar WHERE OrderID = " + givenOrderID;
+
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                int orderID = resultSet.getInt("OrderID");
+                int guitarID = resultSet.getInt("GuitarID");
+                int quantity = resultSet.getInt("Quantity");
+                orderGuitarObservableList.add(new OrderGuitar(orderID, guitarID, quantity));
+            }
+
+        } catch (SQLException e) {
+            AlertFactory.makeDatabaseConnectionError(stackPane);
+        }
+        return orderGuitarObservableList;
+    }
+
+    public String getQuantityByIDs(StackPane stackPane, int orderID, int guitarID) {
+        Statement statement = null;
+        int quantity = 0;
+        String query = "SELECT Quantity FROM Order_Guitar WHERE OrderID = " + orderID + " AND GuitarID = " + guitarID;
+
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                quantity = resultSet.getInt("Quantity");
+            }
+
+        } catch (SQLException e) {
+            AlertFactory.makeDatabaseConnectionError(stackPane);
+        }
+
+        return String.valueOf(quantity);
+    }
+
+    public void setQuantity(int orderID, int guitarID, int quanitity) {
+        String query = "";
+        executeUpdate(query);
+    }
+
+    public void deleteFromOrder(int orderID, int guitarID, int quanitity) {
+        String query = "";
+        executeUpdate(query);
+    }
+
+    private void executeUpdate(String query) {
+        Statement statement = null;
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }
