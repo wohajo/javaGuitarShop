@@ -1,5 +1,6 @@
 package com.guitarShop.java.controllers.tabControllers.innerTabControllers;
 
+import com.guitarShop.java.controllers.tabControllers.StockTabController;
 import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.models.ClientsModel;
 import com.guitarShop.java.models.OrdersModel;
@@ -13,13 +14,17 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
+import java.io.IOException;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -210,7 +215,6 @@ public class OrdersInfoTabController {
     @FXML
     private void add() {
         try {
-            List<Integer> guitarsToAdd = new ArrayList<>();
             List<OrderGuitar> quantityToAdd = new ArrayList<>();
             JFXComboBox<Guitar> guitarListView = new JFXComboBox<>();
             JFXComboBox<Guitar> addedGuitarsListView = new JFXComboBox<>();
@@ -281,15 +285,15 @@ public class OrdersInfoTabController {
                 @Override
                 public void changed(ObservableValue<? extends Guitar> observable, Guitar oldValue, Guitar newValue) {
                     if(addedGuitarsListView.getSelectionModel().getSelectedItem() != null) {
-                        for (int i = 0; i < quantityToAdd.size(); i++) {
-                            if(addedGuitarsListView.getSelectionModel().getSelectedItem().getGuitarID() == quantityToAdd.get(i).getGuitarID())
-                                addedCountText.setText(String.valueOf(quantityToAdd.get(i).getQuantity()));
+                        for (OrderGuitar orderGuitar : quantityToAdd) {
+                            if (addedGuitarsListView.getSelectionModel().getSelectedItem().getGuitarID() == orderGuitar.getGuitarID())
+                                addedCountText.setText(String.valueOf(orderGuitar.getQuantity()));
                         }
                 }
             }});
 
             addGuitarButton.setOnAction(e -> {
-                int selectedQuantity = Integer.valueOf(countText.getText());
+                int selectedQuantity = Integer.parseInt(countText.getText());
                 Guitar selectedGuitar = guitarListView.getSelectionModel().getSelectedItem();
                 int selectedGuitarQuantity = guitarListView.getSelectionModel().getSelectedItem().getNumberOfGuitars();
                 int guitarsLeftInStock = selectedGuitarQuantity - selectedQuantity;
@@ -330,24 +334,38 @@ public class OrdersInfoTabController {
                     AlertFactory.makeItemNotChoosenDialog(ordersInfoStackPane);
                 } else {
                     int index = addedGuitarsListView.getSelectionModel().getSelectedIndex();
-                    int number = addedGuitarsListView.getItems().get(index).getNumberOfGuitars();
+                    Guitar guitarToModify = addedGuitarsListView.getItems().get(index);
+                    int numberToAdd = 0;
+                    int guitarID = guitarToModify.getGuitarID();
+                    OrderGuitar orderGuitar = null;
 
-                    for (int i = 0; i < guitarListView.getItems().size(); i++) {
-                        if (guitarListView.getItems().get(i).getGuitarID() == addedGuitarsListView.getItems().get(index).getGuitarID()) {
-                            guitarListView.getItems().get(i).setNumberOfGuitars(guitarListView.getItems().get(i).getNumberOfGuitars() + number);
+                    for (OrderGuitar og : quantityToAdd) {
+                        if (og.getGuitarID() == guitarID) {
+                            numberToAdd = og.getQuantity();
+                            orderGuitar = og;
                         }
                     }
-                    addedGuitarsListView.getItems().remove(index);
+                    guitarToModify.setNumberOfGuitars(guitarToModify.getNumberOfGuitars() + numberToAdd);
+                    addedGuitarsListView.getItems().set(index, guitarToModify);
+                    addedGuitarsListView.getItems().remove(guitarToModify);
+                    if (addedGuitarsListView.getItems().size() == 0)
+                        addedCountText.setText("0");
+                    quantityToAdd.remove(orderGuitar);
                 }
             });
 
             acceptButton.setOnAction(e -> {
-                if(dateText.getValue() == null || clientBox.getSelectionModel().getSelectedItem() == null || sellerBox.getValue() == null || guitarsToAdd.size() < 1) {
+                if(dateText.getValue() == null || clientBox.getSelectionModel().getSelectedItem() == null || sellerBox.getValue() == null) {
                     AlertFactory.makeItemNotChoosenDialog(ordersInfoStackPane);
                 } else {
                     ordersModel.addOrder(ordersInfoStackPane, clientBox.getSelectionModel().getSelectedItem().getClientID(), sellerBox.getSelectionModel().getSelectedItem().getSellerID(), dateText.getValue(), quantityToAdd);
                     viewDialog.close();
                     refreshTable();
+                    try {
+                        refreshStockTable();
+                    } catch (IOException | SQLException ioException) {
+                        AlertFactory.makeRefreshTableError(ordersInfoStackPane);
+                    }
                 }
             });
 
@@ -362,10 +380,22 @@ public class OrdersInfoTabController {
 
     @FXML
     private void delete() {
-
+        if (getSelectedItem() == null)
+            AlertFactory.makeItemNotChoosenDialog(ordersInfoStackPane);
+        else {
+            ordersModel.deleteOrder(ordersInfoStackPane, getSelectedItem().getOrderID());
+            refreshTable();
+        }
     }
 
     private Guitar getSelectedGuitarFromView(JFXComboBox<Guitar> listView) {
         return (Guitar) listView.getSelectionModel().getSelectedItem();
+    }
+
+    private void refreshStockTable() throws IOException, SQLException {
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/guitarShop/resources/tabs/StockTab.fxml"));
+        Parent root = (Parent)fxmlLoader.load();
+        StockTabController controller = fxmlLoader.getController();
+        controller.refreshTable();
     }
 }

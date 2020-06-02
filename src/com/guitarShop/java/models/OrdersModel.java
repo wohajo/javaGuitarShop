@@ -136,5 +136,26 @@ public class OrdersModel {
     }
 
     public void addOrder(StackPane ordersInfoStackPane, int clientID, int sellerID, LocalDate date, List<OrderGuitar> quantityToAdd) {
+        String query = "INSERT INTO Orders(OrderDate, SellerID, ClientID)" +
+                "VALUES ('" + date + "', "+ sellerID + ", " + clientID + ")";
+        executeUpdate(ordersInfoStackPane, query);
+
+        for (OrderGuitar og : quantityToAdd) {
+            query = "INSERT INTO Order_Guitar(OrderID, GuitarID, Quantity)" +
+                    "VALUES ((SELECT MAX(OrderID) as 'OrderID' FROM Orders), " + og.getGuitarID() + ", " + og.getQuantity() + ")";
+            executeUpdate(ordersInfoStackPane, query);
+
+            query = "UPDATE Guitars SET NumberOfGuitars = " +
+                    "(SELECT NumberOfGuitars FROM Guitars WHERE GuitarID = " + og.getGuitarID() + ") - " + og.getQuantity() +
+                    " WHERE GuitarID = " + og.getGuitarID();
+            executeUpdate(ordersInfoStackPane, query);
+        }
+    }
+
+    public void deleteOrder(StackPane ordersInfoStackPane, int orderID) {
+        String query = "DELETE FROM Order_Guitar WHERE OrderID = " + orderID;
+        executeUpdate(ordersInfoStackPane, query);
+        query = "DELETE FROM Orders WHERE OrderID = " + orderID;
+        executeUpdate(ordersInfoStackPane, query);
     }
 }
