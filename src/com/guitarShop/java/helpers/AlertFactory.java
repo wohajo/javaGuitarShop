@@ -40,7 +40,7 @@ public class AlertFactory {
     }
 
     public static void makeDatabaseConnectionError(StackPane stackPane) {
-        makeAlertDialog(stackPane, "Error", "Connection error.", "Close");
+        makeAlertDialog(stackPane, "Error", "Connection error or incorrect data.", "Close");
     }
 
     public static void makeNotEnoughItemsInStock(StackPane ordersInfoStackPane) {

@@ -1,14 +1,13 @@
 package com.guitarShop.java.controllers.tabControllers.innerTabControllers;
 
 import com.guitarShop.java.helpers.AlertFactory;
+import com.guitarShop.java.models.ClientsModel;
 import com.guitarShop.java.models.OrdersModel;
+import com.guitarShop.java.models.SellersModel;
 import com.guitarShop.java.models.StockModel;
-import com.guitarShop.java.models.objects.Guitar;
-import com.guitarShop.java.models.objects.Order;
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXDialog;
-import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXTreeTableView;
+import com.guitarShop.java.models.objects.*;
+import com.jfoenix.controls.*;
+import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -18,11 +17,12 @@ import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.GridPane;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 public class OrdersInfoTabController {
 
@@ -34,8 +34,8 @@ public class OrdersInfoTabController {
     private TreeItem<Order> root = new TreeItem<>();
     private OrdersModel ordersModel = new OrdersModel();
     private StockModel stockModel = new StockModel();
-    ListView<Guitar> guitarListView = new ListView<>();
-    ListView<Guitar> newGuitarListView = new ListView<>();
+    private SellersModel sellersModel = new SellersModel();
+    private ClientsModel clientsModel = new ClientsModel();
 
     @FXML
     private void initialize() {
@@ -135,48 +135,45 @@ public class OrdersInfoTabController {
     @FXML
     private void update() {
         try {
-            HBox hbox = new HBox();
+            ListView<Guitar> guitarListView = new ListView<>();
             StackPane stackPane = new StackPane();
             GridPane dialogGrid = getGridPaneWithText();
             stackPane.getChildren().add(dialogGrid);
-            TextField sellerText = new TextField(getSelectedItem().getSeller());
-            TextField clientText = new TextField(getSelectedItem().getClient());
+            JFXComboBox<Seller> sellerBox = new JFXComboBox<>();
+            JFXComboBox<Client> clientBox = new JFXComboBox<>();
             DatePicker dateText = new DatePicker(getSelectedItem().getDate());
             Label countLabel = new Label("Quantity");
             TextField countText = new TextField("0");
-            Label addLabel = new Label("Add");
-            addLabel.setStyle("-fx-text-fill: black");
-            TextField addCountText = new TextField("0");
+            countText.setEditable(false);
+
+            ObservableList<Seller> sellers = sellersModel.getSellers();
+            sellerBox.setItems(sellers);
+            for (Seller s : sellers) {
+                if (s.getSellerID() == getSelectedItem().getSellerID())
+                    sellerBox.getSelectionModel().select(s);
+            }
+
+            ObservableList<Client> clients = clientsModel.getClients();
+            clientBox.setItems(clients);
+            for (Client c : clients) {
+                if (c.getClientID() == getSelectedItem().getClientID())
+                    clientBox.getSelectionModel().select(c);
+            }
 
             guitarListView.setItems(stockModel.getStockByOrderID(getSelectedItem().getOrderID()));
-            newGuitarListView.setItems(stockModel.getStock());
-
             guitarListView.setMaxHeight(100);
             guitarListView.setMaxWidth(240);
-            newGuitarListView.setMaxHeight(150);
-            newGuitarListView.setMaxWidth(240);
-            addCountText.setMaxWidth(60);
+
 
             JFXButton closeButton = new JFXButton("close");
             JFXButton acceptButton = new JFXButton("accept");
-            JFXButton confirmQuantityButton = new JFXButton("Confirm quantity");
-            JFXButton deleteButton = new JFXButton("delete guitar(s)");
-            JFXButton confirmNewGuitarButton = new JFXButton("Confirm quantity");
-            confirmQuantityButton.setButtonType(JFXButton.ButtonType.RAISED);
 
-            hbox.getChildren().addAll(deleteButton, confirmQuantityButton);
-
-            dialogGrid.add(sellerText, 1, 0);
-            dialogGrid.add(clientText, 1, 1);
+            dialogGrid.add(sellerBox, 1, 0);
+            dialogGrid.add(clientBox, 1, 1);
             dialogGrid.add(dateText, 1, 2);
             dialogGrid.add(guitarListView, 1, 3);
             dialogGrid.add(countLabel, 0, 4);
             dialogGrid.add(countText, 1, 4);
-            dialogGrid.add(hbox, 1, 5);
-            dialogGrid.add(addLabel, 1, 6);
-            dialogGrid.add(addCountText, 0, 7);
-            dialogGrid.add(newGuitarListView, 1, 7);
-            dialogGrid.add(confirmNewGuitarButton, 1, 8);
 
             dialogGrid.setAlignment(Pos.CENTER);
             dialogGrid.setVgap(10);
@@ -196,32 +193,13 @@ public class OrdersInfoTabController {
                 }
             });
 
-            newGuitarListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Guitar>() {
-                @Override
-                public void changed(ObservableValue<? extends Guitar> observable, Guitar oldValue, Guitar newValue) {
-                    addCountText.setText(String.valueOf(Integer.valueOf(getSelectedGuitarFromView(newGuitarListView).getNumberOfGuitars())));
-                }
-            });
-
-            confirmQuantityButton.setOnAction(e -> {
-                // TODO works with guitars id's
-            });
-
-            confirmNewGuitarButton.setOnAction(e -> {
-                if (getSelectedGuitarFromView(newGuitarListView) == null)
-                    AlertFactory.makeItemNotChoosenDialog(ordersInfoStackPane);
-                else if(getSelectedGuitarFromView(newGuitarListView).getNumberOfGuitars() < Integer.parseInt(addCountText.getText()))
-                    AlertFactory.makeNotEnoughItemsInStock(ordersInfoStackPane);
-                else {
-                    
-                }
-            });
-
             acceptButton.setOnAction(e -> {
-
+                ordersModel.updateOrder(ordersInfoStackPane, getSelectedItem().getOrderID(), sellerBox.getSelectionModel().getSelectedItem().getSellerID(), clientBox.getSelectionModel().getSelectedItem().getClientID(), dateText.getValue());
+                viewDialog.close();
+                refreshTable();
             });
-
             closeButton.setOnAction(actionEvent -> viewDialog.close());
+
             viewDialog.show();
 
         } catch (NullPointerException e) {
@@ -231,7 +209,155 @@ public class OrdersInfoTabController {
 
     @FXML
     private void add() {
+        try {
+            List<Integer> guitarsToAdd = new ArrayList<>();
+            List<OrderGuitar> quantityToAdd = new ArrayList<>();
+            JFXComboBox<Guitar> guitarListView = new JFXComboBox<>();
+            JFXComboBox<Guitar> addedGuitarsListView = new JFXComboBox<>();
+            StackPane stackPane = new StackPane();
+            GridPane dialogGrid = getGridPaneWithText();
+            stackPane.getChildren().add(dialogGrid);
+            JFXComboBox<Seller> sellerBox = new JFXComboBox<>();
+            JFXComboBox<Client> clientBox = new JFXComboBox<>();
+            DatePicker dateText = new DatePicker();
+            Label countLabel = new Label("Quantity");
+            TextField countText = new TextField("0");
+            Label addedLabel = new Label("Added guitars");
+            Label countLabel2 = new Label("Quantity");
+            TextField addedCountText = new TextField("0");
+            addedCountText.setEditable(false);
 
+            ObservableList<Seller> sellers = sellersModel.getSellers();
+            sellerBox.setItems(sellers);
+
+            ObservableList<Client> clients = clientsModel.getClients();
+            clientBox.setItems(clients);
+
+
+            guitarListView.setItems(stockModel.getStock());
+            guitarListView.setMaxHeight(100);
+            guitarListView.setMaxWidth(240);
+            addedGuitarsListView.setMaxHeight(100);
+            addedGuitarsListView.setMaxWidth(240);
+
+
+            JFXButton closeButton = new JFXButton("close");
+            JFXButton acceptButton = new JFXButton("accept");
+            JFXButton addGuitarButton = new JFXButton("add guitar(s)");
+            JFXButton deleteButton = new JFXButton("delete guitar");
+
+            dialogGrid.add(sellerBox, 1, 0);
+            dialogGrid.add(clientBox, 1, 1);
+            dialogGrid.add(dateText, 1, 2);
+            dialogGrid.add(guitarListView, 1, 3);
+            dialogGrid.add(countLabel, 0, 4);
+            dialogGrid.add(countText, 1, 4);
+            dialogGrid.add(addGuitarButton, 1, 5);
+            dialogGrid.add(addedLabel, 0, 6);
+            dialogGrid.add(addedGuitarsListView, 1, 6);
+            dialogGrid.add(countLabel2, 0, 7);
+            dialogGrid.add(addedCountText, 1, 7);
+            dialogGrid.add(deleteButton, 1, 8);
+
+            dialogGrid.setAlignment(Pos.CENTER);
+            dialogGrid.setVgap(10);
+            dialogGrid.setHgap(10);
+
+            JFXDialogLayout dialogLayout = new JFXDialogLayout();
+            dialogLayout.setHeading(new Text("Order"));
+            dialogLayout.setBody(dialogGrid);
+            dialogLayout.setActions(acceptButton, closeButton);
+
+            JFXDialog viewDialog = new JFXDialog(ordersInfoStackPane, dialogLayout, JFXDialog.DialogTransition.BOTTOM);
+
+            guitarListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Guitar>() {
+                @Override
+                public void changed(ObservableValue<? extends Guitar> observable, Guitar oldValue, Guitar newValue) {
+                    countText.setText(String.valueOf(guitarListView.getSelectionModel().getSelectedItem().getNumberOfGuitars()));
+                }
+            });
+
+            addedGuitarsListView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Guitar>() {
+                @Override
+                public void changed(ObservableValue<? extends Guitar> observable, Guitar oldValue, Guitar newValue) {
+                    if(addedGuitarsListView.getSelectionModel().getSelectedItem() != null) {
+                        for (int i = 0; i < quantityToAdd.size(); i++) {
+                            if(addedGuitarsListView.getSelectionModel().getSelectedItem().getGuitarID() == quantityToAdd.get(i).getGuitarID())
+                                addedCountText.setText(String.valueOf(quantityToAdd.get(i).getQuantity()));
+                        }
+                }
+            }});
+
+            addGuitarButton.setOnAction(e -> {
+                int selectedQuantity = Integer.valueOf(countText.getText());
+                Guitar selectedGuitar = guitarListView.getSelectionModel().getSelectedItem();
+                int selectedGuitarQuantity = guitarListView.getSelectionModel().getSelectedItem().getNumberOfGuitars();
+                int guitarsLeftInStock = selectedGuitarQuantity - selectedQuantity;
+
+                if (selectedQuantity > selectedGuitar.getNumberOfGuitars()) {
+
+                    AlertFactory.makeNotEnoughItemsInStock(ordersInfoStackPane);
+                } else if (selectedQuantity == 0) {
+                    AlertFactory.makeItemNotChoosenDialog(ordersInfoStackPane);
+                } else if (selectedGuitarQuantity == 0) {
+                    AlertFactory.makeNotEnoughItemsInStock(ordersInfoStackPane);
+                } else {
+                    if (addedGuitarsListView.getItems().size() > 0) {
+
+                        if (!addedGuitarsListView.getItems().contains(selectedGuitar)) {
+                            addedGuitarsListView.getItems().add(selectedGuitar);
+                        } else {
+                            AlertFactory.makeAlertDialog(ordersInfoStackPane, "Error", "Item already added!", "Close");
+                            return;
+                        }
+                    } else {
+                        addedGuitarsListView.getItems().add(selectedGuitar);
+                    }
+
+                    int index = guitarListView.getSelectionModel().getSelectedIndex();
+                    Guitar guitarToModify = guitarListView.getItems().get(index);
+                    guitarToModify.setNumberOfGuitars(guitarsLeftInStock);
+                    guitarListView.getItems().set(index, guitarToModify);
+
+                    quantityToAdd.add(new OrderGuitar(0, guitarToModify.getGuitarID(), selectedQuantity));
+
+                    countText.setText(String.valueOf(guitarListView.getSelectionModel().getSelectedItem().getNumberOfGuitars()));
+                }
+            });
+
+            deleteButton.setOnAction(e -> {
+                if (getSelectedGuitarFromView(addedGuitarsListView) == null) {
+                    AlertFactory.makeItemNotChoosenDialog(ordersInfoStackPane);
+                } else {
+                    int index = addedGuitarsListView.getSelectionModel().getSelectedIndex();
+                    int number = addedGuitarsListView.getItems().get(index).getNumberOfGuitars();
+
+                    for (int i = 0; i < guitarListView.getItems().size(); i++) {
+                        if (guitarListView.getItems().get(i).getGuitarID() == addedGuitarsListView.getItems().get(index).getGuitarID()) {
+                            guitarListView.getItems().get(i).setNumberOfGuitars(guitarListView.getItems().get(i).getNumberOfGuitars() + number);
+                        }
+                    }
+                    addedGuitarsListView.getItems().remove(index);
+                }
+            });
+
+            acceptButton.setOnAction(e -> {
+                if(dateText.getValue() == null || clientBox.getSelectionModel().getSelectedItem() == null || sellerBox.getValue() == null || guitarsToAdd.size() < 1) {
+                    AlertFactory.makeItemNotChoosenDialog(ordersInfoStackPane);
+                } else {
+                    ordersModel.addOrder(ordersInfoStackPane, clientBox.getSelectionModel().getSelectedItem().getClientID(), sellerBox.getSelectionModel().getSelectedItem().getSellerID(), dateText.getValue(), quantityToAdd);
+                    viewDialog.close();
+                    refreshTable();
+                }
+            });
+
+            closeButton.setOnAction(actionEvent -> viewDialog.close());
+
+            viewDialog.show();
+
+        } catch (NullPointerException e) {
+            AlertFactory.makeItemNotChoosenDialog(ordersInfoStackPane);
+        }
     }
 
     @FXML
@@ -239,7 +365,7 @@ public class OrdersInfoTabController {
 
     }
 
-    private Guitar getSelectedGuitarFromView(ListView listView) {
+    private Guitar getSelectedGuitarFromView(JFXComboBox<Guitar> listView) {
         return (Guitar) listView.getSelectionModel().getSelectedItem();
     }
 }

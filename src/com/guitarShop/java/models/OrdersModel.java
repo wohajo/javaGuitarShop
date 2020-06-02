@@ -15,6 +15,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDate;
 import java.util.LinkedHashMap;
+import java.util.List;
 
 public class OrdersModel {
 
@@ -119,23 +120,21 @@ public class OrdersModel {
         return String.valueOf(quantity);
     }
 
-    public void setQuantity(int orderID, int guitarID, int quanitity) {
-        String query = "";
-        executeUpdate(query);
-    }
-
-    public void deleteFromOrder(int orderID, int guitarID, int quanitity) {
-        String query = "";
-        executeUpdate(query);
-    }
-
-    private void executeUpdate(String query) {
+    private void executeUpdate(StackPane stackPane, String query) {
         Statement statement = null;
         try (Connection connection = ConnectionFactory.getConnection()) {
             statement = connection.createStatement();
             statement.executeUpdate(query);
         } catch (SQLException e) {
-            e.printStackTrace();
+            AlertFactory.makeDatabaseConnectionError(stackPane);
         }
+    }
+
+    public void updateOrder(StackPane stackPane, int orderID, int sellerID, int clientID, LocalDate date) {
+        String query = "UPDATE Orders SET SellerID = " + sellerID + ", ClientID = " + clientID + ", OrderDate = '" + date + "' WHERE OrderID = " + orderID;
+        executeUpdate(stackPane, query);
+    }
+
+    public void addOrder(StackPane ordersInfoStackPane, int clientID, int sellerID, LocalDate date, List<OrderGuitar> quantityToAdd) {
     }
 }
