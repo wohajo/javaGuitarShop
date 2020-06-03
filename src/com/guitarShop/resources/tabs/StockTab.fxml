@@ -23,12 +23,13 @@
                   <TreeTableColumn fx:id="quantityCol" prefWidth="112.0" text="In stock" />
                </columns>
             </JFXTreeTableView>
-            <VBox layoutX="740.0" layoutY="65.0" prefHeight="215.0" prefWidth="224.0">
+            <VBox layoutX="740.0" layoutY="21.0" prefHeight="259.0" prefWidth="224.0">
                <children>
                   <JFXButton fx:id="viewButton" onAction="#view" prefHeight="53.0" prefWidth="234.0" text="View" />
                   <JFXButton fx:id="updateButton" layoutX="10.0" layoutY="10.0" onAction="#update" prefHeight="53.0" prefWidth="234.0" text="Update" />
                   <JFXButton fx:id="addButton" layoutX="10.0" layoutY="63.0" onAction="#add" prefHeight="53.0" prefWidth="234.0" text="Add" />
                   <JFXButton fx:id="deleteButton" layoutX="10.0" layoutY="116.0" onAction="#delete" prefHeight="53.0" prefWidth="234.0" text="Delete" />
+                  <JFXButton fx:id="refreshButton" layoutX="10.0" layoutY="169.0" onAction="#refreshTable" prefHeight="53.0" prefWidth="234.0" text="Refresh" />
                </children>
             </VBox>
             <TextField fx:id="manSearchText" layoutX="740.0" layoutY="378.0" prefHeight="26.0" prefWidth="181.0" />

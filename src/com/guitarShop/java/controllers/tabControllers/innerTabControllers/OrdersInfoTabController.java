@@ -8,7 +8,6 @@ import com.guitarShop.java.models.SellersModel;
 import com.guitarShop.java.models.StockModel;
 import com.guitarShop.java.models.objects.*;
 import com.jfoenix.controls.*;
-import javafx.beans.Observable;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -24,7 +23,6 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -358,12 +356,12 @@ public class OrdersInfoTabController {
                 if(dateText.getValue() == null || clientBox.getSelectionModel().getSelectedItem() == null || sellerBox.getValue() == null) {
                     AlertFactory.makeItemNotChoosenDialog(ordersInfoStackPane);
                 } else {
-                    ordersModel.addOrder(ordersInfoStackPane, clientBox.getSelectionModel().getSelectedItem().getClientID(), sellerBox.getSelectionModel().getSelectedItem().getSellerID(), dateText.getValue(), quantityToAdd);
-                    viewDialog.close();
-                    refreshTable();
                     try {
+                        ordersModel.addOrder(ordersInfoStackPane, clientBox.getSelectionModel().getSelectedItem().getClientID(), sellerBox.getSelectionModel().getSelectedItem().getSellerID(), dateText.getValue(), quantityToAdd);
+                        viewDialog.close();
+                        refreshTable();
                         refreshStockTable();
-                    } catch (IOException | SQLException ioException) {
+                    } catch (IOException ioException) {
                         AlertFactory.makeRefreshTableError(ordersInfoStackPane);
                     }
                 }
@@ -392,10 +390,10 @@ public class OrdersInfoTabController {
         return (Guitar) listView.getSelectionModel().getSelectedItem();
     }
 
-    private void refreshStockTable() throws IOException, SQLException {
+    private void refreshStockTable() throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/guitarShop/resources/tabs/StockTab.fxml"));
-        Parent root = (Parent)fxmlLoader.load();
+        Parent root = fxmlLoader.load();
         StockTabController controller = fxmlLoader.getController();
-        controller.refreshTable();
+        controller.initTable();
     }
 }

@@ -1,6 +1,5 @@
 package com.guitarShop.java.controllers.tabControllers.innerTabControllers;
 
-import com.guitarShop.java.controllers.tabControllers.StockTabController;
 import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.models.ManufacturerModel;
 import com.guitarShop.java.models.objects.Manufacturer;
@@ -13,9 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.GridPane;
@@ -97,26 +94,16 @@ public class PartsTabController {
     public void refreshBridgesTable() throws IOException, SQLException {
         bridgeTable.getRoot().getChildren().clear();
         initBridgesTable();
-        refreshStockTable();
     }
 
     public void refreshPickupsTable() throws IOException, SQLException {
         pickupsTable.getRoot().getChildren().clear();
         initPickupsTable();
-        refreshStockTable();
     }
 
     public void refreshTypeTable() throws IOException, SQLException {
         typeTable.getRoot().getChildren().clear();
         initGuitarTypesTable();
-        refreshStockTable();
-    }
-
-    private void refreshStockTable() throws IOException, SQLException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/guitarShop/resources/tabs/StockTab.fxml"));
-        Parent root = (Parent)fxmlLoader.load();
-        StockTabController controller = fxmlLoader.getController();
-        controller.refreshTable();
     }
 
     private GridPane getGridPaneWithText() {

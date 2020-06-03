@@ -1,6 +1,5 @@
 package com.guitarShop.java.controllers.tabControllers;
 
-import com.guitarShop.java.controllers.MainController;
 import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.models.ManufacturerModel;
 import com.guitarShop.java.models.PartsModel;
@@ -18,14 +17,12 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -42,23 +39,19 @@ public class StockTabController {
     private StockModel stockModel = new StockModel();
     private PartsModel partsModel = new PartsModel();
     private ManufacturerModel manufacturerModel = new ManufacturerModel();
-    private TreeItem<Guitar> root = new TreeItem<>();
 
-    @FXML private void initialize() throws SQLException, IOException {
+    @FXML private void initialize() {
         initTable();
-        // test
-        /*FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/com/guitarShop/resources/login.fxml"));
-        Parent root = (Parent) fxmlLoader.load();
-        MainController controller = fxmlLoader.getController();
-        controller.print("Stock controller up");*/
     }
 
-    @FXML private void initTable() throws SQLException {
-        manufacturerCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, String>("manufacturer"));
-        modelCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, String>("model"));
-        priceCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, Double>("guitarPrice"));
-        typeCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, String>("guitarType"));
-        quantityCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, String>("numberOfGuitars"));
+    @FXML
+    public void initTable() {
+        manufacturerCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("manufacturer"));
+        modelCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("model"));
+        priceCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("guitarPrice"));
+        typeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("guitarType"));
+        quantityCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("numberOfGuitars"));
+        TreeItem<Guitar> root = new TreeItem<>();
 
         ObservableList<Guitar> stock = FXCollections.observableArrayList();
         stock.addAll(stockModel.getStock());
@@ -69,10 +62,12 @@ public class StockTabController {
         stockTable.getColumns().setAll(manufacturerCol, modelCol, priceCol, typeCol, quantityCol);
         stockTable.setRoot(root);
         stockTable.setShowRoot(false);
+        stockTable.refresh();
     }
 
-    public void refreshTable() throws SQLException {
+    public void refreshTable() {
         stockTable.getRoot().getChildren().clear();
+        stockTable.setRoot(null);
         initTable();
     }
 
@@ -376,13 +371,9 @@ public class StockTabController {
                     int bridgeTypeID = bridgeJFXListView.getSelectionModel().getSelectedItem().getBridgeID();
                     Boolean lockingTuners = lockingTunersToggle.isSelected();
                     int quantity = Integer.valueOf(quantityText.getText());
-                    try {
-                        stockModel.addGuitar(stockStackPane, manufacturerID, model, modelDesc, numbersOfStrings, guitarPrice,
-                                guitarTypeID, pickupsTypeID, bridgeTypeID, lockingTuners, quantity);
-                        refreshTable();
-                    } catch (SQLException e) {
-                        alertFactory.makeAlertDialog(stockStackPane, "Error", "Error updating guitar.", "Close");
-                    }
+                    stockModel.addGuitar(stockStackPane, manufacturerID, model, modelDesc, numbersOfStrings, guitarPrice,
+                            guitarTypeID, pickupsTypeID, bridgeTypeID, lockingTuners, quantity);
+                    refreshTable();
                     viewDialog.close();
                 }
             });

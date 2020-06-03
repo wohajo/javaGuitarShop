@@ -1,52 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
+
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Tab?>
 
-<JFXTabPane maxHeight="-Infinity" maxWidth="-Infinity"
-            minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="750.0" prefWidth="1000.0"
-            xmlns="http://javafx.com/javafx/11.0.1"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.guitarShop.java.controllers.MainController">
+<JFXTabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.MainController">
   <tabs>
     <Tab text="Stock">
       <content>
-        <fx:include fx:id="stockTab" source="tabs/StockTab.fxml"/>
-      </content>
-    </Tab>
-    <Tab text="Workers">
-      <content>
-        <fx:include fx:id="sellersTab" source="tabs/sellersTab.fxml"/>
-      </content>
-    </Tab>
-    <Tab text="Clients">
-      <content>
-        <fx:include fx:id="clientsTab" source="tabs/ClientsTab.fxml"/>
-      </content>
-    </Tab>
-    <Tab text="Orders">
-      <content>
-        <fx:include fx:id="ordersTab" source="tabs/OrdersTab.fxml"/>
-      </content>
-    </Tab>
-    <Tab text="Addresses">
-      <content>
-        <fx:include fx:id="addressesTab" source="tabs/AddressesTab.fxml"/>
+        <fx:include fx:id="stockTab" source="tabs/StockTab.fxml" />
       </content>
     </Tab>
     <Tab text="Details">
       <content>
-        <fx:include fx:id="detailsTab" source="tabs/DetailsTab.fxml"/>
+        <fx:include fx:id="detailsTab" source="tabs/DetailsTab.fxml" />
+      </content>
+    </Tab>
+    <Tab text="Workers">
+      <content>
+        <fx:include fx:id="sellersTab" source="tabs/sellersTab.fxml" />
+      </content>
+    </Tab>
+    <Tab text="Clients">
+      <content>
+        <fx:include fx:id="clientsTab" source="tabs/ClientsTab.fxml" />
+      </content>
+    </Tab>
+    <Tab text="Addresses">
+      <content>
+        <fx:include fx:id="addressesTab" source="tabs/AddressesTab.fxml" />
+      </content>
+    </Tab>
+    <Tab text="Orders">
+      <content>
+        <fx:include fx:id="ordersTab" source="tabs/OrdersTab.fxml" />
       </content>
     </Tab>
     <Tab text="Dashboard">
       <content>
-        <fx:include fx:id="dashboardTab" source="tabs/Dashboard.fxml"/>
-      </content>
-    </Tab>
-    <Tab text="Test">
-      <content>
-        <fx:include fx:id="TestTab" source="tabs/TestTab.fxml"/>
+        <fx:include fx:id="dashboardTab" source="tabs/Dashboard.fxml" />
       </content>
     </Tab>
   </tabs>

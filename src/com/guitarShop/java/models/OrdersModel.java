@@ -146,7 +146,7 @@ public class OrdersModel {
             executeUpdate(ordersInfoStackPane, query);
 
             query = "UPDATE Guitars SET NumberOfGuitars = " +
-                    "(SELECT NumberOfGuitars FROM Guitars WHERE GuitarID = " + og.getGuitarID() + ") - " + og.getQuantity() +
+                    "(SELECT NumberOfGuitars) - " + og.getQuantity() +
                     " WHERE GuitarID = " + og.getGuitarID();
             executeUpdate(ordersInfoStackPane, query);
         }
@@ -157,5 +157,6 @@ public class OrdersModel {
         executeUpdate(ordersInfoStackPane, query);
         query = "DELETE FROM Orders WHERE OrderID = " + orderID;
         executeUpdate(ordersInfoStackPane, query);
+        // TODO ADD TO STOCK
     }
 }
