@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -14,15 +14,6 @@
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0">
          <children>
-            <JFXTreeTableView fx:id="stockTable" layoutX="45.0" layoutY="65.0" prefHeight="607.0" prefWidth="651.0">
-               <columns>
-                  <TreeTableColumn fx:id="manufacturerCol" prefWidth="151.0" text="Manufacturer" />
-                  <TreeTableColumn fx:id="modelCol" prefWidth="114.0" text="Model" />
-                  <TreeTableColumn fx:id="priceCol" prefWidth="109.0" text="Price" />
-                  <TreeTableColumn fx:id="typeCol" prefWidth="164.0" text="Type" />
-                  <TreeTableColumn fx:id="quantityCol" prefWidth="112.0" text="In stock" />
-               </columns>
-            </JFXTreeTableView>
             <VBox layoutX="740.0" layoutY="21.0" prefHeight="259.0" prefWidth="224.0">
                <children>
                   <JFXButton fx:id="viewButton" onAction="#view" prefHeight="53.0" prefWidth="234.0" text="View" />
@@ -53,6 +44,15 @@
             <Label layoutX="742.0" layoutY="649.0" text="Min" />
             <TextField fx:id="maxCountText" layoutX="865.0" layoutY="646.0" prefHeight="26.0" prefWidth="57.0" />
             <Label layoutX="837.0" layoutY="649.0" text="Max" />
+            <TableView fx:id="stockTable" layoutX="27.0" layoutY="67.0" prefHeight="602.0" prefWidth="682.0">
+              <columns>
+                <TableColumn fx:id="manufacturerCol" prefWidth="165.0" text="Manufacturer" />
+                <TableColumn fx:id="modelCol" prefWidth="169.0" text="Model" />
+                  <TableColumn fx:id="priceCol" prefWidth="101.0" text="Price" />
+                  <TableColumn fx:id="typeCol" prefWidth="136.0" text="Type" />
+                  <TableColumn fx:id="quantityCol" prefWidth="110.0" text="In stock" />
+              </columns>
+            </TableView>
          </children>
       </Pane>
    </children>

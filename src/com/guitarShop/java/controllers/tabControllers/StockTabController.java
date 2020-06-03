@@ -12,29 +12,37 @@ import com.guitarShop.java.models.objects.parts.Pickups;
 import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
 
 public class StockTabController {
 
     @FXML private StackPane stockStackPane;
-    @FXML private JFXTreeTableView<Guitar> stockTable;
-    @FXML private TreeTableColumn<Guitar, String> manufacturerCol;
-    @FXML private TreeTableColumn<Guitar, String> modelCol;
-    @FXML private TreeTableColumn<Guitar, Double> priceCol;
-    @FXML private TreeTableColumn<Guitar, String> typeCol;
-    @FXML private TreeTableColumn<Guitar, String> quantityCol;
+    @FXML private TableView<Guitar> stockTable;
+    @FXML private TableColumn<Guitar, String> manufacturerCol;
+    @FXML private TableColumn<Guitar, String> modelCol;
+    @FXML private TableColumn<Guitar, Double> priceCol;
+    @FXML private TableColumn<Guitar, String> typeCol;
+    @FXML private TableColumn<Guitar, String> quantityCol;
+    @FXML private TextField manSearchText;
+    @FXML private TextField modelSearchText;
+    @FXML private TextField typeSearchText;
+    @FXML private TextField minPriceText;
+    @FXML private TextField maxPriceText;
+    @FXML private TextField minCountText;
+    @FXML private TextField maxCountText;
+
     private AlertFactory alertFactory = new AlertFactory();
     private StockModel stockModel = new StockModel();
     private PartsModel partsModel = new PartsModel();
@@ -46,28 +54,88 @@ public class StockTabController {
 
     @FXML
     public void initTable() {
-        manufacturerCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("manufacturer"));
-        modelCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("model"));
-        priceCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("guitarPrice"));
-        typeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("guitarType"));
-        quantityCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("numberOfGuitars"));
-        TreeItem<Guitar> root = new TreeItem<>();
+        manufacturerCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        modelCol.setCellValueFactory(new PropertyValueFactory<>("model"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<>("guitarPrice"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("guitarType"));
+        quantityCol.setCellValueFactory(new PropertyValueFactory<>("numberOfGuitars"));
 
         ObservableList<Guitar> stock = FXCollections.observableArrayList();
         stock.addAll(stockModel.getStock());
+        FilteredList<Guitar> filteredStock = new FilteredList<>(stock, p -> true);
 
-        for(int i = 0; i < stock.size(); i++)
-            root.getChildren().add(new TreeItem<Guitar>(stock.get(i)));
+        initSearchFields(filteredStock);
 
+        SortedList<Guitar> sortedList = new SortedList<>(filteredStock);
+        sortedList.comparatorProperty().bind(stockTable.comparatorProperty());
+        stockTable.setItems(sortedList);
         stockTable.getColumns().setAll(manufacturerCol, modelCol, priceCol, typeCol, quantityCol);
-        stockTable.setRoot(root);
-        stockTable.setShowRoot(false);
-        stockTable.refresh();
+    }
+
+    private void initSearchFields(FilteredList<Guitar> filteredList) {
+        manSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Guitar -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Guitar.getManufacturer().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
+        modelSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Guitar -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Guitar.getModel().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
+        typeSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Guitar -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Guitar.getGuitarType().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
+        minCountText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Guitar -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                int filter = Integer.parseInt(newValue);
+                if(Guitar.getNumberOfGuitars() >= filter)
+                    return true;
+
+                return false;
+            });
+        });
+        maxCountText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Guitar -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                int filter = Integer.parseInt(newValue);
+                if(Guitar.getNumberOfGuitars() <= filter)
+                    return true;
+
+                return false;
+            });
+        });
     }
 
     public void refreshTable() {
-        stockTable.getRoot().getChildren().clear();
-        stockTable.setRoot(null);
         initTable();
     }
 
@@ -104,7 +172,7 @@ public class StockTabController {
     }
 
     private Guitar getSelectedItem() {
-        return stockTable.getSelectionModel().getSelectedItem().getValue();
+        return stockTable.getSelectionModel().getSelectedItem();
     }
 
     @FXML public void view() {

@@ -1,6 +1,5 @@
 package com.guitarShop.java.controllers.tabControllers.innerTabControllers;
 
-import com.guitarShop.java.controllers.tabControllers.StockTabController;
 import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.models.AddressModel;
 import com.guitarShop.java.models.ManufacturerModel;
@@ -9,6 +8,8 @@ import com.guitarShop.java.models.objects.Manufacturer;
 import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -16,11 +17,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -30,8 +28,9 @@ import java.sql.SQLException;
 
 public class ManufacturersTabController {
     @FXML private StackPane manufacturersStackPane;
-    @FXML private JFXTreeTableView<Manufacturer> manufacturerTable;
-    @FXML private TreeTableColumn<Manufacturer, String> nameCol;
+    @FXML private TableView<Manufacturer> manufacturerTable;
+    @FXML private TableColumn<Manufacturer, String> nameCol;
+    @FXML private TextField searchField;
     private AddressModel addressModel = new AddressModel();
     private ManufacturerModel manufacturerModel = new ManufacturerModel();
     private TreeItem<Manufacturer> root = new TreeItem<>();
@@ -42,20 +41,36 @@ public class ManufacturersTabController {
     }
 
     @FXML private void initTable() {
-        nameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("manufacturerName"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("manufacturerName"));
         ObservableList<Manufacturer> manufacturerObservableList = FXCollections.observableArrayList();
-
         manufacturerObservableList.addAll(manufacturerModel.getManufacturers());
-        for (int i = 0; i < manufacturerObservableList.size(); i++)
-            root.getChildren().add(new TreeItem<>(manufacturerObservableList.get(i)));
+        FilteredList<Manufacturer> filteredList = new FilteredList<>(manufacturerObservableList, p -> true);
+
+        initSearchFields(filteredList);
+
+        SortedList<Manufacturer> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(manufacturerTable.comparatorProperty());
+        manufacturerTable.setItems(sortedList);
 
         manufacturerTable.getColumns().setAll(nameCol);
-        manufacturerTable.setRoot(root);
-        manufacturerTable.setShowRoot(false);
+    }
+
+    private void initSearchFields(FilteredList<Manufacturer> filteredList) {
+        searchField.textProperty().addListener((observableValue, s, t1) -> {
+            filteredList.setPredicate(Manufacturer -> {
+                if(t1 == null || t1.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = t1.toLowerCase();
+                if(Manufacturer.getManufacturerName().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
     }
 
     private void refreshTable() {
-        manufacturerTable.getRoot().getChildren().clear();
         initTable();
     }
 
@@ -69,7 +84,7 @@ public class ManufacturersTabController {
     }
 
     private Manufacturer getSelectedItem() {
-        return manufacturerTable.getSelectionModel().getSelectedItem().getValue();
+        return manufacturerTable.getSelectionModel().getSelectedItem();
     }
 
     private GridPane getDialogGridWithText() {

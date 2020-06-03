@@ -9,37 +9,36 @@ import com.guitarShop.java.models.objects.parts.Pickups;
 import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import com.guitarShop.java.models.PartsModel;
 import javafx.scene.text.Text;
 
-import java.io.IOException;
-import java.sql.SQLException;
-
 public class PartsTabController {
 
     @FXML
     private StackPane partsStackPane;
-    @FXML private JFXTreeTableView<Bridge> bridgeTable;
-    @FXML private JFXTreeTableView<GuitarType> typeTable;
-    @FXML private JFXTreeTableView<Pickups> pickupsTable;
-    @FXML private TreeTableColumn <Bridge, String> bridgeManCol;
-    @FXML private TreeTableColumn <Bridge, String> bridgeCol;
-    @FXML private TreeTableColumn <GuitarType, String> typeCol;
-    @FXML private TreeTableColumn <Pickups, String> pickupsManCol;
-    @FXML private TreeTableColumn <Pickups, String> pickupsCol;
+    @FXML private TableView<Bridge> bridgeTable;
+    @FXML private TableView<GuitarType> typeTable;
+    @FXML private TableView<Pickups> pickupsTable;
+    @FXML private TableColumn <Bridge, String> bridgeManCol;
+    @FXML private TableColumn <Bridge, String> bridgeCol;
+    @FXML private TableColumn <GuitarType, String> typeCol;
+    @FXML private TableColumn <Pickups, String> pickupsManCol;
+    @FXML private TableColumn <Pickups, String> pickupsCol;
+    @FXML private TextField typeSearchText;
+    @FXML private TextField pickupsSearchText;
+    @FXML private TextField bridgeSearchText;
     private PartsModel partsModel = new PartsModel();
     private ManufacturerModel manufacturerModel = new ManufacturerModel();
-    private TreeItem<Bridge> bridgesTreeRoot = new TreeItem<>();
-    private TreeItem<GuitarType> guitarTypeRoot = new TreeItem<>();
-    private TreeItem<Pickups> pickupsRoot = new TreeItem<>();
     private AlertFactory alertFactory = new AlertFactory();
 
     @FXML void initialize() {
@@ -50,59 +49,103 @@ public class PartsTabController {
         initBridgesTable();
         initGuitarTypesTable();
         initPickupsTable();
-
     }
 
     private void initPickupsTable() {
-        pickupsManCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
-        pickupsCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("manufacturer"));
+        pickupsManCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        pickupsCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
         ObservableList<Pickups> pickups = FXCollections.observableArrayList();
         pickups.addAll(partsModel.getPickups());
-        for (int i = 0; i < pickups.size(); i ++)
-            pickupsRoot.getChildren().add(new TreeItem<>(pickups.get(i)));
 
+        FilteredList<Pickups> filteredList = new FilteredList<>(pickups, p -> true);
+        initSearchFieldsPickups(filteredList);
+        SortedList<Pickups> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(pickupsTable.comparatorProperty());
+        pickupsTable.setItems(sortedList);
         pickupsTable.getColumns().setAll(pickupsManCol, pickupsCol);
-        pickupsTable.setRoot(pickupsRoot);
-        pickupsTable.setShowRoot(false);
+    }
+
+    private void initSearchFieldsPickups(FilteredList<Pickups> filteredList) {
+        pickupsSearchText.textProperty().addListener((observableValue, s, t1) -> {
+            filteredList.setPredicate(Pickups -> {
+                if(t1 == null || t1.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = t1.toLowerCase();
+                if(Pickups.getName().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
     }
 
     private void initGuitarTypesTable() {
         ObservableList<GuitarType> guitarTypes = FXCollections.observableArrayList();
-        typeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        typeCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         guitarTypes.addAll(partsModel.getGuitarTypes());
-        for (int i = 0; i < guitarTypes.size(); i ++)
-            guitarTypeRoot.getChildren().add(new TreeItem<>(guitarTypes.get(i)));
-
+        FilteredList<GuitarType> filteredList = new FilteredList<>(guitarTypes, p -> true);
+        initSearchFieldsTypes(filteredList);
+        SortedList<GuitarType> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(typeTable.comparatorProperty());
+        typeTable.setItems(sortedList);
+        typeTable.getColumns().setAll();
         typeTable.getColumns().setAll(typeCol);
-        typeTable.setRoot(guitarTypeRoot);
-        typeTable.setShowRoot(false);
+    }
+
+    private void initSearchFieldsTypes(FilteredList<GuitarType> filteredList) {
+        typeSearchText.textProperty().addListener((observableValue, s, t1) -> {
+            filteredList.setPredicate(GuitarType -> {
+                if(t1 == null || t1.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = t1.toLowerCase();
+                if(GuitarType.getName().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
     }
 
     private void initBridgesTable() {
         ObservableList<Bridge> bridges = FXCollections.observableArrayList();
-        bridgeManCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("manufacturer"));
-        bridgeCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
+        bridgeManCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        bridgeCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         bridges.addAll(partsModel.getBridges());
-        for (int i = 0; i < bridges.size(); i ++)
-            bridgesTreeRoot.getChildren().add(new TreeItem<>(bridges.get(i)));
-
+        FilteredList<Bridge> filteredList = new FilteredList<>(bridges, p -> true);
+        initSearchFieldsBridges(filteredList);
+        SortedList<Bridge> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(bridgeTable.comparatorProperty());
+        bridgeTable.setItems(sortedList);
+        bridgeTable.getColumns().setAll();
         bridgeTable.getColumns().setAll(bridgeManCol, bridgeCol);
-        bridgeTable.setRoot(bridgesTreeRoot);
-        bridgeTable.setShowRoot(false);
     }
 
-    public void refreshBridgesTable() throws IOException, SQLException {
-        bridgeTable.getRoot().getChildren().clear();
+    private void initSearchFieldsBridges(FilteredList<Bridge> filteredList) {
+        bridgeSearchText.textProperty().addListener((observableValue, s, t1) -> {
+            filteredList.setPredicate(Bridge -> {
+                if(t1 == null || t1.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = t1.toLowerCase();
+                if(Bridge.getName().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
+    }
+
+    public void refreshBridgesTable() {
         initBridgesTable();
     }
 
-    public void refreshPickupsTable() throws IOException, SQLException {
-        pickupsTable.getRoot().getChildren().clear();
+    public void refreshPickupsTable(){
         initPickupsTable();
     }
 
-    public void refreshTypeTable() throws IOException, SQLException {
-        typeTable.getRoot().getChildren().clear();
+    public void refreshTypeTable(){
         initGuitarTypesTable();
     }
 
@@ -114,15 +157,15 @@ public class PartsTabController {
     }
 
     private Bridge getSelectedBridge() {
-        return bridgeTable.getSelectionModel().getSelectedItem().getValue();
+        return bridgeTable.getSelectionModel().getSelectedItem();
     }
 
     private GuitarType getSelectedType() {
-        return typeTable.getSelectionModel().getSelectedItem().getValue();
+        return typeTable.getSelectionModel().getSelectedItem();
     }
 
     private Pickups getSelectedPickups() {
-        return pickupsTable.getSelectionModel().getSelectedItem().getValue();
+        return pickupsTable.getSelectionModel().getSelectedItem();
     }
 
     @FXML private void updateBridge() {
@@ -160,11 +203,7 @@ public class PartsTabController {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     partsModel.updateBridge(partsStackPane, getSelectedBridge().getBridgeID(), nameText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
-                    try {
-                        refreshBridgesTable();
-                    } catch (IOException | SQLException ex) {
-                        AlertFactory.makeRefreshTableError(partsStackPane);
-                    }
+                    refreshBridgesTable();
                     viewDialog.close();
                 }
             });
@@ -211,11 +250,7 @@ public class PartsTabController {
             @Override
             public void handle(ActionEvent actionEvent) {
                 partsModel.addBridge(partsStackPane, nameText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
-                try {
-                    refreshBridgesTable();
-                } catch (IOException | SQLException ex) {
-                    AlertFactory.makeRefreshTableError(partsStackPane);
-                }
+                refreshBridgesTable();
                 viewDialog.close();
             }
         });
@@ -232,11 +267,7 @@ public class PartsTabController {
     @FXML private void deleteBridge() {
         try {
             partsModel.deleteBridge(partsStackPane, getSelectedBridge().getBridgeID());
-            try {
-                refreshBridgesTable();
-            } catch (IOException | SQLException ex) {
-                AlertFactory.makeRefreshTableError(partsStackPane);
-            }
+            refreshBridgesTable();
         } catch (NullPointerException e) {
             AlertFactory.makeItemNotChoosenDialog(partsStackPane);
         }
@@ -270,11 +301,7 @@ public class PartsTabController {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     partsModel.updateType(partsStackPane, getSelectedType().getTypeID(), nameText.getText());
-                    try {
-                        refreshTypeTable();
-                    } catch (IOException | SQLException ex) {
-                        AlertFactory.makeRefreshTableError(partsStackPane);
-                    }
+                    refreshTypeTable();
                     viewDialog.close();
                 }
             });
@@ -319,11 +346,7 @@ public class PartsTabController {
             @Override
             public void handle(ActionEvent actionEvent) {
                 partsModel.addType(partsStackPane, nameText.getText());
-                try {
-                    refreshTypeTable();
-                } catch (IOException | SQLException ex) {
-                    AlertFactory.makeRefreshTableError(partsStackPane);
-                }
+                refreshTypeTable();
                 viewDialog.close();
             }
         });
@@ -340,11 +363,7 @@ public class PartsTabController {
     @FXML private void deleteType() {
         try {
             partsModel.deleteType(partsStackPane, getSelectedType().getTypeID());
-            try {
-                refreshTypeTable();
-            } catch (IOException | SQLException ex) {
-                AlertFactory.makeRefreshTableError(partsStackPane);
-            }
+            refreshTypeTable();
         } catch (NullPointerException e) {
             AlertFactory.makeItemNotChoosenDialog(partsStackPane);
         }
@@ -384,11 +403,7 @@ public class PartsTabController {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     partsModel.updatePickups(partsStackPane, getSelectedPickups().getPickupsID(), nameText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
-                    try {
-                        refreshPickupsTable();
-                    } catch (IOException | SQLException ex) {
-                        AlertFactory.makeRefreshTableError(partsStackPane);
-                    }
+                    refreshPickupsTable();
                     viewDialog.close();
                 }
             });
@@ -437,11 +452,7 @@ public class PartsTabController {
             @Override
             public void handle(ActionEvent actionEvent) {
                 partsModel.addPickups(partsStackPane, nameText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
-                try {
-                    refreshPickupsTable();
-                } catch (IOException | SQLException ex) {
-                    AlertFactory.makeRefreshTableError(partsStackPane);
-                }
+                refreshPickupsTable();
                 viewDialog.close();
             }
         });
@@ -458,11 +469,7 @@ public class PartsTabController {
     @FXML private void deletePickups() {
         try {
             partsModel.deletePickups(partsStackPane, getSelectedPickups().getPickupsID());
-            try {
-                refreshPickupsTable();
-            } catch (IOException | SQLException ex) {
-                AlertFactory.makeRefreshTableError(partsStackPane);
-            }
+            refreshPickupsTable();
         } catch (NullPointerException e) {
             AlertFactory.makeItemNotChoosenDialog(partsStackPane);
         }

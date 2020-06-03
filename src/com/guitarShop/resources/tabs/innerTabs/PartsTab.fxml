@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
@@ -33,19 +33,19 @@
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField layoutX="39.0" layoutY="76.0" prefHeight="26.0" prefWidth="298.0" />
+      <TextField fx:id="typeSearchText" layoutX="39.0" layoutY="76.0" prefHeight="26.0" prefWidth="298.0" />
       <Text layoutX="352.0" layoutY="66.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField layoutX="352.0" layoutY="77.0" prefHeight="26.0" prefWidth="298.0" />
+      <TextField fx:id="pickupsSearchText" layoutX="352.0" layoutY="77.0" prefHeight="26.0" prefWidth="298.0" />
       <Text layoutX="665.0" layoutY="67.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Search">
          <font>
             <Font size="18.0" />
          </font>
       </Text>
-      <TextField layoutX="665.0" layoutY="78.0" prefHeight="26.0" prefWidth="298.0" />
+      <TextField fx:id="bridgeSearchText" layoutX="665.0" layoutY="78.0" prefHeight="26.0" prefWidth="298.0" />
       <VBox layoutX="38.0" layoutY="346.0" prefHeight="313.0" prefWidth="300.0">
          <children>
             <JFXButton fx:id="updateTypeButton" layoutX="10.0" layoutY="10.0" onAction="#updateType" prefHeight="82.0" prefWidth="386.0" text="Update" />
@@ -67,23 +67,23 @@
             <JFXButton fx:id="deleteBridgeButton" layoutX="10.0" layoutY="174.0" onAction="#deleteBridge" prefHeight="82.0" prefWidth="386.0" text="Delete" />
          </children>
       </VBox>
-      <JFXTreeTableView fx:id="typeTable" layoutX="39.0" layoutY="119.0" prefHeight="173.0" prefWidth="300.0">
+      <TableView fx:id="typeTable" layoutX="39.0" layoutY="119.0" prefHeight="173.0" prefWidth="300.0">
          <columns>
-            <TreeTableColumn fx:id="typeCol" prefWidth="299.0" text="Type" />
+            <TableColumn fx:id="typeCol" prefWidth="299.0" text="Type" />
          </columns>
-      </JFXTreeTableView>
-      <JFXTreeTableView fx:id="pickupsTable" layoutX="351.0" layoutY="119.0" prefHeight="173.0" prefWidth="300.0">
+      </TableView>
+      <TableView fx:id="pickupsTable" layoutX="351.0" layoutY="119.0" prefHeight="173.0" prefWidth="300.0">
          <columns>
-            <TreeTableColumn fx:id="pickupsManCol" editable="false" prefWidth="153.0" text="Manufacturer" />
-            <TreeTableColumn fx:id="pickupsCol" editable="false" prefWidth="153.0" text="Pickups" />
+            <TableColumn fx:id="pickupsManCol" editable="false" prefWidth="153.0" text="Manufacturer" />
+            <TableColumn fx:id="pickupsCol" editable="false" prefWidth="153.0" text="Pickups" />
          </columns>
-      </JFXTreeTableView>
-      <JFXTreeTableView fx:id="bridgeTable" layoutX="664.0" layoutY="119.0" prefHeight="173.0" prefWidth="300.0">
+      </TableView>
+      <TableView fx:id="bridgeTable" layoutX="664.0" layoutY="119.0" prefHeight="173.0" prefWidth="300.0">
          <columns>
-            <TreeTableColumn fx:id="bridgeManCol" editable="false" prefWidth="154.0" text="Manufacturer" />
-            <TreeTableColumn fx:id="bridgeCol" editable="false" prefWidth="154.0" text="Bridge" />
+            <TableColumn fx:id="bridgeManCol" editable="false" prefWidth="154.0" text="Manufacturer" />
+            <TableColumn fx:id="bridgeCol" editable="false" prefWidth="154.0" text="Bridge" />
          </columns>
-      </JFXTreeTableView>
+      </TableView>
    </children>
    </AnchorPane>
 </StackPane>

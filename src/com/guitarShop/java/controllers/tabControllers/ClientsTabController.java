@@ -5,17 +5,18 @@ import com.guitarShop.java.models.AddressModel;
 import com.guitarShop.java.models.ClientsModel;
 import com.guitarShop.java.models.objects.Address;
 import com.guitarShop.java.models.objects.Client;
-import com.guitarShop.java.models.objects.Seller;
 import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -24,11 +25,14 @@ import java.util.ArrayList;
 
 public class ClientsTabController {
 
-    @FXML StackPane clientsStackPane;
-    @FXML JFXTreeTableView<Client> clientsTable;
-    @FXML TreeTableColumn<Client, String> nameCol;
-    @FXML TreeTableColumn<Client, String> surnameCol;
-    @FXML TreeTableColumn<Client, String> peselCol;
+    @FXML private StackPane clientsStackPane;
+    @FXML private TableView<Client> clientsTable;
+    @FXML private TableColumn<Client, String> nameCol;
+    @FXML private TableColumn<Client, String> surnameCol;
+    @FXML private TableColumn<Client, String> peselCol;
+    @FXML private TextField nameSearchText;
+    @FXML private TextField surnameSearchText;
+    @FXML private TextField peselSearchText;
     private AlertFactory alertFactory = new AlertFactory();
     private ClientsModel clientsModel = new ClientsModel();
     private AddressModel addressModel = new AddressModel();
@@ -39,18 +43,60 @@ public class ClientsTabController {
     }
 
     @FXML private void initTable() {
-        nameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
-        surnameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("surname"));
-        peselCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("pesel"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        surnameCol.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        peselCol.setCellValueFactory(new PropertyValueFactory<>("pesel"));
 
         ObservableList<Client> clients = FXCollections.observableArrayList();
         clients.addAll(clientsModel.getClients());
 
-        for(int i = 0; i < clients.size(); i++)
-            root.getChildren().add(new TreeItem<Client>(clients.get(i)));
+        FilteredList<Client> filteredList = new FilteredList<>(clients, p -> true);
+        initSearchFields(filteredList);
+        SortedList<Client> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(clientsTable.comparatorProperty());
+        clientsTable.setItems(sortedList);
+        clientsTable.getColumns().setAll();
+
         clientsTable.getColumns().setAll(nameCol, surnameCol, peselCol);
-        clientsTable.setRoot(root);
-        clientsTable.setShowRoot(false);
+    }
+
+    private void initSearchFields(FilteredList<Client> filteredList) {
+        nameSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Client -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Client.getName().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
+        surnameSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Client -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Client.getSurname().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
+        peselSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Client -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Client.getPesel().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
     }
 
     private GridPane getGridPaneWithText() {
@@ -74,12 +120,11 @@ public class ClientsTabController {
     }
 
     private void refreshTable() {
-        clientsTable.getRoot().getChildren().clear();
         initTable();
     }
 
     private Client getSelectedItem() {
-        return clientsTable.getSelectionModel().getSelectedItem().getValue();
+        return clientsTable.getSelectionModel().getSelectedItem();
     }
 
     @FXML private void view() {

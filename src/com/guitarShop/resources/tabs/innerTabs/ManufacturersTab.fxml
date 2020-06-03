@@ -11,13 +11,15 @@
 <?import javafx.scene.text.Text?>
 
 
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <StackPane fx:id="manufacturersStackPane"
            maxHeight="-Infinity" maxWidth="-Infinity"
            minHeight="-Infinity" minWidth="-Infinity"
            prefHeight="750.0" prefWidth="1000.0"
            xmlns="http://javafx.com/javafx/11.0.1"
            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="com.guitarShop.java.controllers.tabControllers.innerTabControllers.ManufacturersTabController">
+           fx:controller="com.guitarShop.java.controllers.tabControllers.innerTabControllers.ManufacturersTabController">
    <children>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="750.0" prefWidth="1000.0">
          <children>
@@ -26,11 +28,11 @@
                   <Font size="27.0" />
                </font>
             </Text>
-            <JFXTreeTableView fx:id="manufacturerTable" layoutX="53.0" layoutY="160.0" prefHeight="488.0" prefWidth="402.0">
+            <TableView fx:id="manufacturerTable" layoutX="53.0" layoutY="160.0" prefHeight="488.0" prefWidth="402.0">
                <columns>
-                  <TreeTableColumn fx:id="nameCol" prefWidth="401.0" text="Name" />
+                  <TableColumn fx:id="nameCol" prefWidth="401.0" text="Name" />
                </columns>
-            </JFXTreeTableView>
+            </TableView>
             <VBox layoutX="528.0" layoutY="213.0" prefHeight="325.0" prefWidth="385.0">
                <children>
                   <JFXButton fx:id="viewButton" onAction="#view" prefHeight="82.0" prefWidth="386.0" text="View" />
