@@ -10,17 +10,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <StackPane fx:id="sellersStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.SellersTabController">
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0">
          <children>
-            <JFXTreeTableView fx:id="sellersTable" layoutX="41.0" layoutY="62.0" prefHeight="562.0" prefWidth="552.0">
+            <TableView fx:id="sellersTable" layoutX="41.0" layoutY="62.0" prefHeight="562.0" prefWidth="552.0">
                <columns>
-                  <TreeTableColumn fx:id="nameCol" prefWidth="153.0" text="Name" />
-                  <TreeTableColumn fx:id="surnameCol" prefWidth="215.0" text="Surname" />
-                  <TreeTableColumn fx:id="peselCol" prefWidth="183.0" text="Pesel" />
+                  <TableColumn fx:id="nameCol" prefWidth="153.0" text="Name" />
+                  <TableColumn fx:id="surnameCol" prefWidth="215.0" text="Surname" />
+                  <TableColumn fx:id="peselCol" prefWidth="183.0" text="Pesel" />
                </columns>
-            </JFXTreeTableView>
+            </TableView>
             <VBox layoutX="685.0" layoutY="62.0" prefHeight="278.0" prefWidth="226.0">
                <children>
                   <JFXButton fx:id="viewButton" onAction="#view" prefHeight="71.0" prefWidth="242.0" text="View" />

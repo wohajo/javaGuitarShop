@@ -9,6 +9,8 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TableColumn?>
 <StackPane fx:id="clientsOrdersStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.innerTabControllers.ClientsOrdersTabController">
    <children>
       <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="750.0" prefWidth="1000.0">
@@ -55,18 +57,18 @@
                   <Font size="24.0" />
                </font>
             </Text>
-            <JFXTreeTableView fx:id="itemsTable" layoutX="29.0" layoutY="317.0" prefHeight="400.0" prefWidth="380.0">
+            <TableView fx:id="itemsTable" layoutX="29.0" layoutY="317.0" prefHeight="400.0" prefWidth="380.0">
                <columns>
-                  <TreeTableColumn fx:id="manCol" prefWidth="133.0" text="Manufacturer" />
-                  <TreeTableColumn fx:id="modelCol" prefWidth="137.0" text="Model" />
-                  <TreeTableColumn fx:id="priceCol" prefWidth="109.0" text="Price" />
+                  <TableColumn fx:id="manCol" prefWidth="133.0" text="Manufacturer" />
+                  <TableColumn fx:id="modelCol" prefWidth="137.0" text="Model" />
+                  <TableColumn fx:id="priceCol" prefWidth="109.0" text="Price" />
                </columns>
-            </JFXTreeTableView>
-            <JFXTreeTableView fx:id="quantityTable" layoutX="409.0" layoutY="317.0" prefHeight="400.0" prefWidth="97.0">
+            </TableView>
+            <TableView fx:id="quantityTable" layoutX="409.0" layoutY="317.0" prefHeight="400.0" prefWidth="97.0">
                <columns>
-                  <TreeTableColumn fx:id="quantityCol" prefWidth="96.0" text="Quantity" />
+                  <TableColumn fx:id="quantityCol" prefWidth="96.0" text="Quantity" />
                </columns>
-            </JFXTreeTableView>
+            </TableView>
             
          </children>
       </AnchorPane>

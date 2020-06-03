@@ -6,13 +6,13 @@ import com.guitarShop.java.models.objects.Order;
 import com.guitarShop.java.models.objects.OrderGuitar;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTextArea;
-import com.jfoenix.controls.JFXTreeTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.StackPane;
 
 import java.sql.SQLException;
@@ -26,12 +26,12 @@ public class ClientsOrdersTabController {
     @FXML private StackPane clientsOrdersStackPane;
     @FXML private JFXComboBox clientsComboBox;
     @FXML private JFXComboBox orderComboBox;
-    @FXML private JFXTreeTableView<Guitar> itemsTable;
-    @FXML private JFXTreeTableView<OrderGuitar> quantityTable;
-    @FXML private TreeTableColumn<Guitar, String> manCol;
-    @FXML private TreeTableColumn<Guitar, String> modelCol;
-    @FXML private TreeTableColumn<Guitar, Double> priceCol;
-    @FXML private TreeTableColumn<OrderGuitar, Integer> quantityCol;
+    @FXML private TableView<Guitar> itemsTable;
+    @FXML private TableView<OrderGuitar> quantityTable;
+    @FXML private TableColumn<Guitar, String> manCol;
+    @FXML private TableColumn<Guitar, String> modelCol;
+    @FXML private TableColumn<Guitar, Double> priceCol;
+    @FXML private TableColumn<OrderGuitar, Integer> quantityCol;
     private TreeItem<Guitar> itemsRoot = new TreeItem<>();
     private TreeItem<OrderGuitar> ordersRoot = new TreeItem<>();
     private int itemCount = 0;
@@ -48,30 +48,18 @@ public class ClientsOrdersTabController {
     }
 
    private void initTable(int orderID) {
-        manCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, String>("manufacturer"));
-        modelCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, String>("model"));
-        priceCol.setCellValueFactory(new TreeItemPropertyValueFactory<Guitar, Double>("guitarPrice"));
+        manCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("manufacturer"));
+        modelCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("model"));
+        priceCol.setCellValueFactory(new PropertyValueFactory<Guitar, Double>("guitarPrice"));
 
         ObservableList<Guitar> stock = FXCollections.observableArrayList();
         stock.addAll(stockModel.getStockByOrderID(orderID));
+        itemsTable.setItems(stock);
 
-        for(int i = 0; i < stock.size(); i++)
-            itemsRoot.getChildren().add(new TreeItem<Guitar>(stock.get(i)));
-
-        itemsTable.getColumns().setAll(manCol, modelCol, priceCol);
-        itemsTable.setRoot(itemsRoot);
-        itemsTable.setShowRoot(false);
-
-        quantityCol.setCellValueFactory(new TreeItemPropertyValueFactory<OrderGuitar, Integer>("quantity"));
+        quantityCol.setCellValueFactory(new PropertyValueFactory<OrderGuitar, Integer>("quantity"));
         ObservableList<OrderGuitar> orderGuitars = FXCollections.observableArrayList();
         orderGuitars.addAll(ordersModel.getOrderGuitarsByOrderID(clientsOrdersStackPane, orderID));
-
-        for(int i = 0; i < orderGuitars.size(); i++)
-            ordersRoot.getChildren().add(new TreeItem<OrderGuitar>(orderGuitars.get(i)));
-
-        quantityTable.getColumns().setAll(quantityCol);
-        quantityTable.setRoot(ordersRoot);
-        quantityTable.setShowRoot(false);
+        quantityTable.setItems(orderGuitars);
    }
 
     @FXML private void changeClient() {
@@ -80,10 +68,10 @@ public class ClientsOrdersTabController {
         sellerBox.setText("");
         priceBox.setText("");
 
-        if (itemsTable.getRoot() != null) {
+        if (itemsTable.getItems().size() != 0) {
             orderComboBox.setValue(null);
-            itemsTable.getRoot().getChildren().clear();
-            quantityTable.getRoot().getChildren().clear();
+            itemsTable.getItems().clear();
+            quantityTable.getItems().clear();
         }
 
         int clientID = getSelectedClient().getClientID();
@@ -102,8 +90,8 @@ public class ClientsOrdersTabController {
             initTable(orderID);
             int totalPrice = 0;
 
-           for(int i = 0; i < itemsTable.getExpandedItemCount(); i++)
-                totalPrice += itemsTable.getTreeItem(i).getValue().getGuitarPrice() * quantityTable.getTreeItem(i).getValue().getQuantity();
+           for(int i = 0; i < itemsTable.getItems().size(); i++)
+                totalPrice += itemsTable.getItems().get(i).getGuitarPrice() * quantityTable.getItems().get(i).getQuantity();
 
             priceBox.setText(totalPrice + "$");
         }

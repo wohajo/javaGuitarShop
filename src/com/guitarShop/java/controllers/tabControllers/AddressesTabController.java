@@ -1,41 +1,36 @@
 package com.guitarShop.java.controllers.tabControllers;
 
-import com.guitarShop.java.controllers.MainController;
-import com.guitarShop.java.controllers.tabControllers.innerTabControllers.PartsTabController;
 import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.models.AddressModel;
 import com.guitarShop.java.models.objects.Address;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXDialog;
 import com.jfoenix.controls.JFXDialogLayout;
-import com.jfoenix.controls.JFXTreeTableView;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Parent;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.control.TreeItem;
-import javafx.scene.control.TreeTableColumn;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
+import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
-import java.io.IOException;
-
-
 public class AddressesTabController {
 
     @FXML private StackPane addressesStackPane;
-    @FXML private JFXTreeTableView<Address> addressTable;
-    @FXML private TreeTableColumn<Address, String> cityCol;
-    @FXML private TreeTableColumn<Address, String> postcodeCol;
-    @FXML private TreeTableColumn<Address, String> streetCol;
+    @FXML private TableView<Address> addressTable;
+    @FXML private TableColumn<Address, String> cityCol;
+    @FXML private TableColumn<Address, String> postcodeCol;
+    @FXML private TableColumn<Address, String> streetCol;
+    @FXML private TextField citySearchText;
+    @FXML private TextField postcodeSearchText;
+    @FXML private TextField streetSearchText;
+
     private AddressModel addressModel = new AddressModel();
     private TreeItem<Address> root = new TreeItem<>();
     private AlertFactory alertFactory = new AlertFactory();
@@ -45,18 +40,57 @@ public class AddressesTabController {
     }
 
     @FXML private void initTable() {
-        cityCol.setCellValueFactory(new TreeItemPropertyValueFactory<Address, String>("city"));
-        postcodeCol.setCellValueFactory(new TreeItemPropertyValueFactory<Address, String>("postcode"));
-        streetCol.setCellValueFactory(new TreeItemPropertyValueFactory<Address, String>("street"));
+        cityCol.setCellValueFactory(new PropertyValueFactory<>("city"));
+        postcodeCol.setCellValueFactory(new PropertyValueFactory<>("postcode"));
+        streetCol.setCellValueFactory(new PropertyValueFactory<>("street"));
 
         ObservableList<Address> addresses = FXCollections.observableArrayList();
-        addresses.addAll(addressModel.getAddresses());
-        for(int i = 0; i < addresses.size(); i ++)
-            root.getChildren().add(new TreeItem<>(addresses.get(i)));
-
+        addresses.setAll(addressModel.getAddresses());
+        FilteredList<Address> filteredList = new FilteredList<>(addresses, p -> true);
+        initSearchFields(filteredList);
+        SortedList<Address> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(addressTable.comparatorProperty());
+        addressTable.setItems(sortedList);
         addressTable.getColumns().setAll(cityCol, postcodeCol, streetCol);
-        addressTable.setRoot(root);
-        addressTable.setShowRoot(false);
+    }
+
+    private void initSearchFields(FilteredList<Address> filteredList) {
+        citySearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Address -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Address.getCity().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
+        streetSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Address -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Address.getStreet().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
+        postcodeSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Address -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Address.getPostcode().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
     }
 
     private GridPane getGridPaneWithText() {
@@ -77,11 +111,10 @@ public class AddressesTabController {
     }
 
     private Address getSelectedItem() {
-        return addressTable.getSelectionModel().getSelectedItem().getValue();
+        return addressTable.getSelectionModel().getSelectedItem();
     }
 
     private void refreshTable() {
-        addressTable.getRoot().getChildren().clear();
         initTable();
     }
 

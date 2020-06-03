@@ -43,7 +43,11 @@ public class AlertFactory {
         makeAlertDialog(stackPane, "Error", "Connection error or incorrect data.", "Close");
     }
 
-    public static void makeNotEnoughItemsInStock(StackPane ordersInfoStackPane) {
-        makeAlertDialog(ordersInfoStackPane, "Error", "Not enough items in stock, choose less.", "Close");
+    public static void makeNotEnoughItemsInStock(StackPane stackPane) {
+        makeAlertDialog(stackPane, "Error", "Not enough items in stock, choose less.", "Close");
+    }
+
+    public static void makeFillAllFieldsError(StackPane stackPane) {
+        makeAlertDialog(stackPane, "Error", "You need to fill every field in the dialog.", "Close");
     }
 }

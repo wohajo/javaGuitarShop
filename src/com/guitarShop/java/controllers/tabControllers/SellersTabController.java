@@ -6,16 +6,18 @@ import com.guitarShop.java.models.AddressModel;
 import com.guitarShop.java.models.SellersModel;
 import com.guitarShop.java.models.objects.Address;
 import com.guitarShop.java.models.objects.Seller;
-import com.guitarShop.java.models.objects.parts.Pickups;
 import com.jfoenix.controls.*;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
@@ -26,10 +28,13 @@ import java.util.ArrayList;
 public class SellersTabController {
 
     @FXML StackPane sellersStackPane;
-    @FXML JFXTreeTableView<Seller> sellersTable;
-    @FXML TreeTableColumn<Seller, String> nameCol;
-    @FXML TreeTableColumn<Seller, String> surnameCol;
-    @FXML TreeTableColumn<Seller, String> peselCol;
+    @FXML TableView<Seller> sellersTable;
+    @FXML TableColumn<Seller, String> nameCol;
+    @FXML TableColumn<Seller, String> surnameCol;
+    @FXML TableColumn<Seller, String> peselCol;
+    @FXML private TextField nameSearchText;
+    @FXML private TextField surnameSearchText;
+    @FXML private TextField peselSearchText;
     private AlertFactory alertFactory = new AlertFactory();
     private SellersModel sellersModel = new SellersModel();
     private AddressModel addressModel = new AddressModel();
@@ -41,27 +46,66 @@ public class SellersTabController {
     }
 
     @FXML private void initTable() {
-        nameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("name"));
-        surnameCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("surname"));
-        peselCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("pesel"));
+        nameCol.setCellValueFactory(new PropertyValueFactory<>("name"));
+        surnameCol.setCellValueFactory(new PropertyValueFactory<>("surname"));
+        peselCol.setCellValueFactory(new PropertyValueFactory<>("pesel"));
 
         ObservableList<Seller> sellers = FXCollections.observableArrayList();
         sellers.addAll(sellersModel.getSellers());
 
-        for(int i = 0; i < sellers.size(); i++)
-            root.getChildren().add(new TreeItem<>(sellers.get(i)));
+        FilteredList<Seller> filteredList = new FilteredList<>(sellers, p -> true);
+        initSearchFields(filteredList);
+        SortedList<Seller> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(sellersTable.comparatorProperty());
+        sellersTable.setItems(sortedList);
         sellersTable.getColumns().setAll(nameCol, surnameCol, peselCol);
-        sellersTable.setRoot(root);
-        sellersTable.setShowRoot(false);
+    }
+
+    private void initSearchFields(FilteredList<Seller> filteredList) {
+        nameSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Seller -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Seller.getName().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
+        surnameSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Seller -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Seller.getSurname().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
+        peselSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Seller -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Seller.getPesel().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
     }
 
     private void refreshTable() {
-        sellersTable.getRoot().getChildren().clear();
         initTable();
     }
 
     private Seller getSelectedItem() {
-        return sellersTable.getSelectionModel().getSelectedItem().getValue();
+        return sellersTable.getSelectionModel().getSelectedItem();
     }
 
     private GridPane getGridPaneWithText() {

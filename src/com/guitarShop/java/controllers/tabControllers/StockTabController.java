@@ -115,9 +115,12 @@ public class StockTabController {
                     return true;
                 }
                 int filter = Integer.parseInt(newValue);
-                if(Guitar.getNumberOfGuitars() >= filter)
+                if(Guitar.getNumberOfGuitars() >= filter && maxCountText.getText().isEmpty()) {
                     return true;
-
+                } else {
+                    if(Guitar.getNumberOfGuitars() >= filter && Guitar.getNumberOfGuitars() <= Integer.parseInt(maxCountText.getText()))
+                        return true;
+                }
                 return false;
             });
         });
@@ -127,9 +130,46 @@ public class StockTabController {
                     return true;
                 }
                 int filter = Integer.parseInt(newValue);
-                if(Guitar.getNumberOfGuitars() <= filter)
+                if(Guitar.getNumberOfGuitars() <= filter) {
+                    if (minCountText.getText().isEmpty()) {
+                        return true;
+                    } else {
+                        if (Guitar.getNumberOfGuitars() <= filter && Guitar.getNumberOfGuitars() >= Integer.parseInt(minCountText.getText()))
+                            return true;
+                    }
+                }
+                return false;
+            });
+        });
+        minPriceText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Guitar -> {
+                if(newValue == null || newValue.isEmpty()) {
                     return true;
-
+                }
+                int filter = Integer.parseInt(newValue);
+                if(Guitar.getGuitarPrice() >= filter && maxPriceText.getText().isEmpty()) {
+                    return true;
+                } else {
+                    if(Guitar.getGuitarPrice() >= filter && Guitar.getGuitarPrice() <= Integer.parseInt(maxPriceText.getText()))
+                        return true;
+                }
+                return false;
+            });
+        });
+        maxPriceText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Guitar -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                int filter = Integer.parseInt(newValue);
+                if(Guitar.getGuitarPrice() <= filter) {
+                    if (minPriceText.getText().isEmpty()) {
+                        return true;
+                    } else {
+                        if (Guitar.getGuitarPrice() <= filter && Guitar.getGuitarPrice() >= Integer.parseInt(minPriceText.getText()))
+                            return true;
+                    }
+                }
                 return false;
             });
         });
@@ -319,26 +359,30 @@ public class StockTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    int guitarID = getSelectedItem().getGuitarID();
-                    int manufacturerID = manufacturerJFXListView.getSelectionModel().getSelectedItem().getManufacturerID();
-                    String model = modelText.getText();
-                    String modelDesc = descText.getText();
-                    int numbersOfStrings = Integer.valueOf(stringsText.getText());
-                    int guitarPrice = Integer.valueOf(priceText.getText());
-                    int guitarTypeID = guitarTypeJFXListView.getSelectionModel().getSelectedItem().getTypeID();
-                    int pickupsTypeID = pickupsJFXListView.getSelectionModel().getSelectedItem().getPickupsID();
-                    int bridgeTypeID = bridgeJFXListView.getSelectionModel().getSelectedItem().getBridgeID();
-                    Boolean lockingTuners = lockingTunersToggle.isSelected();
-                    int quantity = Integer.valueOf(quantityText.getText());
+                    if (modelText.getText() == null || descText.getText() == null || stringsText.getText() == null || priceText.getText() == null || quantityText.getText() == null) {
+                        AlertFactory.makeFillAllFieldsError(stockStackPane);
+                    } else {
+                        int guitarID = getSelectedItem().getGuitarID();
+                        int manufacturerID = manufacturerJFXListView.getSelectionModel().getSelectedItem().getManufacturerID();
+                        String model = modelText.getText();
+                        String modelDesc = descText.getText();
+                        int numbersOfStrings = Integer.valueOf(stringsText.getText());
+                        int guitarPrice = Integer.valueOf(priceText.getText());
+                        int guitarTypeID = guitarTypeJFXListView.getSelectionModel().getSelectedItem().getTypeID();
+                        int pickupsTypeID = pickupsJFXListView.getSelectionModel().getSelectedItem().getPickupsID();
+                        int bridgeTypeID = bridgeJFXListView.getSelectionModel().getSelectedItem().getBridgeID();
+                        Boolean lockingTuners = lockingTunersToggle.isSelected();
+                        int quantity = Integer.valueOf(quantityText.getText());
 
-                    try {
-                        stockModel.updateGuitar(stockStackPane, guitarID, manufacturerID, model, modelDesc, numbersOfStrings, guitarPrice,
-                                guitarTypeID, pickupsTypeID, bridgeTypeID, lockingTuners, quantity);
-                        refreshTable();
-                    } catch (SQLException e) {
-                        alertFactory.makeAlertDialog(stockStackPane, "Error", "Error updating guitar.", "Close");
+                        try {
+                            stockModel.updateGuitar(stockStackPane, guitarID, manufacturerID, model, modelDesc, numbersOfStrings, guitarPrice,
+                                    guitarTypeID, pickupsTypeID, bridgeTypeID, lockingTuners, quantity);
+                            refreshTable();
+                        } catch (SQLException e) {
+                            alertFactory.makeAlertDialog(stockStackPane, "Error", "Error updating guitar.", "Close");
+                        }
+                        viewDialog.close();
                     }
-                    viewDialog.close();
                 }
             });
 
@@ -429,20 +473,26 @@ public class StockTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    int manufacturerID = manufacturerJFXListView.getSelectionModel().getSelectedItem().getManufacturerID();
-                    String model = modelText.getText();
-                    String modelDesc = descText.getText();
-                    int numbersOfStrings = Integer.valueOf(stringsText.getText());
-                    int guitarPrice = Integer.valueOf(priceText.getText());
-                    int guitarTypeID = guitarTypeJFXListView.getSelectionModel().getSelectedItem().getTypeID();
-                    int pickupsTypeID = pickupsJFXListView.getSelectionModel().getSelectedItem().getPickupsID();
-                    int bridgeTypeID = bridgeJFXListView.getSelectionModel().getSelectedItem().getBridgeID();
-                    Boolean lockingTuners = lockingTunersToggle.isSelected();
-                    int quantity = Integer.valueOf(quantityText.getText());
-                    stockModel.addGuitar(stockStackPane, manufacturerID, model, modelDesc, numbersOfStrings, guitarPrice,
-                            guitarTypeID, pickupsTypeID, bridgeTypeID, lockingTuners, quantity);
-                    refreshTable();
-                    viewDialog.close();
+                    if (modelText.getText() == "" || descText.getText() == "" || stringsText.getText() == "" || priceText.getText() == "" || quantityText.getText() == ""
+                    || manufacturerJFXListView.getSelectionModel().getSelectedItem() == null || guitarTypeJFXListView.getSelectionModel().getSelectedItem() == null ||
+                            pickupsJFXListView.getSelectionModel().getSelectedItem() == null || bridgeJFXListView.getSelectionModel().getSelectedItem() == null) {
+                        AlertFactory.makeFillAllFieldsError(stockStackPane);
+                    } else {
+                        int manufacturerID = manufacturerJFXListView.getSelectionModel().getSelectedItem().getManufacturerID();
+                        String model = modelText.getText();
+                        String modelDesc = descText.getText();
+                        int numbersOfStrings = Integer.valueOf(stringsText.getText());
+                        int guitarPrice = Integer.valueOf(priceText.getText());
+                        int guitarTypeID = guitarTypeJFXListView.getSelectionModel().getSelectedItem().getTypeID();
+                        int pickupsTypeID = pickupsJFXListView.getSelectionModel().getSelectedItem().getPickupsID();
+                        int bridgeTypeID = bridgeJFXListView.getSelectionModel().getSelectedItem().getBridgeID();
+                        Boolean lockingTuners = lockingTunersToggle.isSelected();
+                        int quantity = Integer.valueOf(quantityText.getText());
+                        stockModel.addGuitar(stockStackPane, manufacturerID, model, modelDesc, numbersOfStrings, guitarPrice,
+                                guitarTypeID, pickupsTypeID, bridgeTypeID, lockingTuners, quantity);
+                        refreshTable();
+                        viewDialog.close();
+                    }
                 }
             });
 
@@ -454,7 +504,11 @@ public class StockTabController {
     }
 
     @FXML public void delete() throws SQLException {
-        stockModel.deleteGuitar(stockStackPane, getSelectedItem().getGuitarID());
-        refreshTable();
+        if (getSelectedItem() == null) {
+            AlertFactory.makeItemNotChoosenDialog(stockStackPane);
+        } else {
+            stockModel.deleteGuitar(stockStackPane, getSelectedItem().getGuitarID());
+            refreshTable();
+        }
     }
 }

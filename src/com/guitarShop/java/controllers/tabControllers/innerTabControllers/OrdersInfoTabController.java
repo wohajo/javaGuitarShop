@@ -12,28 +12,37 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
 
+import javax.script.Bindings;
 import java.io.IOException;
 import java.time.LocalDate;
+import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
 public class OrdersInfoTabController {
 
-    @FXML StackPane ordersInfoStackPane;
-    @FXML JFXTreeTableView<Order> ordersTable;
-    @FXML TreeTableColumn<Order, String> clientCol;
-    @FXML TreeTableColumn<Order, String> sellerCol;
-    @FXML TreeTableColumn<Order, LocalDate> dateCol;
+    @FXML private StackPane ordersInfoStackPane;
+    @FXML private TableView<Order> ordersTable;
+    @FXML private TableColumn<Order, String> clientCol;
+    @FXML private TableColumn<Order, String> sellerCol;
+    @FXML private TableColumn<Order, LocalDate> dateCol;
+    @FXML private TextField clientSearchText;
+    @FXML private TextField sellerSearchText;
+    @FXML private DatePicker dateFromPicker;
+    @FXML private DatePicker dateToPicker;
     private TreeItem<Order> root = new TreeItem<>();
     private OrdersModel ordersModel = new OrdersModel();
     private StockModel stockModel = new StockModel();
@@ -46,18 +55,46 @@ public class OrdersInfoTabController {
     }
 
     public void initTable() {
-        clientCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("client"));
-        sellerCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("seller"));
-        dateCol.setCellValueFactory(new TreeItemPropertyValueFactory<>("date"));
+        clientCol.setCellValueFactory(new PropertyValueFactory<>("client"));
+        sellerCol.setCellValueFactory(new PropertyValueFactory<>("seller"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         ObservableList<Order> orders = FXCollections.observableArrayList();
         orders.addAll(ordersModel.getOrders());
-        for (int i = 0; i < orders.size(); i++)
-            root.getChildren().add(new TreeItem<>(orders.get(i)));
 
+        FilteredList<Order> filteredList = new FilteredList<>(orders, p -> true);
+        initSearchFields(filteredList);
+        SortedList<Order> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(ordersTable.comparatorProperty());
+        ordersTable.setItems(sortedList);
         ordersTable.getColumns().setAll(clientCol, sellerCol, dateCol);
-        ordersTable.setRoot(root);
-        ordersTable.setShowRoot(false);
+    }
+
+    private void initSearchFields(FilteredList<Order> filteredList) {
+        clientSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Order -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Order.getClient().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
+        sellerSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
+            filteredList.setPredicate(Order -> {
+                if(newValue == null || newValue.isEmpty()) {
+                    return true;
+                }
+                String lowercaseFilter = newValue.toLowerCase();
+                if(Order.getSeller().toLowerCase().contains(lowercaseFilter))
+                    return true;
+
+                return false;
+            });
+        });
     }
 
     private GridPane getGridPaneWithText() {
@@ -76,11 +113,10 @@ public class OrdersInfoTabController {
     }
 
     private Order getSelectedItem() {
-        return ordersTable.getSelectionModel().getSelectedItem().getValue();
+        return ordersTable.getSelectionModel().getSelectedItem();
     }
 
     private void refreshTable() {
-        ordersTable.getRoot().getChildren().clear();
         initTable();
     }
 

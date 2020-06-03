@@ -10,17 +10,19 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <StackPane fx:id="addressesStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.AddressesTabController">
    <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
       <children>
          <Label layoutX="695.0" layoutY="391.0" text="City" />
-         <JFXTreeTableView fx:id="addressTable" layoutX="31.0" layoutY="65.0" prefHeight="528.0" prefWidth="548.0">
+         <TableView fx:id="addressTable" layoutX="31.0" layoutY="65.0" prefHeight="528.0" prefWidth="548.0">
             <columns>
-               <TreeTableColumn fx:id="cityCol" prefWidth="196.0" text="City" />
-               <TreeTableColumn fx:id="postcodeCol" minWidth="0.0" prefWidth="119.0" text="Postcode" />
-               <TreeTableColumn fx:id="streetCol" prefWidth="232.0" text="Street" />
+               <TableColumn fx:id="cityCol" prefWidth="196.0" text="City" />
+               <TableColumn fx:id="postcodeCol" minWidth="0.0" prefWidth="119.0" text="Postcode" />
+               <TableColumn fx:id="streetCol" prefWidth="232.0" text="Street" />
             </columns>
-         </JFXTreeTableView>
+         </TableView>
          <VBox layoutX="695.0" layoutY="68.0" prefHeight="240.0" prefWidth="191.0">
             <children>
                <JFXButton fx:id="viewButton" onAction="#view" prefHeight="80.0" prefWidth="191.0" text="View" />
