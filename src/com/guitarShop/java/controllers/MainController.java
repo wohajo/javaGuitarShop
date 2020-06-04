@@ -1,6 +1,7 @@
 package com.guitarShop.java.controllers;
 
 import com.guitarShop.java.controllers.tabControllers.StockTabController;
+import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.helpers.PasswordManager;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -19,8 +20,14 @@ public class MainController {
     @FXML private PasswordField passwordField;
     @FXML private TabPane tabPane;
 
+    @FXML private void initialize() {
+
+    }
+
     public void setStage(Stage primaryStage) {
         this.primaryStage = primaryStage;
+        AlertFactory.preventSpecial(loginField);
+        AlertFactory.preventSpecial(passwordField);
     }
 
     @FXML

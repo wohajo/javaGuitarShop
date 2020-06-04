@@ -83,6 +83,9 @@ public class OrdersInfoTabController {
     }
 
     private void initSearchFields(FilteredList<Order> filteredList) {
+        AlertFactory.preventInjection(sellerSearchText);
+        AlertFactory.preventInjection(clientSearchText);
+
         clientSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(Order -> {
                 if(newValue == null || newValue.isEmpty()) {
@@ -281,6 +284,8 @@ public class OrdersInfoTabController {
             Label countLabel2 = new Label("Quantity");
             TextField addedCountText = new TextField("0");
             addedCountText.setEditable(false);
+
+            AlertFactory.restrictToNumbers(countText);
 
             ObservableList<Seller> sellers = sellersModel.getSellers();
             sellerBox.setItems(sellers);

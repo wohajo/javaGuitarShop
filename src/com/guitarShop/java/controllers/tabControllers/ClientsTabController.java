@@ -61,6 +61,9 @@ public class ClientsTabController {
     }
 
     private void initSearchFields(FilteredList<Client> filteredList) {
+        AlertFactory.preventInjection(nameSearchText);
+        AlertFactory.preventInjection(surnameSearchText);
+
         nameSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(Client -> {
                 if(newValue == null || newValue.isEmpty()) {
@@ -183,6 +186,12 @@ public class ClientsTabController {
             TextField peselText = new TextField(getSelectedItem().getPesel());
             TextField emailText = new TextField(getSelectedItem().getEmail());
 
+            AlertFactory.preventInjection(nameText);
+            AlertFactory.preventInjection(surnameText);
+            AlertFactory.preventSpecial(emailText);
+            //AlertFactory.preventSpecial();
+            //AlertFactory.preventSpecial();
+
             JFXListView<Address> addressJFXListView = new JFXListView<>();
             addressJFXListView.setMaxWidth(200);
             addressJFXListView.setMaxHeight(100);
@@ -263,6 +272,12 @@ public class ClientsTabController {
             TextField phoneText = new TextField();
             TextField peselText = new TextField();
             TextField emailText = new TextField();
+
+            AlertFactory.preventInjection(nameText);
+            AlertFactory.preventInjection(surnameText);
+            AlertFactory.preventSpecial(emailText);
+            //AlertFactory.preventSpecial();
+            //AlertFactory.preventSpecial();
 
             JFXListView<Address> addressJFXListView = new JFXListView<>();
             addressJFXListView.setMaxWidth(200);

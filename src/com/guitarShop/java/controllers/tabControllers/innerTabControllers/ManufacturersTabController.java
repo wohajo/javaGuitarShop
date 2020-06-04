@@ -56,6 +56,7 @@ public class ManufacturersTabController {
     }
 
     private void initSearchFields(FilteredList<Manufacturer> filteredList) {
+        AlertFactory.preventInjection(searchField);
         searchField.textProperty().addListener((observableValue, s, t1) -> {
             filteredList.setPredicate(Manufacturer -> {
                 if(t1 == null || t1.isEmpty()) {
@@ -148,6 +149,7 @@ public class ManufacturersTabController {
 
             JFXButton acceptButton = new JFXButton("Accept");
             JFXButton closeButton = new JFXButton("Close");
+            AlertFactory.preventInjection(nameText);
 
             dialogGrid.add(nameText, 1, 0);
             dialogGrid.add(addressJFXListView, 1, 1);
@@ -201,6 +203,8 @@ public class ManufacturersTabController {
         addressJFXListView.setMaxHeight(100);
         ObservableList<Address> addressObservableList = addressModel.getAddresses();
         addressJFXListView.setItems(addressObservableList);
+
+        AlertFactory.preventInjection(nameText);
 
         JFXButton acceptButton = new JFXButton("Accept");
         JFXButton closeButton = new JFXButton("Close");

@@ -10,6 +10,8 @@ import com.guitarShop.java.models.objects.parts.Bridge;
 import com.guitarShop.java.models.objects.parts.GuitarType;
 import com.guitarShop.java.models.objects.parts.Pickups;
 import com.jfoenix.controls.*;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
@@ -73,6 +75,15 @@ public class StockTabController {
     }
 
     private void initSearchFields(FilteredList<Guitar> filteredList) {
+
+        AlertFactory.restrictToNumbers(minPriceText);
+        AlertFactory.restrictToNumbers(maxPriceText);
+        AlertFactory.restrictToNumbers(minCountText);
+        AlertFactory.restrictToNumbers(maxCountText);
+        AlertFactory.preventInjection(manSearchText);
+        AlertFactory.preventInjection(modelSearchText);
+        AlertFactory.preventInjection(typeSearchText);
+
         manSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(Guitar -> {
                 if(newValue == null || newValue.isEmpty()) {
@@ -329,6 +340,12 @@ public class StockTabController {
                 t.setMaxHeight(50);
             }
 
+            AlertFactory.preventInjection(modelText);
+            AlertFactory.preventInjection(descText);
+            AlertFactory.restrictToNumbers(priceText);
+            AlertFactory.restrictToNumbers(stringsText);
+            AlertFactory.restrictToNumbers(quantityText);
+
             dialogGrid.add(manufacturerJFXListView, 1, 0);
             dialogGrid.add(modelText, 1,1);
             dialogGrid.add(priceText, 1, 2);
@@ -449,6 +466,12 @@ public class StockTabController {
                 t.setMaxHeight(50);
             }
 
+            AlertFactory.preventInjection(modelText);
+            AlertFactory.preventInjection(descText);
+            AlertFactory.restrictToNumbers(priceText);
+            AlertFactory.restrictToNumbers(stringsText);
+            AlertFactory.restrictToNumbers(quantityText);
+
             dialogGrid.add(manufacturerJFXListView, 1, 0);
             dialogGrid.add(modelText, 1,1);
             dialogGrid.add(priceText, 1, 2);
@@ -479,25 +502,29 @@ public class StockTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (modelText.getText() == "" || descText.getText() == "" || stringsText.getText() == "" || priceText.getText() == "" || quantityText.getText() == ""
-                    || manufacturerJFXListView.getSelectionModel().getSelectedItem() == null || guitarTypeJFXListView.getSelectionModel().getSelectedItem() == null ||
-                            pickupsJFXListView.getSelectionModel().getSelectedItem() == null || bridgeJFXListView.getSelectionModel().getSelectedItem() == null) {
-                        AlertFactory.makeFillAllFieldsError(stockStackPane);
-                    } else {
-                        int manufacturerID = manufacturerJFXListView.getSelectionModel().getSelectedItem().getManufacturerID();
-                        String model = modelText.getText();
-                        String modelDesc = descText.getText();
-                        int numbersOfStrings = Integer.valueOf(stringsText.getText());
-                        int guitarPrice = Integer.valueOf(priceText.getText());
-                        int guitarTypeID = guitarTypeJFXListView.getSelectionModel().getSelectedItem().getTypeID();
-                        int pickupsTypeID = pickupsJFXListView.getSelectionModel().getSelectedItem().getPickupsID();
-                        int bridgeTypeID = bridgeJFXListView.getSelectionModel().getSelectedItem().getBridgeID();
-                        Boolean lockingTuners = lockingTunersToggle.isSelected();
-                        int quantity = Integer.valueOf(quantityText.getText());
-                        stockModel.addGuitar(stockStackPane, manufacturerID, model, modelDesc, numbersOfStrings, guitarPrice,
-                                guitarTypeID, pickupsTypeID, bridgeTypeID, lockingTuners, quantity);
-                        refreshTable();
-                        viewDialog.close();
+                    try {
+                        if (modelText.getText() == "" || descText.getText() == "" || stringsText.getText() == "" || priceText.getText() == "" || quantityText.getText() == ""
+                                || manufacturerJFXListView.getSelectionModel().getSelectedItem() == null || guitarTypeJFXListView.getSelectionModel().getSelectedItem() == null ||
+                                pickupsJFXListView.getSelectionModel().getSelectedItem() == null || bridgeJFXListView.getSelectionModel().getSelectedItem() == null) {
+                            AlertFactory.makeFillAllFieldsError(stockStackPane);
+                        } else {
+                            int manufacturerID = manufacturerJFXListView.getSelectionModel().getSelectedItem().getManufacturerID();
+                            String model = modelText.getText();
+                            String modelDesc = descText.getText();
+                            int numbersOfStrings = Integer.valueOf(stringsText.getText());
+                            int guitarPrice = Integer.valueOf(priceText.getText());
+                            int guitarTypeID = guitarTypeJFXListView.getSelectionModel().getSelectedItem().getTypeID();
+                            int pickupsTypeID = pickupsJFXListView.getSelectionModel().getSelectedItem().getPickupsID();
+                            int bridgeTypeID = bridgeJFXListView.getSelectionModel().getSelectedItem().getBridgeID();
+                            Boolean lockingTuners = lockingTunersToggle.isSelected();
+                            int quantity = Integer.valueOf(quantityText.getText());
+                            stockModel.addGuitar(stockStackPane, manufacturerID, model, modelDesc, numbersOfStrings, guitarPrice,
+                                    guitarTypeID, pickupsTypeID, bridgeTypeID, lockingTuners, quantity);
+                            refreshTable();
+                            viewDialog.close();
+                        }
+                    } catch (NumberFormatException e) {
+                        AlertFactory.makeNotNumberError(stockStackPane);
                     }
                 }
             });

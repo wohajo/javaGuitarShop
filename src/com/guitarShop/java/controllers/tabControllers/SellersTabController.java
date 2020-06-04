@@ -37,7 +37,6 @@ public class SellersTabController {
     private AlertFactory alertFactory = new AlertFactory();
     private SellersModel sellersModel = new SellersModel();
     private AddressModel addressModel = new AddressModel();
-    private TreeItem<Seller> root = new TreeItem<>();
 
 
     @FXML void initialize() {
@@ -61,6 +60,11 @@ public class SellersTabController {
     }
 
     private void initSearchFields(FilteredList<Seller> filteredList) {
+
+        AlertFactory.preventInjection(nameSearchText);
+        AlertFactory.preventInjection(surnameSearchText);
+        //AlertFactory.numbersWithQuantity(peselSearchText);
+
         nameSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(Seller -> {
                 if(newValue == null || newValue.isEmpty()) {
@@ -179,6 +183,12 @@ public class SellersTabController {
             TextField peselText = new TextField(getSelectedItem().getPesel());
             TextField emailText = new TextField(getSelectedItem().getEmail());
 
+            AlertFactory.preventInjection(nameText);
+            AlertFactory.preventInjection(surnameText);
+            AlertFactory.preventSpecial(emailText);
+            //AlertFactory.preventSpecial();
+            //AlertFactory.preventSpecial();
+
             JFXListView<Address> addressJFXListView = new JFXListView<>();
             addressJFXListView.setMaxWidth(200);
             addressJFXListView.setMaxHeight(100);
@@ -262,6 +272,12 @@ public class SellersTabController {
             TextField peselText = new TextField();
             TextField emailText = new TextField();
             TextField passwordText = new TextField();
+
+            AlertFactory.preventInjection(nameText);
+            AlertFactory.preventInjection(surnameText);
+            AlertFactory.preventSpecial(emailText);
+            //AlertFactory.preventSpecial();
+            //AlertFactory.preventSpecial();
 
             JFXListView<Address> addressJFXListView = new JFXListView<>();
             addressJFXListView.setMaxWidth(200);

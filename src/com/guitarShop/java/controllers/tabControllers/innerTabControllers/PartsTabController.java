@@ -66,6 +66,9 @@ public class PartsTabController {
     }
 
     private void initSearchFieldsPickups(FilteredList<Pickups> filteredList) {
+        AlertFactory.preventInjection(bridgeSearchText);
+        AlertFactory.preventInjection(pickupsSearchText);
+        AlertFactory.preventInjection(typeSearchText);
         pickupsSearchText.textProperty().addListener((observableValue, s, t1) -> {
             filteredList.setPredicate(Pickups -> {
                 if(t1 == null || t1.isEmpty()) {
@@ -184,6 +187,7 @@ public class PartsTabController {
 
             JFXButton acceptButton = new JFXButton("Accept");
             JFXButton closeButton = new JFXButton("Close");
+            AlertFactory.preventInjection(nameText);
 
             dialogGrid.add(nameText, 1, 0);
             dialogGrid.add(addressJFXListView, 1, 1);
@@ -238,6 +242,7 @@ public class PartsTabController {
 
         dialogGrid.add(nameText, 1, 0);
         dialogGrid.add(addressJFXListView, 1, 1);
+        AlertFactory.preventInjection(nameText);
 
         dialogGrid.setAlignment(Pos.CENTER);
         dialogGrid.setVgap(10);
@@ -287,6 +292,7 @@ public class PartsTabController {
 
             Label nameLabel = new Label("Name");
             TextField nameText = new TextField(getSelectedType().getName());
+            AlertFactory.preventInjection(nameText);
 
             JFXButton acceptButton = new JFXButton("Accept");
             JFXButton closeButton = new JFXButton("Close");
@@ -336,6 +342,7 @@ public class PartsTabController {
 
         Label nameLabel = new Label("Name");
         TextField nameText = new TextField();
+        AlertFactory.preventInjection(nameText);
 
         JFXButton acceptButton = new JFXButton("Accept");
         JFXButton closeButton = new JFXButton("Close");
@@ -400,6 +407,7 @@ public class PartsTabController {
 
             JFXButton acceptButton = new JFXButton("Accept");
             JFXButton closeButton = new JFXButton("Close");
+            AlertFactory.preventInjection(nameText);
 
             dialogGrid.add(nameText, 1, 0);
             dialogGrid.add(manufacturerJFXListView, 1, 1);
@@ -450,6 +458,7 @@ public class PartsTabController {
         manufacturerJFXListView.setMaxHeight(100);
         ObservableList<Manufacturer> manufacturerObservableList = manufacturerModel.getManufacturers();
         manufacturerJFXListView.setItems(manufacturerObservableList);
+        AlertFactory.preventInjection(nameText);
 
         JFXButton acceptButton = new JFXButton("Accept");
         JFXButton closeButton = new JFXButton("Close");

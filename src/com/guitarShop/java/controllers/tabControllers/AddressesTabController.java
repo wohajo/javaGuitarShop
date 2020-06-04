@@ -55,6 +55,11 @@ public class AddressesTabController {
     }
 
     private void initSearchFields(FilteredList<Address> filteredList) {
+
+        AlertFactory.preventInjection(citySearchText);
+        AlertFactory.preventInjection(streetSearchText);
+        //AlertFactory.restrictPostCode(postcodeSearchText);
+
         citySearchText.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(Address -> {
                 if(newValue == null || newValue.isEmpty()) {
@@ -170,6 +175,11 @@ public class AddressesTabController {
             JFXButton closeButton = new JFXButton("Close");
             JFXButton acceptButton = new JFXButton("Accept");
 
+            AlertFactory.preventInjection(cityText);
+            AlertFactory.preventInjection(streetText);
+            AlertFactory.restrictToNumbers(buildingText);
+            AlertFactory.restrictToNumbers(flatText);
+
             dialogGrid.add(cityText, 1, 0);
             dialogGrid.add(postcodeText, 1, 1);
             dialogGrid.add(streetText, 1, 2);
@@ -225,6 +235,11 @@ public class AddressesTabController {
             TextField flatText = new TextField();
             JFXButton closeButton = new JFXButton("Close");
             JFXButton acceptButton = new JFXButton("Accept");
+
+            AlertFactory.preventInjection(cityText);
+            AlertFactory.preventInjection(streetText);
+            AlertFactory.restrictToNumbers(buildingText);
+            AlertFactory.restrictToNumbers(flatText);
 
             dialogGrid.add(cityText, 1, 0);
             dialogGrid.add(postcodeText, 1, 1);
