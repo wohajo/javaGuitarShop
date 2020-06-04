@@ -224,11 +224,15 @@ public class ManufacturersTabController {
         acceptButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                manufacturerModel.addManufacturer(manufacturersStackPane,
-                        nameText.getText(),
-                        addressJFXListView.getSelectionModel().getSelectedItem().getAddressID());
-                refreshTable();
-                viewDialog.close();
+               if (nameText.getText() == "" || addressJFXListView.getSelectionModel().getSelectedItem() == null) {
+                   AlertFactory.makeFillAllFieldsError(manufacturersStackPane);
+               } else {
+                   manufacturerModel.addManufacturer(manufacturersStackPane,
+                           nameText.getText(),
+                           addressJFXListView.getSelectionModel().getSelectedItem().getAddressID());
+                   refreshTable();
+                   viewDialog.close();
+               }
             }
         });
 

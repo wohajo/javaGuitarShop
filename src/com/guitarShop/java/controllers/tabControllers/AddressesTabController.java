@@ -190,10 +190,15 @@ public class AddressesTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    addressModel.updateAddress(addressesStackPane, cityText.getText(), postcodeText.getText(),
-                            streetText.getText(), buildingText.getText(), flatText.getText(), getSelectedItem().getAddressID());
-                    refreshTable();
-                    viewDialog.close();
+                    if (cityText.getText().isEmpty() || postcodeText.getText().isEmpty() || streetText.getText().isEmpty() || buildingText.getText().isEmpty() || flatText.getText().isEmpty() ||
+                    getSelectedItem() == null) {
+                        AlertFactory.makeFillAllFieldsError(addressesStackPane);
+                    } else {
+                        addressModel.updateAddress(addressesStackPane, cityText.getText(), postcodeText.getText(),
+                                streetText.getText(), buildingText.getText(), flatText.getText(), getSelectedItem().getAddressID());
+                        refreshTable();
+                        viewDialog.close();
+                    }
                 }
             });
 
@@ -238,9 +243,11 @@ public class AddressesTabController {
 
             JFXDialog viewDialog = new JFXDialog(addressesStackPane, dialogLayout, JFXDialog.DialogTransition.BOTTOM);
 
-            acceptButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
+            acceptButton.setOnAction(actionEvent -> {
+                if (cityText.getText().isEmpty() || postcodeText.getText().isEmpty() || streetText.getText().isEmpty() || buildingText.getText().isEmpty() || flatText.getText().isEmpty() ||
+                        getSelectedItem() == null) {
+                    AlertFactory.makeFillAllFieldsError(addressesStackPane);
+                } else {
                     addressModel.addAddress(addressesStackPane, cityText.getText(), postcodeText.getText(),
                             streetText.getText(), buildingText.getText(), flatText.getText());
                     refreshTable();
@@ -248,12 +255,7 @@ public class AddressesTabController {
                 }
             });
 
-            closeButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    viewDialog.close();
-                }
-            });
+            closeButton.setOnAction(actionEvent -> viewDialog.close());
             viewDialog.show();
     }
 

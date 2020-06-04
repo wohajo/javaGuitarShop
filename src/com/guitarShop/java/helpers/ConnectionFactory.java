@@ -33,6 +33,6 @@ public class ConnectionFactory {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
-        return DriverManager.getConnection(dbcred.url + "=" + dbcred.database, dbcred.username, dbcred.password);
+        return DriverManager.getConnection(dbcred.getUrl() + "=" + dbcred.getDatabase(), dbcred.getUsername(), dbcred.getPassword());
     }
 }

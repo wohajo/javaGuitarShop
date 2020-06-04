@@ -2,10 +2,10 @@ package com.guitarShop.java.helpers;
 
 public class DatabaseCredentials {
 
-    String url;
-    String database;
-    String username;
-    String password;
+    private String url;
+    private String database;
+    private String username;
+    private String password;
 
     public DatabaseCredentials(String url, String database, String username, String password) {
         this.url = url;

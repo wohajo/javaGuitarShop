@@ -9,9 +9,9 @@ public class Order extends RecursiveTreeObject<Order> {
     private int orderID;
     private LocalDate date;
     private int sellerID;
-    String seller;
+    private String seller;
     private int clientID;
-    String client;
+    private String client;
     private LinkedHashMap<Guitar, Integer> guitarIDs = new LinkedHashMap<>();
 
     public Order(int orderID, LocalDate date, int sellerID, String seller, int clientID, String client, LinkedHashMap<Guitar, Integer> guitarIDs) {

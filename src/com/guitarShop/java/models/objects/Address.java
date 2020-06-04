@@ -3,12 +3,12 @@ package com.guitarShop.java.models.objects;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 public class Address extends RecursiveTreeObject<Address> {
-    int addressID;
-    String city;
-    String postcode;
-    String street;
-    int buildingNumber;
-    String flatNumber;
+    private int addressID;
+    private String city;
+    private String postcode;
+    private String street;
+    private int buildingNumber;
+    private String flatNumber;
 
     public int getAddressID() {
         return addressID;

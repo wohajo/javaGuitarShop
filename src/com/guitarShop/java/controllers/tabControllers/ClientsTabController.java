@@ -226,12 +226,17 @@ public class ClientsTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    clientsModel.updateClient(clientsStackPane, getSelectedItem().getClientID(),
-                            nameText.getText(), surnameText.getText(),
-                            phoneText.getText(), peselText.getText(),
-                            addressJFXListView.getSelectionModel().getSelectedItem().getAddressID(), emailText.getText());
-                    refreshTable();
-                    viewDialog.close();
+                    if (getSelectedItem() == null || nameText.getText().isEmpty() || surnameText.getText().isEmpty() ||
+                            phoneText.getText().isEmpty() || peselText.getText().isEmpty() || emailText.getText().isEmpty()) {
+                        AlertFactory.makeFillAllFieldsError(clientsStackPane);
+                    } else {
+                        clientsModel.updateClient(clientsStackPane, getSelectedItem().getClientID(),
+                                nameText.getText(), surnameText.getText(),
+                                phoneText.getText(), peselText.getText(),
+                                addressJFXListView.getSelectionModel().getSelectedItem().getAddressID(), emailText.getText());
+                        refreshTable();
+                        viewDialog.close();
+                    }
                 }
             });
 
@@ -299,12 +304,17 @@ public class ClientsTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    clientsModel.addClient(clientsStackPane,
-                            nameText.getText(), surnameText.getText(),
-                            phoneText.getText(), peselText.getText(),
-                            addressJFXListView.getSelectionModel().getSelectedItem().getAddressID(), emailText.getText());
-                    refreshTable();
-                    viewDialog.close();
+                    if (getSelectedItem() == null || nameText.getText().isEmpty() || surnameText.getText().isEmpty() ||
+                            phoneText.getText().isEmpty() || peselText.getText().isEmpty() || emailText.getText().isEmpty()) {
+                        AlertFactory.makeFillAllFieldsError(clientsStackPane);
+                    } else {
+                        clientsModel.addClient(clientsStackPane,
+                                nameText.getText(), surnameText.getText(),
+                                phoneText.getText(), peselText.getText(),
+                                addressJFXListView.getSelectionModel().getSelectedItem().getAddressID(), emailText.getText());
+                        refreshTable();
+                        viewDialog.close();
+                    }
                 }
             });
 

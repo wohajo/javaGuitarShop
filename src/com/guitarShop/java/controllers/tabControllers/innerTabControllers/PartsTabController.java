@@ -52,8 +52,8 @@ public class PartsTabController {
     }
 
     private void initPickupsTable() {
-        pickupsManCol.setCellValueFactory(new PropertyValueFactory<>("name"));
-        pickupsCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        pickupsManCol.setCellValueFactory(new PropertyValueFactory<>("manufacturer"));
+        pickupsCol.setCellValueFactory(new PropertyValueFactory<>("name"));
         ObservableList<Pickups> pickups = FXCollections.observableArrayList();
         pickups.addAll(partsModel.getPickups());
 
@@ -202,9 +202,13 @@ public class PartsTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    partsModel.updateBridge(partsStackPane, getSelectedBridge().getBridgeID(), nameText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
-                    refreshBridgesTable();
-                    viewDialog.close();
+                    if (nameText.getText() == "" || addressJFXListView.getSelectionModel().getSelectedItem() == null) {
+                        AlertFactory.makeFillAllFieldsError(partsStackPane);
+                    } else {
+                        partsModel.updateBridge(partsStackPane, getSelectedBridge().getBridgeID(), nameText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
+                        refreshBridgesTable();
+                        viewDialog.close();
+                    }
                 }
             });
 
@@ -249,9 +253,13 @@ public class PartsTabController {
         acceptButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                partsModel.addBridge(partsStackPane, nameText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
-                refreshBridgesTable();
-                viewDialog.close();
+                if (nameText.getText() == "" || addressJFXListView.getSelectionModel().getSelectedItem() == null) {
+                    AlertFactory.makeFillAllFieldsError(partsStackPane);
+                } else {
+                    partsModel.addBridge(partsStackPane, nameText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
+                    refreshBridgesTable();
+                    viewDialog.close();
+                }
             }
         });
 
@@ -300,9 +308,13 @@ public class PartsTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    partsModel.updateType(partsStackPane, getSelectedType().getTypeID(), nameText.getText());
-                    refreshTypeTable();
-                    viewDialog.close();
+                    if (nameText.getText() == "") {
+                        AlertFactory.makeFillAllFieldsError(partsStackPane);
+                    } else {
+                        partsModel.updateType(partsStackPane, getSelectedType().getTypeID(), nameText.getText());
+                        refreshTypeTable();
+                        viewDialog.close();
+                    }
                 }
             });
 
@@ -345,9 +357,13 @@ public class PartsTabController {
         acceptButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                partsModel.addType(partsStackPane, nameText.getText());
-                refreshTypeTable();
-                viewDialog.close();
+                if (nameText.getText().isEmpty()) {
+                    AlertFactory.makeFillAllFieldsError(partsStackPane);
+                } else {
+                    partsModel.addType(partsStackPane, nameText.getText());
+                    refreshTypeTable();
+                    viewDialog.close();
+                }
             }
         });
 
@@ -373,20 +389,20 @@ public class PartsTabController {
         try {
             GridPane dialogGrid = getGridPaneWithText();
             TextField nameText = new TextField(getSelectedPickups().getName());
-            JFXListView<Manufacturer> addressJFXListView = new JFXListView<>();
-            addressJFXListView.setMaxWidth(200);
-            addressJFXListView.setMaxHeight(100);
+            JFXListView<Manufacturer> manufacturerJFXListView = new JFXListView<>();
+            manufacturerJFXListView.setMaxWidth(200);
+            manufacturerJFXListView.setMaxHeight(100);
             ObservableList<Manufacturer> manufacturerObservableList = manufacturerModel.getManufacturers();
-            addressJFXListView.setItems(manufacturerObservableList);
+            manufacturerJFXListView.setItems(manufacturerObservableList);
             for (Manufacturer m : manufacturerObservableList)
                 if(getSelectedPickups().getManufacturerID() == m.getManufacturerID())
-                    addressJFXListView.getSelectionModel().select(m);
+                    manufacturerJFXListView.getSelectionModel().select(m);
 
             JFXButton acceptButton = new JFXButton("Accept");
             JFXButton closeButton = new JFXButton("Close");
 
             dialogGrid.add(nameText, 1, 0);
-            dialogGrid.add(addressJFXListView, 1, 1);
+            dialogGrid.add(manufacturerJFXListView, 1, 1);
 
             dialogGrid.setAlignment(Pos.CENTER);
             dialogGrid.setVgap(10);
@@ -402,9 +418,13 @@ public class PartsTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    partsModel.updatePickups(partsStackPane, getSelectedPickups().getPickupsID(), nameText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
-                    refreshPickupsTable();
-                    viewDialog.close();
+                    if (nameText.getText() == "" || manufacturerJFXListView.getSelectionModel().getSelectedItem() == null) {
+                        AlertFactory.makeFillAllFieldsError(partsStackPane);
+                    } else {
+                        partsModel.updatePickups(partsStackPane, getSelectedPickups().getPickupsID(), nameText.getText(), manufacturerJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
+                        refreshPickupsTable();
+                        viewDialog.close();
+                    }
                 }
             });
 
@@ -425,17 +445,17 @@ public class PartsTabController {
         GridPane dialogGrid = getGridPaneWithText();
 
         TextField nameText = new TextField();
-        JFXListView<Manufacturer> addressJFXListView = new JFXListView<>();
-        addressJFXListView.setMaxWidth(200);
-        addressJFXListView.setMaxHeight(100);
+        JFXListView<Manufacturer> manufacturerJFXListView = new JFXListView<>();
+        manufacturerJFXListView.setMaxWidth(200);
+        manufacturerJFXListView.setMaxHeight(100);
         ObservableList<Manufacturer> manufacturerObservableList = manufacturerModel.getManufacturers();
-        addressJFXListView.setItems(manufacturerObservableList);
+        manufacturerJFXListView.setItems(manufacturerObservableList);
 
         JFXButton acceptButton = new JFXButton("Accept");
         JFXButton closeButton = new JFXButton("Close");
 
         dialogGrid.add(nameText, 1, 0);
-        dialogGrid.add(addressJFXListView, 1, 1);
+        dialogGrid.add(manufacturerJFXListView, 1, 1);
 
         dialogGrid.setAlignment(Pos.CENTER);
         dialogGrid.setVgap(10);
@@ -451,9 +471,13 @@ public class PartsTabController {
         acceptButton.setOnAction(new EventHandler<ActionEvent>() {
             @Override
             public void handle(ActionEvent actionEvent) {
-                partsModel.addPickups(partsStackPane, nameText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
-                refreshPickupsTable();
-                viewDialog.close();
+                if (nameText.getText() == "" || manufacturerJFXListView.getSelectionModel().getSelectedItem() == null) {
+                    AlertFactory.makeFillAllFieldsError(partsStackPane);
+                } else {
+                    partsModel.addPickups(partsStackPane, nameText.getText(), manufacturerJFXListView.getSelectionModel().getSelectedItem().getManufacturerID());
+                    refreshPickupsTable();
+                    viewDialog.close();
+                }
             }
         });
 

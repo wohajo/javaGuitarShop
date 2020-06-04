@@ -4,13 +4,13 @@ import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 public class Seller extends RecursiveTreeObject<Seller> {
 
-    int sellerID;
-    String name;
-    String surname;
-    String phoneNumber;
-    String pesel;
-    String email;
-    int addressID;
+    private int sellerID;
+    private String name;
+    private String surname;
+    private String phoneNumber;
+    private String pesel;
+    private String email;
+    private int addressID;
 
     public Seller(int sellerID, String name, String surname, String phoneNumber, String pesel, String email, int addressID) {
         this.sellerID = sellerID;

@@ -50,4 +50,8 @@ public class AlertFactory {
     public static void makeFillAllFieldsError(StackPane stackPane) {
         makeAlertDialog(stackPane, "Error", "You need to fill every field in the dialog.", "Close");
     }
+
+    public static void makeNotNumberError(StackPane stackPane) {
+        makeAlertDialog(stackPane, "Error", "Provide a number.", "Close");
+    }
 }

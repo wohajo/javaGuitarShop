@@ -18,7 +18,6 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
@@ -27,11 +26,11 @@ import java.util.ArrayList;
 
 public class SellersTabController {
 
-    @FXML StackPane sellersStackPane;
-    @FXML TableView<Seller> sellersTable;
-    @FXML TableColumn<Seller, String> nameCol;
-    @FXML TableColumn<Seller, String> surnameCol;
-    @FXML TableColumn<Seller, String> peselCol;
+    @FXML private StackPane sellersStackPane;
+    @FXML private TableView<Seller> sellersTable;
+    @FXML private TableColumn<Seller, String> nameCol;
+    @FXML private TableColumn<Seller, String> surnameCol;
+    @FXML private TableColumn<Seller, String> peselCol;
     @FXML private TextField nameSearchText;
     @FXML private TextField surnameSearchText;
     @FXML private TextField peselSearchText;
@@ -224,11 +223,17 @@ public class SellersTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    sellersModel.updateSeller(sellersStackPane, getSelectedItem().getSellerID(),
-                            nameText.getText(), surnameText.getText(), phoneText.getText(),
-                            peselText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getAddressID(), emailText.getText());
-                    refreshTable();
-                    viewDialog.close();
+                    if (getSelectedItem() == null ||
+                    nameText.getText().isEmpty() || surnameText.getText().isEmpty() || phoneText.getText().isEmpty() || peselText.getText().isEmpty() ||
+                            addressJFXListView.getSelectionModel().getSelectedItem() == null || emailText.getText().isEmpty()) {
+
+                    } else {
+                        sellersModel.updateSeller(sellersStackPane, getSelectedItem().getSellerID(),
+                                nameText.getText(), surnameText.getText(), phoneText.getText(),
+                                peselText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getAddressID(), emailText.getText());
+                        refreshTable();
+                        viewDialog.close();
+                    }
                 }
             });
 
@@ -302,11 +307,16 @@ public class SellersTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    String passwordHash = passwordManager.makeHash(passwordText.getText());
-                    sellersModel.addSeller(sellersStackPane, nameText.getText(), surnameText.getText(), phoneText.getText(),
-                            peselText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getAddressID(), emailText.getText(), passwordHash);
-                    refreshTable();
-                    viewDialog.close();
+                    if (getSelectedItem() == null || nameText.getText().isEmpty() || surnameText.getText().isEmpty() || phoneText.getText().isEmpty() || peselText.getText().isEmpty() ||
+                            addressJFXListView.getSelectionModel().getSelectedItem() == null || emailText.getText().isEmpty() || passwordText.getText().isEmpty()) {
+
+                    } else {
+                        String passwordHash = passwordManager.makeHash(passwordText.getText());
+                        sellersModel.addSeller(sellersStackPane, nameText.getText(), surnameText.getText(), phoneText.getText(),
+                                peselText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getAddressID(), emailText.getText(), passwordHash);
+                        refreshTable();
+                        viewDialog.close();
+                    }
                 }
             });
 
@@ -324,7 +334,11 @@ public class SellersTabController {
     }
 
     @FXML private void delete() {
-        sellersModel.deleteSeller(sellersStackPane, getSelectedItem().getSellerID());
-        refreshTable();
+        if(getSelectedItem() == null) {
+            AlertFactory.makeItemNotChoosenDialog(sellersStackPane);
+        } else {
+            sellersModel.deleteSeller(sellersStackPane, getSelectedItem().getSellerID());
+            refreshTable();
+        }
     }
 }

@@ -359,29 +359,35 @@ public class StockTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (modelText.getText() == null || descText.getText() == null || stringsText.getText() == null || priceText.getText() == null || quantityText.getText() == null) {
+                    if (modelText.getText() == "" || descText.getText() == "" || stringsText.getText() == "" || priceText.getText() == "" || quantityText.getText() == ""
+                            || manufacturerJFXListView.getSelectionModel().getSelectedItem() == null || guitarTypeJFXListView.getSelectionModel().getSelectedItem() == null ||
+                            pickupsJFXListView.getSelectionModel().getSelectedItem() == null || bridgeJFXListView.getSelectionModel().getSelectedItem() == null) {
                         AlertFactory.makeFillAllFieldsError(stockStackPane);
                     } else {
-                        int guitarID = getSelectedItem().getGuitarID();
-                        int manufacturerID = manufacturerJFXListView.getSelectionModel().getSelectedItem().getManufacturerID();
-                        String model = modelText.getText();
-                        String modelDesc = descText.getText();
-                        int numbersOfStrings = Integer.valueOf(stringsText.getText());
-                        int guitarPrice = Integer.valueOf(priceText.getText());
-                        int guitarTypeID = guitarTypeJFXListView.getSelectionModel().getSelectedItem().getTypeID();
-                        int pickupsTypeID = pickupsJFXListView.getSelectionModel().getSelectedItem().getPickupsID();
-                        int bridgeTypeID = bridgeJFXListView.getSelectionModel().getSelectedItem().getBridgeID();
-                        Boolean lockingTuners = lockingTunersToggle.isSelected();
-                        int quantity = Integer.valueOf(quantityText.getText());
-
                         try {
-                            stockModel.updateGuitar(stockStackPane, guitarID, manufacturerID, model, modelDesc, numbersOfStrings, guitarPrice,
-                                    guitarTypeID, pickupsTypeID, bridgeTypeID, lockingTuners, quantity);
-                            refreshTable();
-                        } catch (SQLException e) {
-                            alertFactory.makeAlertDialog(stockStackPane, "Error", "Error updating guitar.", "Close");
+                            int guitarID = getSelectedItem().getGuitarID();
+                            int manufacturerID = manufacturerJFXListView.getSelectionModel().getSelectedItem().getManufacturerID();
+                            String model = modelText.getText();
+                            String modelDesc = descText.getText();
+                            int numbersOfStrings = Integer.valueOf(stringsText.getText());
+                            int guitarPrice = Integer.valueOf(priceText.getText());
+                            int guitarTypeID = guitarTypeJFXListView.getSelectionModel().getSelectedItem().getTypeID();
+                            int pickupsTypeID = pickupsJFXListView.getSelectionModel().getSelectedItem().getPickupsID();
+                            int bridgeTypeID = bridgeJFXListView.getSelectionModel().getSelectedItem().getBridgeID();
+                            Boolean lockingTuners = lockingTunersToggle.isSelected();
+                            int quantity = Integer.valueOf(quantityText.getText());
+
+                            try {
+                                stockModel.updateGuitar(stockStackPane, guitarID, manufacturerID, model, modelDesc, numbersOfStrings, guitarPrice,
+                                        guitarTypeID, pickupsTypeID, bridgeTypeID, lockingTuners, quantity);
+                                refreshTable();
+                                viewDialog.close();
+                            } catch (SQLException e) {
+                                alertFactory.makeAlertDialog(stockStackPane, "Error", "Error updating guitar.", "Close");
+                            }
+                        } catch (NumberFormatException e) {
+                            AlertFactory.makeNotNumberError(stockStackPane);
                         }
-                        viewDialog.close();
                     }
                 }
             });

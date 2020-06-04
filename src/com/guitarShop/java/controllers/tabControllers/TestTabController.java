@@ -74,7 +74,7 @@ public class TestTabController {
     }
 
     public String getName() {
-        return (testTable.getSelectionModel().getSelectedItem().getValue().name);
+        return (testTable.getSelectionModel().getSelectedItem().getValue().getName());
     }
 
     @FXML
@@ -86,7 +86,7 @@ public class TestTabController {
 
     @FXML
     public void edit() {
-        testTable.getSelectionModel().getSelectedItem().getValue().name = "aaaaaaaa";
+        testTable.getSelectionModel().getSelectedItem().getValue().setName("aaaaaaaa");
         testTable.refresh();
     }
 }

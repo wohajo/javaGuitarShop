@@ -5,13 +5,13 @@ import javafx.beans.property.SimpleStringProperty;
 
 public class Client extends RecursiveTreeObject<Client> {
 
-    int clientID;
-    public String name;
-    String surname;
-    String phoneNumber;
-    String pesel;
-    String email;
-    int addressID;
+    private int clientID;
+    private  String name;
+    private String surname;
+    private String phoneNumber;
+    private String pesel;
+    private String email;
+    private int addressID;
 
     public Client(int clientID, String name, String surname, String phoneNumber, String pesel, String email, int addressID) {
         this.clientID = clientID;

@@ -20,15 +20,11 @@ import javafx.geometry.Pos;
 import javafx.scene.Parent;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.control.cell.TreeItemPropertyValueFactory;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.text.Text;
-
-import javax.script.Bindings;
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.chrono.ChronoLocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -55,6 +51,22 @@ public class OrdersInfoTabController {
     }
 
     public void initTable() {
+        clientCol.setCellValueFactory(new PropertyValueFactory<>("client"));
+        sellerCol.setCellValueFactory(new PropertyValueFactory<>("seller"));
+        dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
+
+        ObservableList<Order> orders = FXCollections.observableArrayList();
+        orders.addAll(ordersModel.getOrders());
+
+        FilteredList<Order> filteredList = new FilteredList<>(orders, p -> true);
+        initSearchFields(filteredList);
+        SortedList<Order> sortedList = new SortedList<>(filteredList);
+        sortedList.comparatorProperty().bind(ordersTable.comparatorProperty());
+        ordersTable.setItems(sortedList);
+        ordersTable.getColumns().setAll(clientCol, sellerCol, dateCol);
+    }
+
+    private void initTableWithData(String query) {
         clientCol.setCellValueFactory(new PropertyValueFactory<>("client"));
         sellerCol.setCellValueFactory(new PropertyValueFactory<>("seller"));
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
@@ -233,9 +245,14 @@ public class OrdersInfoTabController {
             });
 
             acceptButton.setOnAction(e -> {
-                ordersModel.updateOrder(ordersInfoStackPane, getSelectedItem().getOrderID(), sellerBox.getSelectionModel().getSelectedItem().getSellerID(), clientBox.getSelectionModel().getSelectedItem().getClientID(), dateText.getValue());
-                viewDialog.close();
-                refreshTable();
+                if (clientBox.getSelectionModel().getSelectedItem() == null || sellerBox.getSelectionModel().getSelectedItem() == null ||
+            dateText.getValue() == null) {
+                    AlertFactory.makeFillAllFieldsError(ordersInfoStackPane);
+                } else {
+                    ordersModel.updateOrder(ordersInfoStackPane, getSelectedItem().getOrderID(), sellerBox.getSelectionModel().getSelectedItem().getSellerID(), clientBox.getSelectionModel().getSelectedItem().getClientID(), dateText.getValue());
+                    viewDialog.close();
+                    refreshTable();
+                }
             });
             closeButton.setOnAction(actionEvent -> viewDialog.close());
 
@@ -431,5 +448,21 @@ public class OrdersInfoTabController {
         Parent root = fxmlLoader.load();
         StockTabController controller = fxmlLoader.getController();
         controller.initTable();
+    }
+
+    @FXML private void filterData() {
+        LocalDate dateFrom = dateFromPicker.getValue();
+        LocalDate dateTo = dateToPicker.getValue();
+        if (dateFrom == null && dateTo == null) {
+            AlertFactory.makeAlertDialog(ordersInfoStackPane, "Error", "Pick a date.", "Close");
+        } else if (dateFrom != null && dateTo != null) {
+            //String query = " WHERE OrderDate"
+        }
+    }
+
+    @FXML private void clearFilterData() {
+        dateFromPicker.setValue(null);
+        dateToPicker.setValue(null);
+        initTable();
     }
 }

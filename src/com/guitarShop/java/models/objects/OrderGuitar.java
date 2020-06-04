@@ -3,9 +3,9 @@ package com.guitarShop.java.models.objects;
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
 
 public class OrderGuitar extends RecursiveTreeObject<OrderGuitar> {
-    int orderID;
-    int guitarID;
-    int quantity;
+    private int orderID;
+    private int guitarID;
+    private int quantity;
 
     public OrderGuitar(int orderID, int guitarID, int quantity) {
         this.orderID = orderID;
