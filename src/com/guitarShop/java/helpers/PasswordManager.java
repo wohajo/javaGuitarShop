@@ -1,5 +1,6 @@
 package com.guitarShop.java.helpers;
 
+import com.jfoenix.controls.JFXDialog;
 import javafx.scene.layout.StackPane;
 
 import java.io.File;
@@ -15,6 +16,8 @@ import java.util.Scanner;
 import java.util.Stack;
 
 public class PasswordManager {
+
+    ConnectionFactory connectionFactory = new ConnectionFactory();
 
     public PasswordManager() {
     }
@@ -57,7 +60,6 @@ public class PasswordManager {
     public boolean checkCredentials(String login, String password, StackPane stackPane) throws IOException {
 
         Boolean isCorrect = false;
-        ConnectionFactory connectionFactory = new ConnectionFactory();
 
         try(Connection connection = connectionFactory.getConnection()) {
             String email = "";
@@ -79,5 +81,35 @@ public class PasswordManager {
             e.printStackTrace();
         }
         return isCorrect;
+    }
+
+    public void changePassword(JFXDialog viewDialog, StackPane stackPane, String pesel, String email, String password1, String password2) {
+        try(Connection connection = connectionFactory.getConnection()) {
+            Statement statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery("SELECT Pesel FROM Sellers WHERE Email = '" + email + "'");
+
+            String downloadedPesel = null;
+
+            while (resultSet.next()) {
+                downloadedPesel = resultSet.getString("Pesel");
+            }
+            if (pesel.equals(downloadedPesel)) {
+              if(password1.equals(password2)) {
+                  String newPassword = makeHash(password1);
+                  try {
+                      statement.executeUpdate("UPDATE Sellers SET PasswordHash = '" + newPassword + "' WHERE Pesel = '" + pesel + "'");
+                      viewDialog.close();
+                  } catch (SQLException e) {
+                      AlertFactory.makeRefreshTableError(stackPane);
+                  }
+              } else {
+                  AlertFactory.makeAlertDialog(stackPane, "Error", "Passwords do not match.", "Close");
+              }
+            } else {
+                AlertFactory.makeAlertDialog(stackPane, "Error", "Wrong pesel.", "Close");
+            }
+        } catch (SQLException e) {
+
+        }
     }
 }

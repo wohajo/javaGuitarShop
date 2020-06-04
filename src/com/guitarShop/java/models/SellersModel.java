@@ -36,10 +36,9 @@ public class SellersModel {
         return sellersList;
     }
 
-    public Seller getSellerByID(int sellerID) {
+    public Seller getSeller(String query) {
         Seller seller = null;
         Statement statement = null;
-        String query = "SELECT SellerID, Name, Surname, PhoneNumber, Pesel, Email, AddressID FROM Sellers WHERE SellerID = " + sellerID;
 
         try (Connection connection = ConnectionFactory.getConnection()) {
             statement = connection.createStatement();
@@ -55,6 +54,11 @@ public class SellersModel {
             e.printStackTrace();
         }
         return seller;
+    }
+
+    public Seller getSellerByID(int sellerID) {
+        String query = "SELECT SellerID, Name, Surname, PhoneNumber, Pesel, Email, AddressID FROM Sellers WHERE SellerID = " + sellerID;
+        return getSeller(query);
     }
 
     public void updateSeller(StackPane sellersStackPane, int sellerID, String name, String surname, String phoneNumber, String pesel, int addressID, String email) {
@@ -94,5 +98,10 @@ public class SellersModel {
         } catch (SQLException e) {
             AlertFactory.makeAlertDialog(sellersStackPane, "Database error", "Item cannot be deleted as it is connected to other tables.", "Close");
         }
+    }
+
+    public Seller getSellerByEmail(String loggedUserLogin) {
+        String query = "SELECT SellerID, Name, Surname, PhoneNumber, Pesel, Email, AddressID FROM Sellers WHERE Email = " + loggedUserLogin;
+        return getSeller(query);
     }
 }

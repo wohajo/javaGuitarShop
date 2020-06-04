@@ -1,12 +1,11 @@
 package com.guitarShop.java.models.objects;
 
 import com.jfoenix.controls.datamodels.treetable.RecursiveTreeObject;
-import javafx.beans.property.SimpleStringProperty;
 
 public class Client extends RecursiveTreeObject<Client> {
 
     private int clientID;
-    private  String name;
+    private String name;
     private String surname;
     private String phoneNumber;
     private String pesel;

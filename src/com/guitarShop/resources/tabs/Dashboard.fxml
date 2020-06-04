@@ -10,12 +10,11 @@
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-
-<StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<StackPane fx:id="dashboardStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <Text layoutX="60.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User">
+            <!--<Text layoutX="60.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" text="User">
                <font>
                   <Font size="42.0" />
                </font>
@@ -35,8 +34,8 @@
                   <Font size="22.0" />
                </font>
             </Text>
-            <JFXButton layoutX="114.0" layoutY="256.0" prefHeight="38.0" prefWidth="212.0" text="change password" />
-            <JFXButton layoutX="114.0" layoutY="314.0" prefHeight="38.0" prefWidth="212.0" text="change email" />
+            <JFXButton layoutX="114.0" layoutY="256.0" onAction="#changePassword" prefHeight="38.0" prefWidth="212.0" text="change password" />
+            <JFXButton layoutX="114.0" layoutY="314.0" onAction="#changeEmail" prefHeight="38.0" prefWidth="212.0" text="change email" />-->
             <BarChart layoutX="465.0" layoutY="56.0" title="Placeholder">
               <xAxis>
                 <CategoryAxis side="BOTTOM" />
@@ -45,9 +44,9 @@
                 <NumberAxis side="LEFT" />
               </yAxis>
             </BarChart>
-            <JFXTextArea layoutX="186.0" layoutY="105.0" prefHeight="38.0" prefWidth="239.0" />
-            <JFXTextArea layoutX="186.0" layoutY="145.0" prefHeight="38.0" prefWidth="239.0" />
-            <JFXTextArea layoutX="186.0" layoutY="182.0" prefHeight="38.0" prefWidth="239.0" />
+            <!--<JFXTextArea fx:id="nameField" layoutX="186.0" layoutY="105.0" prefHeight="38.0" prefWidth="239.0" />
+            <JFXTextArea fx:id="surnameField" layoutX="186.0" layoutY="145.0" prefHeight="38.0" prefWidth="239.0" />
+            <JFXTextArea fx:id="emailField" layoutX="186.0" layoutY="182.0" prefHeight="38.0" prefWidth="239.0" />-->
          </children>
       </AnchorPane>
    </children>
