@@ -3,10 +3,8 @@ package com.guitarShop.java.models;
 import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.helpers.ConnectionFactory;
 import com.guitarShop.java.models.objects.Guitar;
-import com.guitarShop.java.models.objects.OrderGuitar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.scene.control.Alert;
 import javafx.scene.layout.StackPane;
 
 import java.sql.Connection;
@@ -114,6 +112,18 @@ public class StockModel {
                 "NumberOfStrings = " + numbersOfStrings + ", GuitarPrice = " + guitarPrice
                 +", GuitarTypeID = " + guitarTypeID + ", PickupsTypeID = " + pickupsTypeID
                 + ", BridgeTypeID = " + bridgeTypeID + ", LockingTuners = " + tuners + " , NumberOfGuitars = " + quantity + " WHERE GuitarID = " + guitarID;
+        try(Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            statement.executeUpdate(query);
+        } catch (SQLException e) {
+            AlertFactory.makeAlertDialog(stackPane, "Database error", "Item cannot be updated.", "Close");
+        }
+    }
+
+    public void addQuantity(StackPane stackPane, int guitarID, int quantity) throws SQLException {
+
+        String query = "UPDATE Guitars SET NumberOfGuitars = NumberOfGuitars + " + quantity + " WHERE GuitarID = " + guitarID;
+        Statement statement = null;
         try(Connection connection = ConnectionFactory.getConnection()) {
             statement = connection.createStatement();
             statement.executeUpdate(query);

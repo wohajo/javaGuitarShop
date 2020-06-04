@@ -1,6 +1,5 @@
 package com.guitarShop.java.controllers;
 
-import com.guitarShop.java.controllers.tabControllers.StockTabController;
 import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.helpers.PasswordManager;
 import javafx.fxml.FXML;
@@ -9,16 +8,19 @@ import javafx.scene.Scene;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TabPane;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import java.io.IOException;
 
 public class MainController {
 
+    public static String loggedUserLogin;
     Stage primaryStage;
-    PasswordManager passwordManager = new PasswordManager();
+    private PasswordManager passwordManager = new PasswordManager();
     @FXML private TextField loginField;
     @FXML private PasswordField passwordField;
     @FXML private TabPane tabPane;
+    @FXML private StackPane loginStackPane;
 
     @FXML private void initialize() {
 
@@ -50,7 +52,9 @@ public class MainController {
     private void checkEnteredCredentials() throws IOException {
         String login = loginField.getText();
         String password = passwordField.getText();
-        if (passwordManager.checkCredentials(login, password))
+        if (passwordManager.checkCredentials(login, password, loginStackPane)) {
             login();
+            loggedUserLogin = login;
+        }
     }
 }

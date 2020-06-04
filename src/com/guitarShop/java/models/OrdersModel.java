@@ -152,11 +152,32 @@ public class OrdersModel {
         }
     }
 
-    public void deleteOrder(StackPane ordersInfoStackPane, int orderID) {
-        String query = "DELETE FROM Order_Guitar WHERE OrderID = " + orderID;
-        executeUpdate(ordersInfoStackPane, query);
-        query = "DELETE FROM Orders WHERE OrderID = " + orderID;
-        executeUpdate(ordersInfoStackPane, query);
-        // TODO ADD TO STOCK
+    public void deleteOrder(StackPane stackPane, int orderID) {
+
+        String query = "SELECT * FROM Order_Guitar WHERE OrderID = " + orderID;
+        Statement statement = null;
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                stockModel.addQuantity(stackPane, resultSet.getInt("GuitarID"), resultSet.getInt("Quantity"));
+            }
+
+            query = "DELETE FROM Order_Guitar WHERE OrderID = " + orderID;
+            executeUpdate(stackPane, query);
+            query = "DELETE FROM Orders WHERE OrderID = " + orderID;
+            executeUpdate(stackPane, query);
+
+        } catch (SQLException e) {
+            AlertFactory.makeDatabaseConnectionError(stackPane);
+        }
+    }
+
+    public ObservableList<Order> getOrdersByDate(String query) {
+        return downloadOrders("SELECT (CONCAT(s.Name, ' ', s.Surname)) AS 'SellerFullName', (CONCAT(c.Name, ' ', c.Surname)) AS 'ClientFullName', OrderID, s.SellerID, c.ClientID, OrderDate FROM Orders o " +
+                " JOIN Sellers s ON o.SellerID = s.SellerID" +
+                " JOIN Clients c ON c.ClientID = o.ClientID" +
+                query);
     }
 }

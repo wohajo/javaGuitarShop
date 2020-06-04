@@ -58,12 +58,7 @@ public class OrdersInfoTabController {
         ObservableList<Order> orders = FXCollections.observableArrayList();
         orders.addAll(ordersModel.getOrders());
 
-        FilteredList<Order> filteredList = new FilteredList<>(orders, p -> true);
-        initSearchFields(filteredList);
-        SortedList<Order> sortedList = new SortedList<>(filteredList);
-        sortedList.comparatorProperty().bind(ordersTable.comparatorProperty());
-        ordersTable.setItems(sortedList);
-        ordersTable.getColumns().setAll(clientCol, sellerCol, dateCol);
+        addItemsToSortedList(orders);
     }
 
     private void initTableWithData(String query) {
@@ -72,8 +67,12 @@ public class OrdersInfoTabController {
         dateCol.setCellValueFactory(new PropertyValueFactory<>("date"));
 
         ObservableList<Order> orders = FXCollections.observableArrayList();
-        orders.addAll(ordersModel.getOrders());
+        orders.addAll(ordersModel.getOrdersByDate(query));
 
+        addItemsToSortedList(orders);
+    }
+
+    private void addItemsToSortedList(ObservableList<Order> orders) {
         FilteredList<Order> filteredList = new FilteredList<>(orders, p -> true);
         initSearchFields(filteredList);
         SortedList<Order> sortedList = new SortedList<>(filteredList);
@@ -85,6 +84,8 @@ public class OrdersInfoTabController {
     private void initSearchFields(FilteredList<Order> filteredList) {
         AlertFactory.preventInjection(sellerSearchText);
         AlertFactory.preventInjection(clientSearchText);
+        dateToPicker.setEditable(false);
+        dateFromPicker.setEditable(false);
 
         clientSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(Order -> {
@@ -461,7 +462,14 @@ public class OrdersInfoTabController {
         if (dateFrom == null && dateTo == null) {
             AlertFactory.makeAlertDialog(ordersInfoStackPane, "Error", "Pick a date.", "Close");
         } else if (dateFrom != null && dateTo != null) {
-            //String query = " WHERE OrderDate"
+            String query = " WHERE OrderDate BETWEEN '" + dateFrom + "' AND '" + dateTo +"'";
+            initTableWithData(query);
+        } else if (dateFrom != null && dateTo == null) {
+            String query = " WHERE OrderDate > '" + dateFrom + "'";
+            initTableWithData(query);
+        } else {
+            String query = " WHERE OrderDate < '" + dateTo + "'";
+            initTableWithData(query);
         }
     }
 

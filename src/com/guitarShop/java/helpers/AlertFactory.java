@@ -56,12 +56,16 @@ public class AlertFactory {
         makeAlertDialog(stackPane, "Error", "Provide a number.", "Close");
     }
 
-    public static void restrictToNumbers(TextField textField) {
+    private static void regexChecker(TextField textField, String regex) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("\\d*")) {
-                textField.setText(newValue.replaceAll("[^\\d]", ""));
+            if (!newValue.matches(regex)) {
+                textField.setText(newValue.replaceAll("[^" + regex + "]", ""));
             }
         });
+    }
+
+    public static void restrictToNumbers(TextField textField) {
+        regexChecker(textField, "\\d*");
     }
 
     public static void preventInjection(TextField textField) {

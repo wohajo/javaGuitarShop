@@ -1,5 +1,7 @@
 package com.guitarShop.java.helpers;
 
+import javafx.scene.layout.StackPane;
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -10,6 +12,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Scanner;
+import java.util.Stack;
 
 public class PasswordManager {
 
@@ -51,7 +54,7 @@ public class PasswordManager {
         return hashedPassword;
     }
 
-    public boolean checkCredentials(String login, String password) throws IOException {
+    public boolean checkCredentials(String login, String password, StackPane stackPane) throws IOException {
 
         Boolean isCorrect = false;
         ConnectionFactory connectionFactory = new ConnectionFactory();
@@ -67,9 +70,9 @@ public class PasswordManager {
                 downloadedPassword = resultSet.getString("PasswordHash");
             }
             if (email.equals(""))
-                System.out.println("wrong email");
+                AlertFactory.makeAlertDialog(stackPane, "Error", "Wrong email.", "Close");
             else if(!makeHash(password).equals(downloadedPassword)) {
-                System.out.println("wrong password");
+                AlertFactory.makeAlertDialog(stackPane, "Error", "Wrong password.", "Close");
             } else
                 isCorrect = true;
         } catch (SQLException e) {
