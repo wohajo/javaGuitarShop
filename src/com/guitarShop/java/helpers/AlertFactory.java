@@ -69,11 +69,7 @@ public class AlertFactory {
     }
 
     public static void preventInjection(TextField textField) {
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("[a-zA-Z0-9]*")) {
-                textField.setText(newValue.replaceAll("[^[a-zA-Z0-9]*]", ""));
-            }
-        });
+        regexChecker(textField, "[a-zA-Z0-9 ]*");
     }
 
     public static void preventSpecial(TextField textField) {
@@ -87,7 +83,7 @@ public class AlertFactory {
     public static void numbersWithQuantity(TextField textField) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("[[0-9]{11}]*")) {
-                textField.setText(newValue.replaceAll("[^[[0-9]{11}]*]", ""));
+
             }
         });
     }
@@ -95,7 +91,7 @@ public class AlertFactory {
     public static void restrictPostCode(TextField textField) {
         textField.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("[0-9]{2}[-][0-9]{3}")) {
-                textField.setText(newValue.replaceAll("[0-9]{2}[-][0-9]{3}", ""));
+                textField.setText(newValue.replaceAll("[^[0-9]{2}[-][0-9]{3}]", ""));
             }
         });
     }

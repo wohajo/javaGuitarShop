@@ -63,6 +63,7 @@ public class ClientsTabController {
     private void initSearchFields(FilteredList<Client> filteredList) {
         AlertFactory.preventInjection(nameSearchText);
         AlertFactory.preventInjection(surnameSearchText);
+        AlertFactory.numbersWithQuantity(peselSearchText);
 
         nameSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(Client -> {
@@ -189,7 +190,7 @@ public class ClientsTabController {
             AlertFactory.preventInjection(nameText);
             AlertFactory.preventInjection(surnameText);
             AlertFactory.preventSpecial(emailText);
-            //AlertFactory.preventSpecial();
+            //AlertFactory.numbersWithQuantity(peselText);
             //AlertFactory.preventSpecial();
 
             JFXListView<Address> addressJFXListView = new JFXListView<>();

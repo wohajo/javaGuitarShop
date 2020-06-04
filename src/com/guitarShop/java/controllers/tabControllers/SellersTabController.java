@@ -324,8 +324,8 @@ public class SellersTabController {
                 @Override
                 public void handle(ActionEvent actionEvent) {
                     if (getSelectedItem() == null || nameText.getText().isEmpty() || surnameText.getText().isEmpty() || phoneText.getText().isEmpty() || peselText.getText().isEmpty() ||
-                            addressJFXListView.getSelectionModel().getSelectedItem() == null || emailText.getText().isEmpty() || passwordText.getText().isEmpty()) {
-
+                    emailText.getText().isEmpty() || passwordText.getText().isEmpty()) {
+                        AlertFactory.makeFillAllFieldsError(sellersStackPane);
                     } else {
                         String passwordHash = passwordManager.makeHash(passwordText.getText());
                         sellersModel.addSeller(sellersStackPane, nameText.getText(), surnameText.getText(), phoneText.getText(),

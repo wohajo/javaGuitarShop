@@ -58,7 +58,7 @@ public class AddressesTabController {
 
         AlertFactory.preventInjection(citySearchText);
         AlertFactory.preventInjection(streetSearchText);
-        //AlertFactory.restrictPostCode(postcodeSearchText);
+        AlertFactory.restrictPostCode(postcodeSearchText);
 
         citySearchText.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(Address -> {
@@ -259,8 +259,7 @@ public class AddressesTabController {
             JFXDialog viewDialog = new JFXDialog(addressesStackPane, dialogLayout, JFXDialog.DialogTransition.BOTTOM);
 
             acceptButton.setOnAction(actionEvent -> {
-                if (cityText.getText().isEmpty() || postcodeText.getText().isEmpty() || streetText.getText().isEmpty() || buildingText.getText().isEmpty() || flatText.getText().isEmpty() ||
-                        getSelectedItem() == null) {
+                if (cityText.getText().isEmpty() || postcodeText.getText().isEmpty() || streetText.getText().isEmpty() || buildingText.getText().isEmpty() || flatText.getText().isEmpty()) {
                     AlertFactory.makeFillAllFieldsError(addressesStackPane);
                 } else {
                     addressModel.addAddress(addressesStackPane, cityText.getText(), postcodeText.getText(),
