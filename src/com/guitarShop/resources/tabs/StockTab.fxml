@@ -14,37 +14,37 @@
    <children>
       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0">
          <children>
-            <VBox layoutX="740.0" layoutY="21.0" prefHeight="259.0" prefWidth="224.0">
+            <VBox layoutX="740.0" layoutY="21.0" prefHeight="297.0" prefWidth="224.0" spacing="10.0">
                <children>
                   <JFXButton fx:id="viewButton" onAction="#view" prefHeight="53.0" prefWidth="234.0" text="View" />
                   <JFXButton fx:id="updateButton" layoutX="10.0" layoutY="10.0" onAction="#update" prefHeight="53.0" prefWidth="234.0" text="Update" />
                   <JFXButton fx:id="addButton" layoutX="10.0" layoutY="63.0" onAction="#add" prefHeight="53.0" prefWidth="234.0" text="Add" />
                   <JFXButton fx:id="deleteButton" layoutX="10.0" layoutY="116.0" onAction="#delete" prefHeight="53.0" prefWidth="234.0" text="Delete" />
-                  <JFXButton fx:id="refreshButton" layoutX="10.0" layoutY="169.0" onAction="#refreshTable" prefHeight="53.0" prefWidth="234.0" text="Refresh" />
+                  <JFXButton fx:id="refreshButton" layoutX="10.0" layoutY="169.0" onAction="#refreshTable" prefHeight="53.0" prefWidth="224.0" text="Refresh" />
                </children>
             </VBox>
-            <TextField fx:id="manSearchText" layoutX="740.0" layoutY="378.0" prefHeight="26.0" prefWidth="181.0" />
-            <Label layoutX="740.0" layoutY="347.0" text="Manufacturer" />
-            <Label layoutX="740.0" layoutY="298.0" text="Search">
+            <TextField fx:id="manSearchText" layoutX="740.0" layoutY="409.0" prefHeight="26.0" prefWidth="181.0" />
+            <Label layoutX="740.0" layoutY="378.0" text="Manufacturer" />
+            <Label layoutX="740.0" layoutY="329.0" text="Search">
                <font>
                   <Font size="28.0" />
                </font>
             </Label>
-            <TextField fx:id="modelSearchText" layoutX="740.0" layoutY="446.0" prefHeight="26.0" prefWidth="181.0" />
-            <Label layoutX="740.0" layoutY="415.0" text="Model" />
-            <TextField fx:id="typeSearchText" layoutX="740.0" layoutY="513.0" prefHeight="26.0" prefWidth="181.0" />
-            <Label layoutX="740.0" layoutY="482.0" text="Type" />
-            <TextField fx:id="minPriceText" layoutX="770.0" layoutY="580.0" prefHeight="26.0" prefWidth="57.0" />
-            <Label layoutX="740.0" layoutY="549.0" text="Price" />
-            <Label layoutX="742.0" layoutY="583.0" text="Min" />
-            <TextField fx:id="maxPriceText" layoutX="865.0" layoutY="580.0" prefHeight="26.0" prefWidth="57.0" />
-            <Label layoutX="837.0" layoutY="583.0" text="Max" />
-            <TextField fx:id="minCountText" layoutX="770.0" layoutY="646.0" prefHeight="26.0" prefWidth="57.0" />
-            <Label layoutX="740.0" layoutY="615.0" text="Stock count" />
-            <Label layoutX="742.0" layoutY="649.0" text="Min" />
-            <TextField fx:id="maxCountText" layoutX="865.0" layoutY="646.0" prefHeight="26.0" prefWidth="57.0" />
-            <Label layoutX="837.0" layoutY="649.0" text="Max" />
-            <TableView fx:id="stockTable" layoutX="27.0" layoutY="67.0" prefHeight="602.0" prefWidth="682.0">
+            <TextField fx:id="modelSearchText" layoutX="740.0" layoutY="477.0" prefHeight="26.0" prefWidth="181.0" />
+            <Label layoutX="740.0" layoutY="446.0" text="Model" />
+            <TextField fx:id="typeSearchText" layoutX="740.0" layoutY="544.0" prefHeight="26.0" prefWidth="181.0" />
+            <Label layoutX="740.0" layoutY="513.0" text="Type" />
+            <TextField fx:id="minPriceText" layoutX="770.0" layoutY="611.0" prefHeight="26.0" prefWidth="57.0" />
+            <Label layoutX="740.0" layoutY="580.0" text="Price" />
+            <Label layoutX="742.0" layoutY="614.0" text="Min" />
+            <TextField fx:id="maxPriceText" layoutX="865.0" layoutY="611.0" prefHeight="26.0" prefWidth="57.0" />
+            <Label layoutX="837.0" layoutY="614.0" text="Max" />
+            <TextField fx:id="minCountText" layoutX="770.0" layoutY="677.0" prefHeight="26.0" prefWidth="57.0" />
+            <Label layoutX="740.0" layoutY="646.0" text="Stock count" />
+            <Label layoutX="742.0" layoutY="680.0" text="Min" />
+            <TextField fx:id="maxCountText" layoutX="865.0" layoutY="677.0" prefHeight="26.0" prefWidth="57.0" />
+            <Label layoutX="837.0" layoutY="680.0" text="Max" />
+            <TableView fx:id="stockTable" layoutX="27.0" layoutY="67.0" prefHeight="631.0" prefWidth="682.0">
               <columns>
                 <TableColumn fx:id="manufacturerCol" prefWidth="165.0" text="Manufacturer" />
                 <TableColumn fx:id="modelCol" prefWidth="169.0" text="Model" />

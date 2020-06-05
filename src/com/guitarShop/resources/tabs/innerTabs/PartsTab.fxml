@@ -46,21 +46,21 @@
          </font>
       </Text>
       <TextField fx:id="bridgeSearchText" layoutX="665.0" layoutY="78.0" prefHeight="26.0" prefWidth="298.0" />
-      <VBox layoutX="38.0" layoutY="346.0" prefHeight="313.0" prefWidth="300.0">
+      <VBox layoutX="38.0" layoutY="346.0" prefHeight="313.0" prefWidth="300.0" spacing="10.0">
          <children>
             <JFXButton fx:id="updateTypeButton" layoutX="10.0" layoutY="10.0" onAction="#updateType" prefHeight="82.0" prefWidth="386.0" text="Update" />
             <JFXButton fx:id="addTypeButton" layoutX="10.0" layoutY="92.0" onAction="#addType" prefHeight="82.0" prefWidth="386.0" text="Add" />
             <JFXButton fx:id="deleteTypeButton" layoutX="10.0" layoutY="174.0" onAction="#deleteType" prefHeight="82.0" prefWidth="386.0" text="Delete" />
          </children>
       </VBox>
-      <VBox layoutX="350.0" layoutY="346.0" prefHeight="313.0" prefWidth="300.0">
+      <VBox layoutX="350.0" layoutY="346.0" prefHeight="313.0" prefWidth="300.0" spacing="10.0">
          <children>
             <JFXButton fx:id="updatePickupsButton" layoutX="10.0" layoutY="10.0" onAction="#updatePickups" prefHeight="82.0" prefWidth="386.0" text="Update" />
             <JFXButton fx:id="addPickupsButton" layoutX="10.0" layoutY="92.0" onAction="#addPickups" prefHeight="82.0" prefWidth="386.0" text="Add" />
             <JFXButton fx:id="deletePickupsButton" layoutX="10.0" layoutY="174.0" onAction="#deletePickups" prefHeight="82.0" prefWidth="386.0" text="Delete" />
          </children>
       </VBox>
-      <VBox layoutX="664.0" layoutY="346.0" prefHeight="313.0" prefWidth="300.0">
+      <VBox layoutX="664.0" layoutY="346.0" prefHeight="313.0" prefWidth="300.0" spacing="10.0">
          <children>
             <JFXButton fx:id="updateBridgeButton" layoutX="10.0" layoutY="10.0" onAction="#updateBridge" prefHeight="82.0" prefWidth="386.0" text="Update" />
             <JFXButton fx:id="addBridgeButton" layoutX="10.0" layoutY="92.0" onAction="#addBridge" prefHeight="82.0" prefWidth="386.0" text="Add" />

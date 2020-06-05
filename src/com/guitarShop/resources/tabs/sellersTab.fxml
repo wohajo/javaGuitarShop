@@ -1,20 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.TableView?>
-<?import javafx.scene.control.TableColumn?>
 <StackPane fx:id="sellersStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.SellersTabController">
    <children>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" stylesheets="@../css/styles.css">
          <children>
             <TableView fx:id="sellersTable" layoutX="41.0" layoutY="62.0" prefHeight="562.0" prefWidth="552.0">
                <columns>
@@ -23,7 +21,7 @@
                   <TableColumn fx:id="peselCol" prefWidth="183.0" text="Pesel" />
                </columns>
             </TableView>
-            <VBox layoutX="685.0" layoutY="62.0" prefHeight="278.0" prefWidth="226.0">
+            <VBox layoutX="685.0" layoutY="46.0" prefHeight="294.0" prefWidth="226.0" spacing="10.0">
                <children>
                   <JFXButton fx:id="viewButton" onAction="#view" prefHeight="71.0" prefWidth="242.0" text="View" />
                   <JFXButton fx:id="updateButton" layoutX="10.0" layoutY="10.0" onAction="#update" prefHeight="71.0" prefWidth="242.0" text="Update" />

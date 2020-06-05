@@ -5,12 +5,11 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 
-
 <StackPane fx:id="ordersStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.OrdersTabController">
    <children>
       <Pane fx:id="OrdersTab" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0">
          <children>
-            <JFXTabPane prefHeight="738.0" prefWidth="1000.0" side="BOTTOM">
+            <JFXTabPane prefHeight="736.0" prefWidth="1000.0" side="BOTTOM" stylesheets="@../css/styles.css">
                <tabs>
                   <Tab text="Clients' orders">
                      <content>

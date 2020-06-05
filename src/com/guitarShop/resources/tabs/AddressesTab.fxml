@@ -1,17 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import com.jfoenix.controls.JFXButton?>
-<?import com.jfoenix.controls.JFXTreeTableView?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
-<?import javafx.scene.control.TreeTableColumn?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<?import javafx.scene.control.TableColumn?>
-<?import javafx.scene.control.TableView?>
 <StackPane fx:id="addressesStackPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.AddressesTabController">
    <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
       <children>
@@ -23,7 +21,7 @@
                <TableColumn fx:id="streetCol" prefWidth="232.0" text="Street" />
             </columns>
          </TableView>
-         <VBox layoutX="695.0" layoutY="68.0" prefHeight="240.0" prefWidth="191.0">
+         <VBox layoutX="695.0" layoutY="46.0" prefHeight="262.0" prefWidth="191.0" spacing="10.0">
             <children>
                <JFXButton fx:id="viewButton" onAction="#view" prefHeight="80.0" prefWidth="191.0" text="View" />
                <JFXButton fx:id="addButton" onAction="#update" prefHeight="80.0" prefWidth="191.0" text="Update" />

@@ -4,18 +4,18 @@
 <?import javafx.scene.control.Tab?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.DetailsTabController">
+<AnchorPane prefHeight="750.0" prefWidth="1000.0" stylesheets="@../css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.tabControllers.DetailsTabController">
    <children>
       <JFXTabPane prefHeight="722.0" prefWidth="1001.0" side="BOTTOM">
          <tabs>
             <Tab text="Manufacturers">
                <content>
-                  <fx:include fx:id="ManufacturersTab" source="innerTabs/ManufacturersTab.fxml"/>
+                  <fx:include fx:id="ManufacturersTab" source="innerTabs/ManufacturersTab.fxml" />
                </content>
             </Tab>
             <Tab text="Parts">
                <content>
-                  <fx:include fx:id="PartsTab" source="innerTabs/PartsTab.fxml"/>
+                  <fx:include fx:id="PartsTab" source="innerTabs/PartsTab.fxml" />
                </content>
             </Tab>
          </tabs>

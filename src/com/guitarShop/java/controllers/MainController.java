@@ -40,6 +40,7 @@ public class MainController {
         this.primaryStage = primaryStage;
         AlertFactory.preventSpecial(loginField);
         AlertFactory.preventSpecial(passwordField);
+        loginStackPane.getStylesheets().add("/com/guitarShop/resources/css/styles.css");
     }
 
     @FXML

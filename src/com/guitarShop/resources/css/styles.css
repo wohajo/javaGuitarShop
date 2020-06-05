@@ -1,0 +1,50 @@
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: #ffc046;
+}
+
+.tab-label {
+    -fx-text-fill: #484848;
+}
+
+.table-view {
+    -fx-background-color: #484848;
+    -fx-border-color: #484848;
+}
+
+.table-view .column-header-background{
+    -fx-background-color: #484848;
+}
+
+.table-view .column-header-background .label{
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+}
+
+.text-field {
+    -fx-background-color: #484848 , #eaeaea, #eaeaea;
+    -fx-background-insets: 0 -1 -1 -1, 0 0 0 0, 0 -1 0 -1;
+}
+
+.text-field:focused {
+    -fx-background-color: #a9a9a9 , #a9a9a9, #a9a9a9;
+}
+
+.jfx-button {
+    -fx-animated: true;
+    -fx-background-color: #ffc046;
+    -fx-border-color: #ffc046
+;
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.6) , 5, 0.0 , 0 , 1 );
+}
+
+.jfx-button:pressed {
+    -fx-effect: none;
+}
+
+.anchor-pane {
+    -fx-background-color: #484848;
+}

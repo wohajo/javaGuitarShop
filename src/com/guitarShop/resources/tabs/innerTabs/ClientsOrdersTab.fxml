@@ -63,12 +63,12 @@
                   <TableColumn fx:id="priceCol" prefWidth="109.0" text="Price" />
                </columns>
             </TableView>
-            <TableView fx:id="quantityTable" layoutX="409.0" layoutY="317.0" prefHeight="400.0" prefWidth="97.0">
+            <TableView fx:id="quantityTable" layoutX="410.0" layoutY="317.0" prefHeight="400.0" prefWidth="97.0">
                <columns>
                   <TableColumn fx:id="quantityCol" prefWidth="96.0" text="Quantity" />
                </columns>
             </TableView>
-            <JFXButton layoutX="587.0" layoutY="687.0" onAction="#refresh" prefHeight="39.0" prefWidth="333.0" text="Refresh" />
+            <JFXButton layoutX="598.0" layoutY="248.0" onAction="#refresh" prefHeight="39.0" prefWidth="333.0" text="Refresh" />
             
          </children>
       </AnchorPane>

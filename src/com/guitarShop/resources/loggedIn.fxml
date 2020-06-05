@@ -3,7 +3,7 @@
 <?import com.jfoenix.controls.JFXTabPane?>
 <?import javafx.scene.control.Tab?>
 
-<JFXTabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.MainController">
+<JFXTabPane fx:id="tabPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="750.0" prefWidth="1000.0" stylesheets="@css/styles.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.guitarShop.java.controllers.MainController">
   <tabs>
     <Tab text="Stock">
       <content>

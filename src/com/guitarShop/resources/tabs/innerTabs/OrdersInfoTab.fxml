@@ -23,7 +23,7 @@
                   <TableColumn fx:id="dateCol" prefWidth="204.0" text="Date" />
                </columns>
             </TableView>
-            <VBox layoutX="695.0" layoutY="60.0" prefHeight="258.0" prefWidth="241.0">
+            <VBox layoutX="695.0" layoutY="45.0" prefHeight="273.0" prefWidth="241.0" spacing="10.0">
                <children>
                   <JFXButton onAction="#view" prefHeight="105.0" prefWidth="310.0" text="View" />
                   <JFXButton layoutX="10.0" layoutY="10.0" onAction="#update" prefHeight="105.0" prefWidth="310.0" text="Update" />
