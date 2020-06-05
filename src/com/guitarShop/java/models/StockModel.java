@@ -1,10 +1,13 @@
 package com.guitarShop.java.models;
 
+import com.google.gson.internal.$Gson$Types;
 import com.guitarShop.java.helpers.AlertFactory;
 import com.guitarShop.java.helpers.ConnectionFactory;
 import com.guitarShop.java.models.objects.Guitar;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.scene.chart.PieChart;
+import javafx.scene.chart.XYChart;
 import javafx.scene.layout.StackPane;
 
 import java.sql.Connection;
@@ -223,5 +226,52 @@ public class StockModel {
     public void updateGuitarQuantity(StackPane stackPane, int guitarID, int orderID, int quantity) {
         String query = "UPDATE Order_Guitar SET Quantity = " + quantity + " WHERE GuitarID = " + guitarID + " AND OrderID = " + orderID;
         updateStatement(stackPane, query);
+    }
+
+    public ObservableList<PieChart.Data> getInfoForPieChart() {
+        Statement statement = null;
+        ObservableList<PieChart.Data> pieChartData = FXCollections.observableArrayList();
+        String query = "SELECT TOP 5 Guitars.GuitarID, SUM(Quantity) as 'Quantity' FROM Order_Guitar \n" +
+                "JOIN Guitars ON Order_Guitar.GuitarID = Guitars.GuitarID\n" +
+                "GROUP BY (Guitars.GuitarID) ORDER BY Quantity DESC";
+
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                pieChartData.add(new PieChart.Data((getGuitar(resultSet.getInt("GuitarID")).showModel()), resultSet.getInt("Quantity")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return pieChartData;
+    }
+
+    public XYChart.Series getDataForIncomeChart() {
+        Statement statement = null;
+        XYChart.Series dataSeries = new XYChart.Series();
+        dataSeries.setName("Income");
+
+        String query = "SELECT DAY(OrderDate) as 'Day', SUM(Quantity * GuitarPrice) as 'Income' \n" +
+                "FROM Guitars g\n" +
+                "JOIN Order_Guitar og ON og.GuitarID = g.GuitarID\n" +
+                "JOIN Orders o ON o.OrderID = og.OrderID \n" +
+                "WHERE MONTH(OrderDate) = MONTH(GETDATE())\n" +
+                "GROUP BY OrderDate";
+
+        try (Connection connection = ConnectionFactory.getConnection()) {
+            statement = connection.createStatement();
+            ResultSet resultSet = statement.executeQuery(query);
+
+            while (resultSet.next()) {
+                dataSeries.getData().add(new XYChart.Data( resultSet.getInt("Day"), resultSet.getInt("Income")));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        return dataSeries;
     }
 }

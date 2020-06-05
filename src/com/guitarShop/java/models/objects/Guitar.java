@@ -162,6 +162,10 @@ public class Guitar extends RecursiveTreeObject<Guitar> {
 
     @Override
     public String toString() {
-        return getManufacturer() + " " + getModel() + " " + getGuitarType();
+        return showModel() + " " + getGuitarType();
+    }
+
+    public String showModel() {
+        return getManufacturer() + " " + getModel();
     }
 }
