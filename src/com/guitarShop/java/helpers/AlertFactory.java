@@ -73,26 +73,10 @@ public class AlertFactory {
     }
 
     public static void preventSpecial(TextField textField) {
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("[^'^\"^-]")) {
-                textField.setText(newValue.replaceAll("[^[^'^\"^-]]", ""));
-            }
-        });
+        regexChecker(textField, "[^'^\"^[-]]");
     }
 
-    public static void numbersWithQuantity(TextField textField) {
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("[[0-9]{11}]*")) {
-
-            }
-        });
-    }
-
-    public static void restrictPostCode(TextField textField) {
-        textField.textProperty().addListener((observable, oldValue, newValue) -> {
-            if (!newValue.matches("[0-9]{2}[-][0-9]{3}")) {
-                textField.setText(newValue.replaceAll("[^[0-9]{2}[-][0-9]{3}]", ""));
-            }
-        });
+    public static void preventAp(TextField textField) {
+        regexChecker(textField, "[0-9-]");
     }
 }

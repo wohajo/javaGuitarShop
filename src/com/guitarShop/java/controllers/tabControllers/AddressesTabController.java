@@ -58,7 +58,7 @@ public class AddressesTabController {
 
         AlertFactory.preventInjection(citySearchText);
         AlertFactory.preventInjection(streetSearchText);
-        AlertFactory.restrictPostCode(postcodeSearchText);
+        AlertFactory.preventAp(postcodeSearchText);
 
         citySearchText.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(Address -> {
@@ -179,6 +179,7 @@ public class AddressesTabController {
             AlertFactory.preventInjection(streetText);
             AlertFactory.restrictToNumbers(buildingText);
             AlertFactory.restrictToNumbers(flatText);
+            AlertFactory.preventAp(postcodeText);
 
             dialogGrid.add(cityText, 1, 0);
             dialogGrid.add(postcodeText, 1, 1);
@@ -240,6 +241,7 @@ public class AddressesTabController {
             AlertFactory.preventInjection(streetText);
             AlertFactory.restrictToNumbers(buildingText);
             AlertFactory.restrictToNumbers(flatText);
+            AlertFactory.preventAp(postcodeText);
 
             dialogGrid.add(cityText, 1, 0);
             dialogGrid.add(postcodeText, 1, 1);

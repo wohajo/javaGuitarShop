@@ -63,7 +63,7 @@ public class ClientsTabController {
     private void initSearchFields(FilteredList<Client> filteredList) {
         AlertFactory.preventInjection(nameSearchText);
         AlertFactory.preventInjection(surnameSearchText);
-        AlertFactory.numbersWithQuantity(peselSearchText);
+        AlertFactory.restrictToNumbers(peselSearchText);
 
         nameSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(Client -> {
@@ -190,8 +190,8 @@ public class ClientsTabController {
             AlertFactory.preventInjection(nameText);
             AlertFactory.preventInjection(surnameText);
             AlertFactory.preventSpecial(emailText);
-            //AlertFactory.numbersWithQuantity(peselText);
-            //AlertFactory.preventSpecial();
+            AlertFactory.restrictToNumbers(peselText);
+            AlertFactory.restrictToNumbers(phoneText);
 
             JFXListView<Address> addressJFXListView = new JFXListView<>();
             addressJFXListView.setMaxWidth(200);
@@ -277,8 +277,8 @@ public class ClientsTabController {
             AlertFactory.preventInjection(nameText);
             AlertFactory.preventInjection(surnameText);
             AlertFactory.preventSpecial(emailText);
-            //AlertFactory.preventSpecial();
-            //AlertFactory.preventSpecial();
+            AlertFactory.restrictToNumbers(peselText);
+            AlertFactory.restrictToNumbers(phoneText);
 
             JFXListView<Address> addressJFXListView = new JFXListView<>();
             addressJFXListView.setMaxWidth(200);
@@ -320,7 +320,7 @@ public class ClientsTabController {
             acceptButton.setOnAction(new EventHandler<ActionEvent>() {
                 @Override
                 public void handle(ActionEvent actionEvent) {
-                    if (getSelectedItem() == null || nameText.getText().isEmpty() || surnameText.getText().isEmpty() ||
+                    if (nameText.getText().isEmpty() || surnameText.getText().isEmpty() ||
                             phoneText.getText().isEmpty() || peselText.getText().isEmpty() || emailText.getText().isEmpty()) {
                         AlertFactory.makeFillAllFieldsError(clientsStackPane);
                     } else {

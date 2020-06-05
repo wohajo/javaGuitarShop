@@ -47,7 +47,26 @@ public class ClientsOrdersTabController {
         clientsComboBox.setItems(clientsModel.getClients());
     }
 
-   private void initTable(int orderID) {
+    @FXML private void refresh() {
+        clientsComboBox.setValue(null);
+        clientsComboBox.setItems(clientsModel.getClients());
+        clearFields();
+    }
+
+    private void clearFields() {
+        dateBox.setText("");
+        addressBox.setText("");
+        sellerBox.setText("");
+        priceBox.setText("");
+
+        if (itemsTable.getItems().size() != 0) {
+            orderComboBox.setValue(null);
+            itemsTable.getItems().clear();
+            quantityTable.getItems().clear();
+        }
+    }
+
+    private void initTable(int orderID) {
         manCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("manufacturer"));
         modelCol.setCellValueFactory(new PropertyValueFactory<Guitar, String>("model"));
         priceCol.setCellValueFactory(new PropertyValueFactory<Guitar, Double>("guitarPrice"));
@@ -63,22 +82,13 @@ public class ClientsOrdersTabController {
    }
 
     @FXML private void changeClient() {
-        dateBox.setText("");
-        addressBox.setText("");
-        sellerBox.setText("");
-        priceBox.setText("");
-
-        if (itemsTable.getItems().size() != 0) {
-            orderComboBox.setValue(null);
-            itemsTable.getItems().clear();
-            quantityTable.getItems().clear();
+        if (getSelectedClient() != null) {
+            clearFields();
+            int clientID = getSelectedClient().getClientID();
+            ObservableList<Order> items = ordersModel.getOrdersWithClientID(clientID);
+            orderComboBox.setItems(items);
+            addressBox.setText(addressModel.getAddress(getSelectedClient().getAddressID()).toString());
         }
-
-        int clientID = getSelectedClient().getClientID();
-        ObservableList<Order> items = ordersModel.getOrdersWithClientID(clientID);
-        orderComboBox.setItems(items);
-
-        addressBox.setText(addressModel.getAddress(getSelectedClient().getAddressID()).toString());
     }
 
     @FXML private void changeOrder() throws SQLException {

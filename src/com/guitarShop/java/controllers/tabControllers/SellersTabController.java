@@ -63,7 +63,7 @@ public class SellersTabController {
 
         AlertFactory.preventInjection(nameSearchText);
         AlertFactory.preventInjection(surnameSearchText);
-        //AlertFactory.numbersWithQuantity(peselSearchText);
+        AlertFactory.restrictToNumbers(peselSearchText);
 
         nameSearchText.textProperty().addListener((observable, oldValue, newValue) -> {
             filteredList.setPredicate(Seller -> {
@@ -186,8 +186,8 @@ public class SellersTabController {
             AlertFactory.preventInjection(nameText);
             AlertFactory.preventInjection(surnameText);
             AlertFactory.preventSpecial(emailText);
-            //AlertFactory.preventSpecial();
-            //AlertFactory.preventSpecial();
+            AlertFactory.restrictToNumbers(peselText);
+            AlertFactory.restrictToNumbers(phoneText);
 
             JFXListView<Address> addressJFXListView = new JFXListView<>();
             addressJFXListView.setMaxWidth(200);
@@ -276,8 +276,9 @@ public class SellersTabController {
             AlertFactory.preventInjection(nameText);
             AlertFactory.preventInjection(surnameText);
             AlertFactory.preventSpecial(emailText);
-            //AlertFactory.preventSpecial();
-            //AlertFactory.preventSpecial();
+            AlertFactory.restrictToNumbers(peselText);
+            AlertFactory.restrictToNumbers(phoneText);
+            AlertFactory.preventSpecial(passwordText);
 
             JFXListView<Address> addressJFXListView = new JFXListView<>();
             addressJFXListView.setMaxWidth(200);
@@ -320,19 +321,16 @@ public class SellersTabController {
 
             JFXDialog viewDialog = new JFXDialog(sellersStackPane, dialogLayout, JFXDialog.DialogTransition.BOTTOM);
 
-            acceptButton.setOnAction(new EventHandler<ActionEvent>() {
-                @Override
-                public void handle(ActionEvent actionEvent) {
-                    if (getSelectedItem() == null || nameText.getText().isEmpty() || surnameText.getText().isEmpty() || phoneText.getText().isEmpty() || peselText.getText().isEmpty() ||
-                    emailText.getText().isEmpty() || passwordText.getText().isEmpty()) {
-                        AlertFactory.makeFillAllFieldsError(sellersStackPane);
-                    } else {
-                        String passwordHash = passwordManager.makeHash(passwordText.getText());
-                        sellersModel.addSeller(sellersStackPane, nameText.getText(), surnameText.getText(), phoneText.getText(),
-                                peselText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getAddressID(), emailText.getText(), passwordHash);
-                        refreshTable();
-                        viewDialog.close();
-                    }
+            acceptButton.setOnAction(actionEvent -> {
+                if (nameText.getText().isEmpty() || surnameText.getText().isEmpty() || phoneText.getText().isEmpty() || peselText.getText().isEmpty() ||
+                emailText.getText().isEmpty() || passwordText.getText().isEmpty()) {
+                    AlertFactory.makeFillAllFieldsError(sellersStackPane);
+                } else {
+                    String passwordHash = passwordManager.makeHash(passwordText.getText());
+                    sellersModel.addSeller(sellersStackPane, nameText.getText(), surnameText.getText(), phoneText.getText(),
+                            peselText.getText(), addressJFXListView.getSelectionModel().getSelectedItem().getAddressID(), emailText.getText(), passwordHash);
+                    refreshTable();
+                    viewDialog.close();
                 }
             });
 
