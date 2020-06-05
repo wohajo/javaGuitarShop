@@ -12,7 +12,7 @@
       <AnchorPane prefHeight="200.0" prefWidth="200.0">
          <children>
             <PieChart fx:id="mostPopularChart" layoutX="32.0" layoutY="104.0" prefHeight="417.0" prefWidth="359.0" title="TOP 5 SELLING GUITARS" />
-            <StackedAreaChart fx:id="monthlyIncomeChart" layoutX="393.0" layoutY="121.0" prefHeight="400.0" prefWidth="593.0" title="INCOME IN MONTH">
+            <StackedAreaChart fx:id="monthlyIncomeChart" layoutX="393.0" layoutY="121.0" prefHeight="400.0" prefWidth="593.0" title="REVENUE THIS MONTH">
               <xAxis>
                 <NumberAxis side="BOTTOM" fx:id="xAxis" />
               </xAxis>

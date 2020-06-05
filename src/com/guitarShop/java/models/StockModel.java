@@ -252,9 +252,9 @@ public class StockModel {
     public XYChart.Series getDataForIncomeChart() {
         Statement statement = null;
         XYChart.Series dataSeries = new XYChart.Series();
-        dataSeries.setName("Income");
+        dataSeries.setName("Revenue");
 
-        String query = "SELECT DAY(OrderDate) as 'Day', SUM(Quantity * GuitarPrice) as 'Income' \n" +
+        String query = "SELECT DAY(OrderDate) as 'Day', SUM(Quantity * GuitarPrice) as 'Revenue' \n" +
                 "FROM Guitars g\n" +
                 "JOIN Order_Guitar og ON og.GuitarID = g.GuitarID\n" +
                 "JOIN Orders o ON o.OrderID = og.OrderID \n" +
@@ -266,7 +266,7 @@ public class StockModel {
             ResultSet resultSet = statement.executeQuery(query);
 
             while (resultSet.next()) {
-                dataSeries.getData().add(new XYChart.Data( resultSet.getInt("Day"), resultSet.getInt("Income")));
+                dataSeries.getData().add(new XYChart.Data( resultSet.getInt("Day"), resultSet.getInt("Revenue")));
             }
         } catch (SQLException e) {
             e.printStackTrace();
